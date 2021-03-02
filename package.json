@@ -46,6 +46,7 @@
     "@graphql-codegen/cli": "1.21.1",
     "@graphql-codegen/typescript": "1.21.0",
     "@graphql-codegen/typescript-operations": "1.17.14",
+    "@graphql-codegen/typescript-resolvers": "^1.18.2",
     "@nrwl/cli": "11.4.0",
     "@nrwl/cypress": "11.4.0",
     "@nrwl/eslint-plugin-nx": "11.4.0",

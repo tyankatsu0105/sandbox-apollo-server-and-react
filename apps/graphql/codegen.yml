@@ -6,13 +6,21 @@ generates:
       - typescript
       - typescript-operations
     config:
-      # optionalにならなくなる
-      avoidOptionals: true
-      # enumの代わりにconst assertionのconstを使う
-      enumsAsConst: true
-      # readonlyが付く
-      immutableTypes: true
       # queryで要求しない限り__typenameを型に付与しない
       skipTypename: true
-      # Pickを使わずに型を律儀に定義してくれる
-      preResolveTypes: true
+  apps/mock-server/src/app/types/gen/api.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-resolvers
+    config:
+      # noSchemaStitching: true
+config:
+  # optionalにならなくなる
+  avoidOptionals: true
+  # enumの代わりにconst assertionのconstを使う
+  enumsAsConst: true
+  # readonlyが付く
+  immutableTypes: true
+  # Pickを使わずに型を律儀に定義してくれる
+  preResolveTypes: true
