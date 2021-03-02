@@ -1,0 +1,6 @@
+schema: apps/schema/* .graphql
+documents: apps/graphql/**/*.graphql
+generates:
+  apps/client/src/app/application/types/gen/api.ts:
+    plugins:
+      - typescript
