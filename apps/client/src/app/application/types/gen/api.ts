@@ -12,12 +12,43 @@ export type Scalars = {
 };
 
 export type User = {
-  __typename?: 'User';
-  id: Scalars['ID'];
-  name: Scalars['String'];
+  readonly id: Scalars['ID'];
+  /** 名前 */
+  readonly name: Scalars['String'];
+  /** 年齢 */
+  readonly age: Scalars['Int'];
+  /** 血液型 */
+  readonly blood: Blood;
+  /** 出身国 */
+  readonly Country: Maybe<Scalars['String']>;
 };
 
+export const Blood = {
+  A: 'A',
+  B: 'B',
+  O: 'O',
+  Ab: 'AB'
+} as const;
+
+export type Blood = typeof Blood[keyof typeof Blood];
 export type Query = {
-  __typename?: 'Query';
-  users: Array<User>;
+  readonly users: ReadonlyArray<User>;
+  readonly user: User;
 };
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
+};
+
+export type UserQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type UserQuery = { readonly user: Pick<User, 'name'> };
+
+export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UsersQuery = { readonly users: ReadonlyArray<Pick<User, 'name'>> };
