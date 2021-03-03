@@ -1,6 +1,11 @@
 schema: apps/schema/*.graphql
 documents: apps/graphql/**/*.graphql
 generates:
+  apps/graphql/schema.graphql:
+    plugins:
+      - schema-ast:
+          includeDirectives: true
+          commentDescriptions: true
   apps/client/src/app/application/types/gen/api.ts:
     plugins:
       - typescript
