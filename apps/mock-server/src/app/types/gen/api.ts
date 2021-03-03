@@ -50,12 +50,24 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { readonly __typename?: 'Query', readonly user: { readonly __typename?: 'User', readonly name: string } };
+export type UserQuery = (
+  { readonly __typename?: 'Query' }
+  & { readonly user: (
+    { readonly __typename?: 'User' }
+    & Pick<User, 'name'>
+  ) }
+);
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { readonly __typename?: 'Query', readonly users: ReadonlyArray<{ readonly __typename?: 'User', readonly name: string }> };
+export type UsersQuery = (
+  { readonly __typename?: 'Query' }
+  & { readonly users: ReadonlyArray<(
+    { readonly __typename?: 'User' }
+    & Pick<User, 'name'>
+  )> }
+);
 
 
 

@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -46,9 +47,25 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { readonly user: { readonly name: string } };
+export type UserQuery = { readonly user: Pick<User, 'name'> };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { readonly users: ReadonlyArray<{ readonly name: string }> };
+export type UsersQuery = { readonly users: ReadonlyArray<Pick<User, 'name'>> };
+
+
+export const UserDocument = gql`
+    query User($id: ID!) {
+  user(id: $id) {
+    name
+  }
+}
+    `;
+export const UsersDocument = gql`
+    query Users {
+  users {
+    name
+  }
+}
+    `;

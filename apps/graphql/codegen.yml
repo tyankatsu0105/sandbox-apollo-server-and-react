@@ -5,15 +5,19 @@ generates:
     plugins:
       - typescript
       - typescript-operations
+      - typescript-react-apollo
     config:
       # queryで要求しない限り__typenameを型に付与しない
       skipTypename: true
+      # カスタムフックの生成を行う
+      withHooks: false
+      #
+      withResultType: false
   apps/mock-server/src/app/types/gen/api.ts:
     plugins:
       - typescript
       - typescript-operations
       - typescript-resolvers
-    config:
 
 config:
   # optionalにならなくなる
@@ -22,5 +26,3 @@ config:
   enumsAsConst: true
   # readonlyが付く
   immutableTypes: true
-  # Pickを使わずに型を律儀に定義してくれる
-  preResolveTypes: true

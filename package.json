@@ -28,6 +28,7 @@
   },
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.3.11",
     "core-js": "^3.6.5",
     "document-register-element": "1.13.1",
     "express": "4.17.1",
@@ -46,6 +47,7 @@
     "@graphql-codegen/cli": "1.21.1",
     "@graphql-codegen/typescript": "1.21.0",
     "@graphql-codegen/typescript-operations": "1.17.14",
+    "@graphql-codegen/typescript-react-apollo": "^2.2.1",
     "@graphql-codegen/typescript-resolvers": "^1.18.2",
     "@nrwl/cli": "11.4.0",
     "@nrwl/cypress": "11.4.0",
