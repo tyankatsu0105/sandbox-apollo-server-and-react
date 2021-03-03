@@ -14,7 +14,7 @@ generates:
       - typescript-operations
       - typescript-resolvers
     config:
-      # noSchemaStitching: true
+
 config:
   # optionalにならなくなる
   avoidOptionals: true
