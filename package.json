@@ -29,6 +29,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.11",
+    "@apollo/link-error": "^2.0.0-beta.3",
     "@reduxjs/toolkit": "^1.5.0",
     "core-js": "^3.6.5",
     "document-register-element": "1.13.1",
