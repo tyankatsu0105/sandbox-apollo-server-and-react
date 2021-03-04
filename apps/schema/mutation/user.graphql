@@ -1,0 +1,16 @@
+input CreateUserInput {
+  "名前"
+  name: String!
+  "年齢"
+  age: Int!
+  "血液型"
+  blood: Blood!
+}
+
+type CreateUserPayload {
+  user: User
+}
+
+type CreateUsersPayload {
+  users: [User]
+}

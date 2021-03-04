@@ -1,0 +1,6 @@
+enum Blood {
+  A
+  B
+  O
+  AB
+}

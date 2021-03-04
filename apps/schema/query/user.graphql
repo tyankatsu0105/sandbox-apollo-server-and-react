@@ -1,0 +1,27 @@
+type UserConnectionEdge {
+  cursor: String
+  node: User
+}
+
+type UserConnection {
+  edges: [UserConnectionEdge]
+  nodes: [User]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type User implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  "名前"
+  name: String!
+  "年齢"
+  age: Int!
+  "血液型"
+  blood: Blood!
+  "出身国"
+  country: String
+  "誕生日"
+  birthDay: Date
+}

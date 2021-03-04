@@ -1,5 +1,10 @@
 query Users {
   users {
-    name
+    totalCount
+    edges {
+      node {
+        id
+      }
+    }
   }
 }

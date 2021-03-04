@@ -1,0 +1,10 @@
+"""
+ISO 8601準拠 YYYY-MM-DDTHH:mm:ss.sssZ
+ex: 2011-10-05T14:48:00.000Z
+"""
+scalar DateTime
+"""
+YYYY-MM-DD
+ex: 2020-01-01
+"""
+scalar Date
