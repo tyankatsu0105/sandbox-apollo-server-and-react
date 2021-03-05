@@ -31,6 +31,21 @@ export const Blood = {
 } as const;
 
 export type Blood = typeof Blood[keyof typeof Blood];
+export type Mutation = {
+  readonly createUser: Maybe<CreateUserPayload>;
+  readonly createUsers: Maybe<CreateUsersPayload>;
+};
+
+
+export type MutationCreateUserArgs = {
+  input: CreateUserInput;
+};
+
+
+export type MutationCreateUsersArgs = {
+  input: ReadonlyArray<CreateUserInput>;
+};
+
 export type CreateUserInput = {
   /** 名前 */
   readonly name: Scalars['String'];
@@ -48,8 +63,23 @@ export type CreateUsersPayload = {
   readonly users: Maybe<ReadonlyArray<Maybe<User>>>;
 };
 
+export type Query = {
+  readonly users: Maybe<UserConnection>;
+  readonly user: Maybe<User>;
+};
+
+
+export type QueryUsersArgs = {
+  page: PaginationInput;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
+};
+
 export type UserConnectionEdge = {
-  readonly cursor: Maybe<Scalars['String']>;
+  readonly cursor: Scalars['String'];
   readonly node: Maybe<User>;
 };
 
@@ -78,36 +108,18 @@ export type User = Node & {
 
 
 
-export type Query = {
-  readonly users: Maybe<UserConnection>;
-  readonly user: Maybe<User>;
-};
-
-
-export type QueryUserArgs = {
-  id: Scalars['ID'];
-};
-
-export type Mutation = {
-  readonly createUser: Maybe<CreateUserPayload>;
-  readonly createUsers: Maybe<CreateUsersPayload>;
-};
-
-
-export type MutationCreateUserArgs = {
-  input: CreateUserInput;
-};
-
-
-export type MutationCreateUsersArgs = {
-  input: ReadonlyArray<CreateUserInput>;
-};
-
 export type PageInfo = {
-  readonly endCursor: Maybe<Scalars['String']>;
+  readonly startCursor: Scalars['String'];
+  readonly endCursor: Scalars['String'];
   readonly hasNextPage: Scalars['Boolean'];
   readonly hasPreviousPage: Scalars['Boolean'];
-  readonly startCursor: Maybe<Scalars['String']>;
+};
+
+export type PaginationInput = {
+  readonly first: Maybe<Scalars['Int']>;
+  readonly last: Maybe<Scalars['Int']>;
+  readonly after: Maybe<Scalars['String']>;
+  readonly before: Maybe<Scalars['String']>;
 };
 
 export type Node = {
@@ -116,6 +128,13 @@ export type Node = {
   readonly updatedAt: Maybe<Scalars['DateTime']>;
 };
 
+export type CreateUserMutationVariables = Exact<{
+  input: CreateUserInput;
+}>;
+
+
+export type CreateUserMutation = { readonly createUser: Maybe<{ readonly user: Maybe<Pick<User, 'id' | 'name'>> }> };
+
 export type UserQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -123,7 +142,9 @@ export type UserQueryVariables = Exact<{
 
 export type UserQuery = { readonly user: Maybe<Pick<User, 'name'>> };
 
-export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type UsersQueryVariables = Exact<{
+  page: PaginationInput;
+}>;
 
 
 export type UsersQuery = { readonly users: Maybe<(
@@ -132,6 +153,19 @@ export type UsersQuery = { readonly users: Maybe<(
   )> };
 
 
+export const CreateUserDocument = gql`
+    mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    user {
+      id
+      name
+    }
+  }
+}
+    `;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const UserDocument = gql`
     query User($id: ID!) {
   user(id: $id) {
@@ -141,8 +175,8 @@ export const UserDocument = gql`
     `;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export const UsersDocument = gql`
-    query Users {
-  users {
+    query Users($page: PaginationInput!) {
+  users(page: $page) {
     totalCount
     edges {
       node {

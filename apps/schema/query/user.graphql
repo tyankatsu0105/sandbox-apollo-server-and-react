@@ -1,5 +1,5 @@
 type UserConnectionEdge {
-  cursor: String
+  cursor: String!
   node: User
 }
 

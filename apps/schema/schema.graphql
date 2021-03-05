@@ -3,21 +3,18 @@ schema {
   mutation: Mutation
 }
 
-type Query {
-  users: UserConnection
-  user(id: ID!): User
-}
-
-type Mutation {
-  createUser(input: CreateUserInput!): CreateUserPayload
-  createUsers(input: [CreateUserInput!]!): CreateUsersPayload
-}
-
 type PageInfo {
-  endCursor: String
+  startCursor: String!
+  endCursor: String!
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
-  startCursor: String
+}
+
+input PaginationInput {
+  first: Int
+  last: Int
+  after: String
+  before: String
 }
 
 interface Node {

@@ -31,6 +31,22 @@ export const Blood = {
 } as const;
 
 export type Blood = typeof Blood[keyof typeof Blood];
+export type Mutation = {
+  readonly __typename: 'Mutation';
+  readonly createUser: Maybe<CreateUserPayload>;
+  readonly createUsers: Maybe<CreateUsersPayload>;
+};
+
+
+export type MutationCreateUserArgs = {
+  input: CreateUserInput;
+};
+
+
+export type MutationCreateUsersArgs = {
+  input: ReadonlyArray<CreateUserInput>;
+};
+
 export type CreateUserInput = {
   /** 名前 */
   readonly name: Scalars['String'];
@@ -50,9 +66,25 @@ export type CreateUsersPayload = {
   readonly users: Maybe<ReadonlyArray<Maybe<User>>>;
 };
 
+export type Query = {
+  readonly __typename: 'Query';
+  readonly users: Maybe<UserConnection>;
+  readonly user: Maybe<User>;
+};
+
+
+export type QueryUsersArgs = {
+  page: PaginationInput;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
+};
+
 export type UserConnectionEdge = {
   readonly __typename: 'UserConnectionEdge';
-  readonly cursor: Maybe<Scalars['String']>;
+  readonly cursor: Scalars['String'];
   readonly node: Maybe<User>;
 };
 
@@ -83,39 +115,19 @@ export type User = Node & {
 
 
 
-export type Query = {
-  readonly __typename: 'Query';
-  readonly users: Maybe<UserConnection>;
-  readonly user: Maybe<User>;
-};
-
-
-export type QueryUserArgs = {
-  id: Scalars['ID'];
-};
-
-export type Mutation = {
-  readonly __typename: 'Mutation';
-  readonly createUser: Maybe<CreateUserPayload>;
-  readonly createUsers: Maybe<CreateUsersPayload>;
-};
-
-
-export type MutationCreateUserArgs = {
-  input: CreateUserInput;
-};
-
-
-export type MutationCreateUsersArgs = {
-  input: ReadonlyArray<CreateUserInput>;
-};
-
 export type PageInfo = {
   readonly __typename: 'PageInfo';
-  readonly endCursor: Maybe<Scalars['String']>;
+  readonly startCursor: Scalars['String'];
+  readonly endCursor: Scalars['String'];
   readonly hasNextPage: Scalars['Boolean'];
   readonly hasPreviousPage: Scalars['Boolean'];
-  readonly startCursor: Maybe<Scalars['String']>;
+};
+
+export type PaginationInput = {
+  readonly first: Maybe<Scalars['Int']>;
+  readonly last: Maybe<Scalars['Int']>;
+  readonly after: Maybe<Scalars['String']>;
+  readonly before: Maybe<Scalars['String']>;
 };
 
 export type Node = {
@@ -123,6 +135,22 @@ export type Node = {
   readonly createdAt: Scalars['DateTime'];
   readonly updatedAt: Maybe<Scalars['DateTime']>;
 };
+
+export type CreateUserMutationVariables = Exact<{
+  input: CreateUserInput;
+}>;
+
+
+export type CreateUserMutation = (
+  { readonly __typename: 'Mutation' }
+  & { readonly createUser: Maybe<(
+    { readonly __typename: 'CreateUserPayload' }
+    & { readonly user: Maybe<(
+      { readonly __typename: 'User' }
+      & Pick<User, 'id' | 'name'>
+    )> }
+  )> }
+);
 
 export type UserQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -137,7 +165,9 @@ export type UserQuery = (
   )> }
 );
 
-export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type UsersQueryVariables = Exact<{
+  page: PaginationInput;
+}>;
 
 
 export type UsersQuery = (
@@ -234,42 +264,49 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Blood: Blood;
+  Mutation: ResolverTypeWrapper<{}>;
   CreateUserInput: CreateUserInput;
   String: ResolverTypeWrapper<Scalars['String']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   CreateUserPayload: ResolverTypeWrapper<CreateUserPayload>;
   CreateUsersPayload: ResolverTypeWrapper<CreateUsersPayload>;
+  Query: ResolverTypeWrapper<{}>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   UserConnectionEdge: ResolverTypeWrapper<UserConnectionEdge>;
   UserConnection: ResolverTypeWrapper<UserConnection>;
   User: ResolverTypeWrapper<User>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
-  Query: ResolverTypeWrapper<{}>;
-  Mutation: ResolverTypeWrapper<{}>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  PaginationInput: PaginationInput;
   Node: ResolversTypes['User'];
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  Mutation: {};
   CreateUserInput: CreateUserInput;
   String: Scalars['String'];
   Int: Scalars['Int'];
   CreateUserPayload: CreateUserPayload;
   CreateUsersPayload: CreateUsersPayload;
+  Query: {};
+  ID: Scalars['ID'];
   UserConnectionEdge: UserConnectionEdge;
   UserConnection: UserConnection;
   User: User;
-  ID: Scalars['ID'];
   DateTime: Scalars['DateTime'];
   Date: Scalars['Date'];
-  Query: {};
-  Mutation: {};
   PageInfo: PageInfo;
   Boolean: Scalars['Boolean'];
+  PaginationInput: PaginationInput;
   Node: ResolversParentTypes['User'];
+};
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createUser: Resolver<Maybe<ResolversTypes['CreateUserPayload']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
+  createUsers: Resolver<Maybe<ResolversTypes['CreateUsersPayload']>, ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'input'>>;
 };
 
 export type CreateUserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUserPayload'] = ResolversParentTypes['CreateUserPayload']> = {
@@ -282,8 +319,13 @@ export type CreateUsersPayloadResolvers<ContextType = any, ParentType extends Re
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  users: Resolver<Maybe<ResolversTypes['UserConnection']>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'page'>>;
+  user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+};
+
 export type UserConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnectionEdge'] = ResolversParentTypes['UserConnectionEdge']> = {
-  cursor: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  cursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   node: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -316,21 +358,11 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  users: Resolver<Maybe<ResolversTypes['UserConnection']>, ParentType, ContextType>;
-  user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
-};
-
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createUser: Resolver<Maybe<ResolversTypes['CreateUserPayload']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
-  createUsers: Resolver<Maybe<ResolversTypes['CreateUsersPayload']>, ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'input'>>;
-};
-
 export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
-  endCursor: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  startCursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  endCursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   hasNextPage: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   hasPreviousPage: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  startCursor: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -342,15 +374,15 @@ export type NodeResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type Resolvers<ContextType = any> = {
+  Mutation: MutationResolvers<ContextType>;
   CreateUserPayload: CreateUserPayloadResolvers<ContextType>;
   CreateUsersPayload: CreateUsersPayloadResolvers<ContextType>;
+  Query: QueryResolvers<ContextType>;
   UserConnectionEdge: UserConnectionEdgeResolvers<ContextType>;
   UserConnection: UserConnectionResolvers<ContextType>;
   User: UserResolvers<ContextType>;
   DateTime: GraphQLScalarType;
   Date: GraphQLScalarType;
-  Query: QueryResolvers<ContextType>;
-  Mutation: MutationResolvers<ContextType>;
   PageInfo: PageInfoResolvers<ContextType>;
   Node: NodeResolvers<ContextType>;
 };
