@@ -17,6 +17,11 @@ input PaginationInput {
   before: String
 }
 
+interface Edge {
+  cursor: String!
+  node: Node!
+}
+
 interface Node {
   id: ID!
   createdAt: DateTime!

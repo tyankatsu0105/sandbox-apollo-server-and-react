@@ -82,10 +82,10 @@ export type QueryUserArgs = {
   id: Scalars['ID'];
 };
 
-export type UserConnectionEdge = {
+export type UserConnectionEdge = Edge & {
   readonly __typename: 'UserConnectionEdge';
   readonly cursor: Scalars['String'];
-  readonly node: Maybe<User>;
+  readonly node: User;
 };
 
 export type UserConnection = {
@@ -128,6 +128,11 @@ export type PaginationInput = {
   readonly last: Maybe<Scalars['Int']>;
   readonly after: Maybe<Scalars['String']>;
   readonly before: Maybe<Scalars['String']>;
+};
+
+export type Edge = {
+  readonly cursor: Scalars['String'];
+  readonly node: Node;
 };
 
 export type Node = {
@@ -177,10 +182,10 @@ export type UsersQuery = (
     & Pick<UserConnection, 'totalCount'>
     & { readonly edges: Maybe<ReadonlyArray<Maybe<(
       { readonly __typename: 'UserConnectionEdge' }
-      & { readonly node: Maybe<(
+      & { readonly node: (
         { readonly __typename: 'User' }
         & Pick<User, 'id'>
-      )> }
+      ) }
     )>>> }
   )> }
 );
@@ -280,6 +285,7 @@ export type ResolversTypes = {
   PageInfo: ResolverTypeWrapper<PageInfo>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   PaginationInput: PaginationInput;
+  Edge: ResolversTypes['UserConnectionEdge'];
   Node: ResolversTypes['User'];
 };
 
@@ -301,6 +307,7 @@ export type ResolversParentTypes = {
   PageInfo: PageInfo;
   Boolean: Scalars['Boolean'];
   PaginationInput: PaginationInput;
+  Edge: ResolversParentTypes['UserConnectionEdge'];
   Node: ResolversParentTypes['User'];
 };
 
@@ -326,7 +333,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type UserConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnectionEdge'] = ResolversParentTypes['UserConnectionEdge']> = {
   cursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  node: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  node: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -366,6 +373,12 @@ export type PageInfoResolvers<ContextType = any, ParentType extends ResolversPar
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type EdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Edge'] = ResolversParentTypes['Edge']> = {
+  __resolveType: TypeResolveFn<'UserConnectionEdge', ParentType, ContextType>;
+  cursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node: Resolver<ResolversTypes['Node'], ParentType, ContextType>;
+};
+
 export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
   __resolveType: TypeResolveFn<'User', ParentType, ContextType>;
   id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -384,6 +397,7 @@ export type Resolvers<ContextType = any> = {
   DateTime: GraphQLScalarType;
   Date: GraphQLScalarType;
   PageInfo: PageInfoResolvers<ContextType>;
+  Edge: EdgeResolvers<ContextType>;
   Node: NodeResolvers<ContextType>;
 };
 

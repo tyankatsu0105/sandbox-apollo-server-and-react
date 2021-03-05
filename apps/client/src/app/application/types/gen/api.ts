@@ -78,9 +78,9 @@ export type QueryUserArgs = {
   id: Scalars['ID'];
 };
 
-export type UserConnectionEdge = {
+export type UserConnectionEdge = Edge & {
   readonly cursor: Scalars['String'];
-  readonly node: Maybe<User>;
+  readonly node: User;
 };
 
 export type UserConnection = {
@@ -122,6 +122,11 @@ export type PaginationInput = {
   readonly before: Maybe<Scalars['String']>;
 };
 
+export type Edge = {
+  readonly cursor: Scalars['String'];
+  readonly node: Node;
+};
+
 export type Node = {
   readonly id: Scalars['ID'];
   readonly createdAt: Scalars['DateTime'];
@@ -149,7 +154,7 @@ export type UsersQueryVariables = Exact<{
 
 export type UsersQuery = { readonly users: Maybe<(
     Pick<UserConnection, 'totalCount'>
-    & { readonly edges: Maybe<ReadonlyArray<Maybe<{ readonly node: Maybe<Pick<User, 'id'>> }>>> }
+    & { readonly edges: Maybe<ReadonlyArray<Maybe<{ readonly node: Pick<User, 'id'> }>>> }
   )> };
 
 

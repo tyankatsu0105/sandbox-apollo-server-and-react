@@ -1,6 +1,6 @@
-type UserConnectionEdge {
+type UserConnectionEdge implements Edge {
   cursor: String!
-  node: User
+  node: User!
 }
 
 type UserConnection {
