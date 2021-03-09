@@ -1,5 +1,5 @@
-query Users($page: PaginationInput!) {
-  users(page: $page) {
+query Users($page: PaginationInput!, $ids: [ID!]!) {
+  users(page: $page, ids: $ids) {
     totalCount
     edges {
       node {

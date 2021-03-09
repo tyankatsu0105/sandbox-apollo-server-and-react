@@ -1,4 +1,0 @@
-type Query {
-  users(page: PaginationInput!): UserConnection
-  user(id: ID!): User
-}

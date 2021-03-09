@@ -1,4 +1,0 @@
-type Mutation {
-  createUser(input: CreateUserInput!): CreateUserPayload
-  createUsers(input: [CreateUserInput!]!): CreateUsersPayload
-}

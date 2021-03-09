@@ -31,9 +31,65 @@ export const Blood = {
 } as const;
 
 export type Blood = typeof Blood[keyof typeof Blood];
+
+
+export type Query = {
+  readonly node: Maybe<Node>;
+  readonly nodes: ReadonlyArray<Maybe<Node>>;
+  readonly user: Maybe<User>;
+  readonly users: UserConnection;
+};
+
+
+export type QueryNodeArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryNodesArgs = {
+  ids: ReadonlyArray<Scalars['ID']>;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryUsersArgs = {
+  page: PaginationInput;
+  ids: ReadonlyArray<Scalars['ID']>;
+};
+
+export type PageInfo = {
+  readonly startCursor: Scalars['String'];
+  readonly endCursor: Scalars['String'];
+  readonly hasNextPage: Scalars['Boolean'];
+  readonly hasPreviousPage: Scalars['Boolean'];
+};
+
+export type PaginationInput = {
+  readonly first: Maybe<Scalars['Int']>;
+  readonly last: Maybe<Scalars['Int']>;
+  readonly after: Maybe<Scalars['String']>;
+  readonly before: Maybe<Scalars['String']>;
+};
+
+export type Edge = {
+  readonly cursor: Scalars['String'];
+  readonly node: Node;
+};
+
+export type Node = {
+  readonly id: Scalars['ID'];
+  readonly createdAt: Scalars['DateTime'];
+  readonly updatedAt: Maybe<Scalars['DateTime']>;
+};
+
 export type Mutation = {
-  readonly createUser: Maybe<CreateUserPayload>;
-  readonly createUsers: Maybe<CreateUsersPayload>;
+  readonly createUser: CreateUserPayload;
+  readonly createUsers: CreateUsersPayload;
+  readonly deleteUser: DeleteUserPayload;
 };
 
 
@@ -46,36 +102,9 @@ export type MutationCreateUsersArgs = {
   input: ReadonlyArray<CreateUserInput>;
 };
 
-export type CreateUserInput = {
-  /** 名前 */
-  readonly name: Scalars['String'];
-  /** 年齢 */
-  readonly age: Scalars['Int'];
-  /** 血液型 */
-  readonly blood: Blood;
-};
 
-export type CreateUserPayload = {
-  readonly user: Maybe<User>;
-};
-
-export type CreateUsersPayload = {
-  readonly users: Maybe<ReadonlyArray<Maybe<User>>>;
-};
-
-export type Query = {
-  readonly users: Maybe<UserConnection>;
-  readonly user: Maybe<User>;
-};
-
-
-export type QueryUsersArgs = {
-  page: PaginationInput;
-};
-
-
-export type QueryUserArgs = {
-  id: Scalars['ID'];
+export type MutationDeleteUserArgs = {
+  input: DeleteUserInput;
 };
 
 export type UserConnectionEdge = Edge & {
@@ -106,31 +135,30 @@ export type User = Node & {
   readonly birthDay: Maybe<Scalars['Date']>;
 };
 
-
-
-export type PageInfo = {
-  readonly startCursor: Scalars['String'];
-  readonly endCursor: Scalars['String'];
-  readonly hasNextPage: Scalars['Boolean'];
-  readonly hasPreviousPage: Scalars['Boolean'];
+export type CreateUserInput = {
+  /** 名前 */
+  readonly name: Scalars['String'];
+  /** 年齢 */
+  readonly age: Scalars['Int'];
+  /** 血液型 */
+  readonly blood: Blood;
 };
 
-export type PaginationInput = {
-  readonly first: Maybe<Scalars['Int']>;
-  readonly last: Maybe<Scalars['Int']>;
-  readonly after: Maybe<Scalars['String']>;
-  readonly before: Maybe<Scalars['String']>;
+export type CreateUserPayload = {
+  readonly user: Maybe<User>;
 };
 
-export type Edge = {
-  readonly cursor: Scalars['String'];
-  readonly node: Node;
+export type CreateUsersPayload = {
+  readonly users: Maybe<ReadonlyArray<Maybe<User>>>;
 };
 
-export type Node = {
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt: Maybe<Scalars['DateTime']>;
+export type DeleteUserInput = {
+  readonly userID: Scalars['ID'];
+};
+
+export type DeleteUserPayload = {
+  readonly DeletedUserID: Scalars['ID'];
+  readonly user: Maybe<User>;
 };
 
 export type CreateUserMutationVariables = Exact<{
@@ -138,7 +166,7 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { readonly createUser: Maybe<{ readonly user: Maybe<Pick<User, 'id' | 'name'>> }> };
+export type CreateUserMutation = { readonly createUser: { readonly user: Maybe<Pick<User, 'id' | 'name'>> } };
 
 export type UserQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -149,13 +177,14 @@ export type UserQuery = { readonly user: Maybe<Pick<User, 'name'>> };
 
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
+  ids: ReadonlyArray<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
-export type UsersQuery = { readonly users: Maybe<(
+export type UsersQuery = { readonly users: (
     Pick<UserConnection, 'totalCount'>
     & { readonly edges: Maybe<ReadonlyArray<Maybe<{ readonly node: Pick<User, 'id'> }>>> }
-  )> };
+  ) };
 
 
 export const CreateUserDocument = gql`
@@ -180,8 +209,8 @@ export const UserDocument = gql`
     `;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export const UsersDocument = gql`
-    query Users($page: PaginationInput!) {
-  users(page: $page) {
+    query Users($page: PaginationInput!, $ids: [ID!]!) {
+  users(page: $page, ids: $ids) {
     totalCount
     edges {
       node {

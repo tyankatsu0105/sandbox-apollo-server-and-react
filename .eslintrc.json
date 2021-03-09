@@ -30,6 +30,18 @@
       "rules": {}
     },
     {
+      "files": ["*.graphql"],
+      "parser": "@graphql-eslint/eslint-plugin",
+      "plugins": ["@graphql-eslint"],
+      "parserOptions": {
+        "operations": ["./apps/graphql/**/*.graphql"],
+        "schema": "./apps/schema/schema.graphql"
+      },
+      "rules": {
+        "@graphql-eslint/no-unreachable-types": ["error"]
+      }
+    },
+    {
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}

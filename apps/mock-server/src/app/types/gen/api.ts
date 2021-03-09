@@ -31,10 +31,68 @@ export const Blood = {
 } as const;
 
 export type Blood = typeof Blood[keyof typeof Blood];
+
+
+export type Query = {
+  readonly __typename: 'Query';
+  readonly node: Maybe<Node>;
+  readonly nodes: ReadonlyArray<Maybe<Node>>;
+  readonly user: Maybe<User>;
+  readonly users: UserConnection;
+};
+
+
+export type QueryNodeArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryNodesArgs = {
+  ids: ReadonlyArray<Scalars['ID']>;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryUsersArgs = {
+  page: PaginationInput;
+  ids: ReadonlyArray<Scalars['ID']>;
+};
+
+export type PageInfo = {
+  readonly __typename: 'PageInfo';
+  readonly startCursor: Scalars['String'];
+  readonly endCursor: Scalars['String'];
+  readonly hasNextPage: Scalars['Boolean'];
+  readonly hasPreviousPage: Scalars['Boolean'];
+};
+
+export type PaginationInput = {
+  readonly first: Maybe<Scalars['Int']>;
+  readonly last: Maybe<Scalars['Int']>;
+  readonly after: Maybe<Scalars['String']>;
+  readonly before: Maybe<Scalars['String']>;
+};
+
+export type Edge = {
+  readonly cursor: Scalars['String'];
+  readonly node: Node;
+};
+
+export type Node = {
+  readonly id: Scalars['ID'];
+  readonly createdAt: Scalars['DateTime'];
+  readonly updatedAt: Maybe<Scalars['DateTime']>;
+};
+
 export type Mutation = {
   readonly __typename: 'Mutation';
-  readonly createUser: Maybe<CreateUserPayload>;
-  readonly createUsers: Maybe<CreateUsersPayload>;
+  readonly createUser: CreateUserPayload;
+  readonly createUsers: CreateUsersPayload;
+  readonly deleteUser: DeleteUserPayload;
 };
 
 
@@ -47,39 +105,9 @@ export type MutationCreateUsersArgs = {
   input: ReadonlyArray<CreateUserInput>;
 };
 
-export type CreateUserInput = {
-  /** 名前 */
-  readonly name: Scalars['String'];
-  /** 年齢 */
-  readonly age: Scalars['Int'];
-  /** 血液型 */
-  readonly blood: Blood;
-};
 
-export type CreateUserPayload = {
-  readonly __typename: 'CreateUserPayload';
-  readonly user: Maybe<User>;
-};
-
-export type CreateUsersPayload = {
-  readonly __typename: 'CreateUsersPayload';
-  readonly users: Maybe<ReadonlyArray<Maybe<User>>>;
-};
-
-export type Query = {
-  readonly __typename: 'Query';
-  readonly users: Maybe<UserConnection>;
-  readonly user: Maybe<User>;
-};
-
-
-export type QueryUsersArgs = {
-  page: PaginationInput;
-};
-
-
-export type QueryUserArgs = {
-  id: Scalars['ID'];
+export type MutationDeleteUserArgs = {
+  input: DeleteUserInput;
 };
 
 export type UserConnectionEdge = Edge & {
@@ -113,32 +141,33 @@ export type User = Node & {
   readonly birthDay: Maybe<Scalars['Date']>;
 };
 
-
-
-export type PageInfo = {
-  readonly __typename: 'PageInfo';
-  readonly startCursor: Scalars['String'];
-  readonly endCursor: Scalars['String'];
-  readonly hasNextPage: Scalars['Boolean'];
-  readonly hasPreviousPage: Scalars['Boolean'];
+export type CreateUserInput = {
+  /** 名前 */
+  readonly name: Scalars['String'];
+  /** 年齢 */
+  readonly age: Scalars['Int'];
+  /** 血液型 */
+  readonly blood: Blood;
 };
 
-export type PaginationInput = {
-  readonly first: Maybe<Scalars['Int']>;
-  readonly last: Maybe<Scalars['Int']>;
-  readonly after: Maybe<Scalars['String']>;
-  readonly before: Maybe<Scalars['String']>;
+export type CreateUserPayload = {
+  readonly __typename: 'CreateUserPayload';
+  readonly user: Maybe<User>;
 };
 
-export type Edge = {
-  readonly cursor: Scalars['String'];
-  readonly node: Node;
+export type CreateUsersPayload = {
+  readonly __typename: 'CreateUsersPayload';
+  readonly users: Maybe<ReadonlyArray<Maybe<User>>>;
 };
 
-export type Node = {
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt: Maybe<Scalars['DateTime']>;
+export type DeleteUserInput = {
+  readonly userID: Scalars['ID'];
+};
+
+export type DeleteUserPayload = {
+  readonly __typename: 'DeleteUserPayload';
+  readonly DeletedUserID: Scalars['ID'];
+  readonly user: Maybe<User>;
 };
 
 export type CreateUserMutationVariables = Exact<{
@@ -148,13 +177,13 @@ export type CreateUserMutationVariables = Exact<{
 
 export type CreateUserMutation = (
   { readonly __typename: 'Mutation' }
-  & { readonly createUser: Maybe<(
+  & { readonly createUser: (
     { readonly __typename: 'CreateUserPayload' }
     & { readonly user: Maybe<(
       { readonly __typename: 'User' }
       & Pick<User, 'id' | 'name'>
     )> }
-  )> }
+  ) }
 );
 
 export type UserQueryVariables = Exact<{
@@ -172,12 +201,13 @@ export type UserQuery = (
 
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
+  ids: ReadonlyArray<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
 export type UsersQuery = (
   { readonly __typename: 'Query' }
-  & { readonly users: Maybe<(
+  & { readonly users: (
     { readonly __typename: 'UserConnection' }
     & Pick<UserConnection, 'totalCount'>
     & { readonly edges: Maybe<ReadonlyArray<Maybe<(
@@ -187,7 +217,7 @@ export type UsersQuery = (
         & Pick<User, 'id'>
       ) }
     )>>> }
-  )> }
+  ) }
 );
 
 
@@ -269,66 +299,92 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Blood: Blood;
-  Mutation: ResolverTypeWrapper<{}>;
-  CreateUserInput: CreateUserInput;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
-  CreateUserPayload: ResolverTypeWrapper<CreateUserPayload>;
-  CreateUsersPayload: ResolverTypeWrapper<CreateUsersPayload>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
   Query: ResolverTypeWrapper<{}>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  PageInfo: ResolverTypeWrapper<PageInfo>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  PaginationInput: PaginationInput;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  Edge: ResolversTypes['UserConnectionEdge'];
+  Node: ResolversTypes['User'];
+  Mutation: ResolverTypeWrapper<{}>;
   UserConnectionEdge: ResolverTypeWrapper<UserConnectionEdge>;
   UserConnection: ResolverTypeWrapper<UserConnection>;
   User: ResolverTypeWrapper<User>;
-  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
-  Date: ResolverTypeWrapper<Scalars['Date']>;
-  PageInfo: ResolverTypeWrapper<PageInfo>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  PaginationInput: PaginationInput;
-  Edge: ResolversTypes['UserConnectionEdge'];
-  Node: ResolversTypes['User'];
+  CreateUserInput: CreateUserInput;
+  CreateUserPayload: ResolverTypeWrapper<CreateUserPayload>;
+  CreateUsersPayload: ResolverTypeWrapper<CreateUsersPayload>;
+  DeleteUserInput: DeleteUserInput;
+  DeleteUserPayload: ResolverTypeWrapper<DeleteUserPayload>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Mutation: {};
-  CreateUserInput: CreateUserInput;
-  String: Scalars['String'];
-  Int: Scalars['Int'];
-  CreateUserPayload: CreateUserPayload;
-  CreateUsersPayload: CreateUsersPayload;
+  DateTime: Scalars['DateTime'];
+  Date: Scalars['Date'];
   Query: {};
   ID: Scalars['ID'];
+  PageInfo: PageInfo;
+  String: Scalars['String'];
+  Boolean: Scalars['Boolean'];
+  PaginationInput: PaginationInput;
+  Int: Scalars['Int'];
+  Edge: ResolversParentTypes['UserConnectionEdge'];
+  Node: ResolversParentTypes['User'];
+  Mutation: {};
   UserConnectionEdge: UserConnectionEdge;
   UserConnection: UserConnection;
   User: User;
-  DateTime: Scalars['DateTime'];
-  Date: Scalars['Date'];
-  PageInfo: PageInfo;
-  Boolean: Scalars['Boolean'];
-  PaginationInput: PaginationInput;
-  Edge: ResolversParentTypes['UserConnectionEdge'];
-  Node: ResolversParentTypes['User'];
+  CreateUserInput: CreateUserInput;
+  CreateUserPayload: CreateUserPayload;
+  CreateUsersPayload: CreateUsersPayload;
+  DeleteUserInput: DeleteUserInput;
+  DeleteUserPayload: DeleteUserPayload;
+};
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
+
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  node: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id'>>;
+  nodes: Resolver<ReadonlyArray<Maybe<ResolversTypes['Node']>>, ParentType, ContextType, RequireFields<QueryNodesArgs, 'ids'>>;
+  user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  users: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersArgs, 'page' | 'ids'>>;
+};
+
+export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
+  startCursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  endCursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  hasNextPage: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  hasPreviousPage: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type EdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Edge'] = ResolversParentTypes['Edge']> = {
+  __resolveType: TypeResolveFn<'UserConnectionEdge', ParentType, ContextType>;
+  cursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node: Resolver<ResolversTypes['Node'], ParentType, ContextType>;
+};
+
+export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
+  __resolveType: TypeResolveFn<'User', ParentType, ContextType>;
+  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  createdAt: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedAt: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createUser: Resolver<Maybe<ResolversTypes['CreateUserPayload']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
-  createUsers: Resolver<Maybe<ResolversTypes['CreateUsersPayload']>, ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'input'>>;
-};
-
-export type CreateUserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUserPayload'] = ResolversParentTypes['CreateUserPayload']> = {
-  user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type CreateUsersPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUsersPayload'] = ResolversParentTypes['CreateUsersPayload']> = {
-  users: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  users: Resolver<Maybe<ResolversTypes['UserConnection']>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'page'>>;
-  user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  createUser: Resolver<ResolversTypes['CreateUserPayload'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
+  createUsers: Resolver<ResolversTypes['CreateUsersPayload'], ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'input'>>;
+  deleteUser: Resolver<ResolversTypes['DeleteUserPayload'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'input'>>;
 };
 
 export type UserConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnectionEdge'] = ResolversParentTypes['UserConnectionEdge']> = {
@@ -357,48 +413,36 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
-  name: 'DateTime';
-}
-
-export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
-  name: 'Date';
-}
-
-export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
-  startCursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  endCursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  hasNextPage: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  hasPreviousPage: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+export type CreateUserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUserPayload'] = ResolversParentTypes['CreateUserPayload']> = {
+  user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type EdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Edge'] = ResolversParentTypes['Edge']> = {
-  __resolveType: TypeResolveFn<'UserConnectionEdge', ParentType, ContextType>;
-  cursor: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  node: Resolver<ResolversTypes['Node'], ParentType, ContextType>;
+export type CreateUsersPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUsersPayload'] = ResolversParentTypes['CreateUsersPayload']> = {
+  users: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
-  __resolveType: TypeResolveFn<'User', ParentType, ContextType>;
-  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  createdAt: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  updatedAt: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+export type DeleteUserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteUserPayload'] = ResolversParentTypes['DeleteUserPayload']> = {
+  DeletedUserID: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
-  Mutation: MutationResolvers<ContextType>;
-  CreateUserPayload: CreateUserPayloadResolvers<ContextType>;
-  CreateUsersPayload: CreateUsersPayloadResolvers<ContextType>;
-  Query: QueryResolvers<ContextType>;
-  UserConnectionEdge: UserConnectionEdgeResolvers<ContextType>;
-  UserConnection: UserConnectionResolvers<ContextType>;
-  User: UserResolvers<ContextType>;
   DateTime: GraphQLScalarType;
   Date: GraphQLScalarType;
+  Query: QueryResolvers<ContextType>;
   PageInfo: PageInfoResolvers<ContextType>;
   Edge: EdgeResolvers<ContextType>;
   Node: NodeResolvers<ContextType>;
+  Mutation: MutationResolvers<ContextType>;
+  UserConnectionEdge: UserConnectionEdgeResolvers<ContextType>;
+  UserConnection: UserConnectionResolvers<ContextType>;
+  User: UserResolvers<ContextType>;
+  CreateUserPayload: CreateUserPayloadResolvers<ContextType>;
+  CreateUsersPayload: CreateUsersPayloadResolvers<ContextType>;
+  DeleteUserPayload: DeleteUserPayloadResolvers<ContextType>;
 };
 
 

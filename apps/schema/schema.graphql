@@ -3,6 +3,11 @@ schema {
   mutation: Mutation
 }
 
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]!
+}
+
 type PageInfo {
   startCursor: String!
   endCursor: String!

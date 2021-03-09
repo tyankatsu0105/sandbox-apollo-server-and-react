@@ -1,0 +1,64 @@
+extend type Query {
+  users(page: PaginationInput!, ids: [ID!]!): UserConnection!
+  user(id: ID!): User
+}
+
+extend type Mutation {
+  createUser(input: CreateUserInput!): CreateUserPayload!
+  createUsers(input: [CreateUserInput!]!): CreateUsersPayload!
+  deleteUser(input: DeleteUserInput!): DeleteUserPayload!
+}
+
+type UserConnectionEdge implements Edge {
+  cursor: String!
+  node: User!
+}
+
+type UserConnection {
+  edges: [UserConnectionEdge]
+  nodes: [User]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type User implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  "名前"
+  name: String!
+  "年齢"
+  age: Int!
+  "血液型"
+  blood: Blood!
+  "出身国"
+  country: String
+  "誕生日"
+  birthDay: Date
+}
+
+input CreateUserInput {
+  "名前"
+  name: String!
+  "年齢"
+  age: Int!
+  "血液型"
+  blood: Blood!
+}
+
+type CreateUserPayload {
+  user: User
+}
+
+type CreateUsersPayload {
+  users: [User]
+}
+
+input DeleteUserInput {
+  userID: ID!
+}
+
+type DeleteUserPayload {
+  DeletedUserID: ID!
+  user: User
+}
