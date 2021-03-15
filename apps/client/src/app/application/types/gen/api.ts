@@ -58,8 +58,8 @@ export type QueryUserArgs = {
 
 
 export type QueryUsersArgs = {
-  page: PaginationInput;
-  ids: ReadonlyArray<Scalars['ID']>;
+  page: Maybe<PaginationInput>;
+  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
 
 export type PageInfo = {

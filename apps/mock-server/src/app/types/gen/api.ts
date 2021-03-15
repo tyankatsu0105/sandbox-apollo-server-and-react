@@ -59,8 +59,8 @@ export type QueryUserArgs = {
 
 
 export type QueryUsersArgs = {
-  page: PaginationInput;
-  ids: ReadonlyArray<Scalars['ID']>;
+  page: Maybe<PaginationInput>;
+  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
 
 export type PageInfo = {
@@ -358,7 +358,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   node: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id'>>;
   nodes: Resolver<ReadonlyArray<Maybe<ResolversTypes['Node']>>, ParentType, ContextType, RequireFields<QueryNodesArgs, 'ids'>>;
   user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
-  users: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersArgs, 'page' | 'ids'>>;
+  users: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersArgs, never>>;
 };
 
 export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {

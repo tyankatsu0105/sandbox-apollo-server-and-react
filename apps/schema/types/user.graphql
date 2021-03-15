@@ -1,5 +1,5 @@
 extend type Query {
-  users(page: PaginationInput!, ids: [ID!]!): UserConnection!
+  users(page: PaginationInput, ids: [ID!]): UserConnection!
   user(id: ID!): User
 }
 
