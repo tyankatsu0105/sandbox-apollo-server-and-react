@@ -1,5 +1,5 @@
 import * as GraphQLTypes from '../types/gen/api';
-import Faker from '../util/faker';
+import Faker from '../shared/modules/faker';
 
 export const users: GraphQLTypes.User[] = Array.from(new Array(1000)).map(
   () => ({

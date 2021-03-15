@@ -23,6 +23,7 @@ export type Scalars = {
   Date: string;
 };
 
+/** 血液型 */
 export const Blood = {
   A: 'A',
   B: 'B',
