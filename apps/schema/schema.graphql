@@ -13,23 +13,9 @@ type Mutation {
   noop(input: NoopInput): NoopPayload
 }
 
-type PageInfo {
-  startCursor: String
-  endCursor: String
-  hasNextPage: Boolean
-  hasPreviousPage: Boolean
-}
-
 input PaginationInput {
-  first: Int
-  last: Int
-  after: String
-  before: String
-}
-
-interface Edge {
-  cursor: String!
-  node: Node!
+  offset: Int
+  limit: Int
 }
 
 interface Node {

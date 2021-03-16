@@ -38,7 +38,7 @@ export type Query = {
   readonly node?: Maybe<Node>;
   readonly nodes: ReadonlyArray<Maybe<Node>>;
   readonly user?: Maybe<User>;
-  readonly users: UserConnection;
+  readonly users?: Maybe<ReadonlyArray<Maybe<User>>>;
 };
 
 
@@ -90,23 +90,9 @@ export type MutationNoopArgs = {
   input?: Maybe<NoopInput>;
 };
 
-export type PageInfo = {
-  readonly startCursor?: Maybe<Scalars['String']>;
-  readonly endCursor?: Maybe<Scalars['String']>;
-  readonly hasNextPage?: Maybe<Scalars['Boolean']>;
-  readonly hasPreviousPage?: Maybe<Scalars['Boolean']>;
-};
-
 export type PaginationInput = {
-  readonly first?: Maybe<Scalars['Int']>;
-  readonly last?: Maybe<Scalars['Int']>;
-  readonly after?: Maybe<Scalars['String']>;
-  readonly before?: Maybe<Scalars['String']>;
-};
-
-export type Edge = {
-  readonly cursor: Scalars['String'];
-  readonly node: Node;
+  readonly offset?: Maybe<Scalars['Int']>;
+  readonly limit?: Maybe<Scalars['Int']>;
 };
 
 export type Node = {
@@ -121,18 +107,6 @@ export type NoopInput = {
 
 export type NoopPayload = {
   readonly clientMutationId?: Maybe<Scalars['String']>;
-};
-
-export type UserConnectionEdge = Edge & {
-  readonly cursor: Scalars['String'];
-  readonly node: User;
-};
-
-export type UserConnection = {
-  readonly edges?: Maybe<ReadonlyArray<Maybe<UserConnectionEdge>>>;
-  readonly nodes?: Maybe<ReadonlyArray<Maybe<User>>>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
 };
 
 export type User = Node & {
@@ -189,7 +163,7 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { readonly node?: Maybe<Pick<User, 'name'>>, readonly user?: Maybe<Pick<User, 'name'>> };
+export type UserQuery = { readonly node?: Maybe<Pick<User, 'name'>> };
 
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
@@ -197,10 +171,7 @@ export type UsersQueryVariables = Exact<{
 }>;
 
 
-export type UsersQuery = { readonly users: (
-    Pick<UserConnection, 'totalCount'>
-    & { readonly edges?: Maybe<ReadonlyArray<Maybe<{ readonly node: Pick<User, 'id'> }>>> }
-  ) };
+export type UsersQuery = { readonly users?: Maybe<ReadonlyArray<Maybe<Pick<User, 'id'>>>> };
 
 
 export const CreateUserDocument = gql`
@@ -223,21 +194,13 @@ export const UserDocument = gql`
       name
     }
   }
-  user(id: $id) {
-    name
-  }
 }
     `;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export const UsersDocument = gql`
     query Users($page: PaginationInput!, $ids: [ID!]!) {
   users(page: $page, ids: $ids) {
-    totalCount
-    edges {
-      node {
-        id
-      }
-    }
+    id
   }
 }
     `;

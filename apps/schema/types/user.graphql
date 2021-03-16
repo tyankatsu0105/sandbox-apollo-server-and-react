@@ -1,5 +1,5 @@
 extend type Query {
-  users(page: PaginationInput, ids: [ID!]): UserConnection!
+  users(page: PaginationInput, ids: [ID!]): [User]
   user(id: ID!): User
 }
 
@@ -7,18 +7,6 @@ extend type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayload!
   createUsers(input: [CreateUserInput!]!): CreateUsersPayload!
   deleteUser(input: DeleteUserInput!): DeleteUserPayload!
-}
-
-type UserConnectionEdge implements Edge {
-  cursor: String!
-  node: User!
-}
-
-type UserConnection {
-  edges: [UserConnectionEdge]
-  nodes: [User]
-  pageInfo: PageInfo!
-  totalCount: Int!
 }
 
 type User implements Node {

@@ -39,7 +39,7 @@ export type Query = {
   readonly node?: Maybe<Node>;
   readonly nodes: ReadonlyArray<Maybe<Node>>;
   readonly user?: Maybe<User>;
-  readonly users: UserConnection;
+  readonly users?: Maybe<ReadonlyArray<Maybe<User>>>;
 };
 
 
@@ -92,24 +92,9 @@ export type MutationNoopArgs = {
   input?: Maybe<NoopInput>;
 };
 
-export type PageInfo = {
-  readonly __typename?: 'PageInfo';
-  readonly startCursor?: Maybe<Scalars['String']>;
-  readonly endCursor?: Maybe<Scalars['String']>;
-  readonly hasNextPage?: Maybe<Scalars['Boolean']>;
-  readonly hasPreviousPage?: Maybe<Scalars['Boolean']>;
-};
-
 export type PaginationInput = {
-  readonly first?: Maybe<Scalars['Int']>;
-  readonly last?: Maybe<Scalars['Int']>;
-  readonly after?: Maybe<Scalars['String']>;
-  readonly before?: Maybe<Scalars['String']>;
-};
-
-export type Edge = {
-  readonly cursor: Scalars['String'];
-  readonly node: Node;
+  readonly offset?: Maybe<Scalars['Int']>;
+  readonly limit?: Maybe<Scalars['Int']>;
 };
 
 export type Node = {
@@ -125,20 +110,6 @@ export type NoopInput = {
 export type NoopPayload = {
   readonly __typename?: 'NoopPayload';
   readonly clientMutationId?: Maybe<Scalars['String']>;
-};
-
-export type UserConnectionEdge = Edge & {
-  readonly __typename?: 'UserConnectionEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: User;
-};
-
-export type UserConnection = {
-  readonly __typename?: 'UserConnection';
-  readonly edges?: Maybe<ReadonlyArray<Maybe<UserConnectionEdge>>>;
-  readonly nodes?: Maybe<ReadonlyArray<Maybe<User>>>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
 };
 
 export type User = Node & {
@@ -213,9 +184,6 @@ export type UserQuery = (
   & { readonly node?: Maybe<(
     { readonly __typename?: 'User' }
     & Pick<User, 'name'>
-  )>, readonly user?: Maybe<(
-    { readonly __typename?: 'User' }
-    & Pick<User, 'name'>
   )> }
 );
 
@@ -227,17 +195,10 @@ export type UsersQueryVariables = Exact<{
 
 export type UsersQuery = (
   { readonly __typename?: 'Query' }
-  & { readonly users: (
-    { readonly __typename?: 'UserConnection' }
-    & Pick<UserConnection, 'totalCount'>
-    & { readonly edges?: Maybe<ReadonlyArray<Maybe<(
-      { readonly __typename?: 'UserConnectionEdge' }
-      & { readonly node: (
-        { readonly __typename?: 'User' }
-        & Pick<User, 'id'>
-      ) }
-    )>>> }
-  ) }
+  & { readonly users?: Maybe<ReadonlyArray<Maybe<(
+    { readonly __typename?: 'User' }
+    & Pick<User, 'id'>
+  )>>> }
 );
 
 
@@ -324,23 +285,19 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Mutation: ResolverTypeWrapper<{}>;
-  PageInfo: ResolverTypeWrapper<PageInfo>;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   PaginationInput: PaginationInput;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  Edge: ResolversTypes['UserConnectionEdge'];
   Node: ResolversTypes['User'];
   NoopInput: NoopInput;
+  String: ResolverTypeWrapper<Scalars['String']>;
   NoopPayload: ResolverTypeWrapper<NoopPayload>;
-  UserConnectionEdge: ResolverTypeWrapper<UserConnectionEdge>;
-  UserConnection: ResolverTypeWrapper<UserConnection>;
   User: ResolverTypeWrapper<User>;
   CreateUserInput: CreateUserInput;
   CreateUserPayload: ResolverTypeWrapper<CreateUserPayload>;
   CreateUsersPayload: ResolverTypeWrapper<CreateUsersPayload>;
   DeleteUserInput: DeleteUserInput;
   DeleteUserPayload: ResolverTypeWrapper<DeleteUserPayload>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -350,23 +307,19 @@ export type ResolversParentTypes = {
   Query: {};
   ID: Scalars['ID'];
   Mutation: {};
-  PageInfo: PageInfo;
-  String: Scalars['String'];
-  Boolean: Scalars['Boolean'];
   PaginationInput: PaginationInput;
   Int: Scalars['Int'];
-  Edge: ResolversParentTypes['UserConnectionEdge'];
   Node: ResolversParentTypes['User'];
   NoopInput: NoopInput;
+  String: Scalars['String'];
   NoopPayload: NoopPayload;
-  UserConnectionEdge: UserConnectionEdge;
-  UserConnection: UserConnection;
   User: User;
   CreateUserInput: CreateUserInput;
   CreateUserPayload: CreateUserPayload;
   CreateUsersPayload: CreateUsersPayload;
   DeleteUserInput: DeleteUserInput;
   DeleteUserPayload: DeleteUserPayload;
+  Boolean: Scalars['Boolean'];
 };
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
@@ -381,7 +334,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id'>>;
   nodes?: Resolver<ReadonlyArray<Maybe<ResolversTypes['Node']>>, ParentType, ContextType, RequireFields<QueryNodesArgs, 'ids'>>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
-  users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersArgs, never>>;
+  users?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['User']>>>, ParentType, ContextType, RequireFields<QueryUsersArgs, never>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -389,20 +342,6 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createUsers?: Resolver<ResolversTypes['CreateUsersPayload'], ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'input'>>;
   deleteUser?: Resolver<ResolversTypes['DeleteUserPayload'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'input'>>;
   noop?: Resolver<Maybe<ResolversTypes['NoopPayload']>, ParentType, ContextType, RequireFields<MutationNoopArgs, never>>;
-};
-
-export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
-  startCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  hasNextPage?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  hasPreviousPage?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type EdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Edge'] = ResolversParentTypes['Edge']> = {
-  __resolveType: TypeResolveFn<'UserConnectionEdge', ParentType, ContextType>;
-  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  node?: Resolver<ResolversTypes['Node'], ParentType, ContextType>;
 };
 
 export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
@@ -414,20 +353,6 @@ export type NodeResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type NoopPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['NoopPayload'] = ResolversParentTypes['NoopPayload']> = {
   clientMutationId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type UserConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnectionEdge'] = ResolversParentTypes['UserConnectionEdge']> = {
-  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  node?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type UserConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection']> = {
-  edges?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['UserConnectionEdge']>>>, ParentType, ContextType>;
-  nodes?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
-  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
-  totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -464,12 +389,8 @@ export type Resolvers<ContextType = any> = {
   Date?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
-  PageInfo?: PageInfoResolvers<ContextType>;
-  Edge?: EdgeResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   NoopPayload?: NoopPayloadResolvers<ContextType>;
-  UserConnectionEdge?: UserConnectionEdgeResolvers<ContextType>;
-  UserConnection?: UserConnectionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   CreateUserPayload?: CreateUserPayloadResolvers<ContextType>;
   CreateUsersPayload?: CreateUsersPayloadResolvers<ContextType>;
