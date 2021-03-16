@@ -2,7 +2,7 @@ import * as GraphQLTypes from '../types/gen/api';
 import Faker from '../shared/modules/faker';
 import * as Utilities from '../shared/utilities';
 
-export const user = (): GraphQLTypes.User => ({
+const user = (): GraphQLTypes.User => ({
   __typename: 'User',
   id: Faker.random.uuid(),
   name: Faker.name.firstName(),

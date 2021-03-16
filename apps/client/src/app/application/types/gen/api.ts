@@ -35,9 +35,9 @@ export type Blood = typeof Blood[keyof typeof Blood];
 
 
 export type Query = {
-  readonly node: Maybe<Node>;
+  readonly node?: Maybe<Node>;
   readonly nodes: ReadonlyArray<Maybe<Node>>;
-  readonly user: Maybe<User>;
+  readonly user?: Maybe<User>;
   readonly users: UserConnection;
 };
 
@@ -58,22 +58,22 @@ export type QueryUserArgs = {
 
 
 export type QueryUsersArgs = {
-  page: Maybe<PaginationInput>;
-  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
+  page?: Maybe<PaginationInput>;
+  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
 
 export type PageInfo = {
-  readonly startCursor: Scalars['String'];
-  readonly endCursor: Scalars['String'];
-  readonly hasNextPage: Scalars['Boolean'];
-  readonly hasPreviousPage: Scalars['Boolean'];
+  readonly startCursor?: Maybe<Scalars['String']>;
+  readonly endCursor?: Maybe<Scalars['String']>;
+  readonly hasNextPage?: Maybe<Scalars['Boolean']>;
+  readonly hasPreviousPage?: Maybe<Scalars['Boolean']>;
 };
 
 export type PaginationInput = {
-  readonly first: Maybe<Scalars['Int']>;
-  readonly last: Maybe<Scalars['Int']>;
-  readonly after: Maybe<Scalars['String']>;
-  readonly before: Maybe<Scalars['String']>;
+  readonly first?: Maybe<Scalars['Int']>;
+  readonly last?: Maybe<Scalars['Int']>;
+  readonly after?: Maybe<Scalars['String']>;
+  readonly before?: Maybe<Scalars['String']>;
 };
 
 export type Edge = {
@@ -84,7 +84,7 @@ export type Edge = {
 export type Node = {
   readonly id: Scalars['ID'];
   readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt: Maybe<Scalars['DateTime']>;
+  readonly updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type Mutation = {
@@ -114,8 +114,8 @@ export type UserConnectionEdge = Edge & {
 };
 
 export type UserConnection = {
-  readonly edges: Maybe<ReadonlyArray<Maybe<UserConnectionEdge>>>;
-  readonly nodes: Maybe<ReadonlyArray<Maybe<User>>>;
+  readonly edges?: Maybe<ReadonlyArray<Maybe<UserConnectionEdge>>>;
+  readonly nodes?: Maybe<ReadonlyArray<Maybe<User>>>;
   readonly pageInfo: PageInfo;
   readonly totalCount: Scalars['Int'];
 };
@@ -123,7 +123,7 @@ export type UserConnection = {
 export type User = Node & {
   readonly id: Scalars['ID'];
   readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt: Maybe<Scalars['DateTime']>;
+  readonly updatedAt?: Maybe<Scalars['DateTime']>;
   /** 名前 */
   readonly name: Scalars['String'];
   /** 年齢 */
@@ -131,9 +131,9 @@ export type User = Node & {
   /** 血液型 */
   readonly blood: Blood;
   /** 出身国 */
-  readonly country: Maybe<Scalars['String']>;
+  readonly country?: Maybe<Scalars['String']>;
   /** 誕生日 */
-  readonly birthDay: Maybe<Scalars['Date']>;
+  readonly birthDay?: Maybe<Scalars['Date']>;
 };
 
 export type CreateUserInput = {
@@ -146,11 +146,11 @@ export type CreateUserInput = {
 };
 
 export type CreateUserPayload = {
-  readonly user: Maybe<User>;
+  readonly user?: Maybe<User>;
 };
 
 export type CreateUsersPayload = {
-  readonly users: Maybe<ReadonlyArray<Maybe<User>>>;
+  readonly users?: Maybe<ReadonlyArray<Maybe<User>>>;
 };
 
 export type DeleteUserInput = {
@@ -159,7 +159,7 @@ export type DeleteUserInput = {
 
 export type DeleteUserPayload = {
   readonly DeletedUserID: Scalars['ID'];
-  readonly user: Maybe<User>;
+  readonly user?: Maybe<User>;
 };
 
 export type CreateUserMutationVariables = Exact<{
@@ -167,14 +167,14 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { readonly createUser: { readonly user: Maybe<Pick<User, 'id' | 'name'>> } };
+export type CreateUserMutation = { readonly createUser: { readonly user?: Maybe<Pick<User, 'id' | 'name'>> } };
 
 export type UserQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type UserQuery = { readonly user: Maybe<Pick<User, 'name'>> };
+export type UserQuery = { readonly user?: Maybe<Pick<User, 'name'>> };
 
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
@@ -184,7 +184,7 @@ export type UsersQueryVariables = Exact<{
 
 export type UsersQuery = { readonly users: (
     Pick<UserConnection, 'totalCount'>
-    & { readonly edges: Maybe<ReadonlyArray<Maybe<{ readonly node: Pick<User, 'id'> }>>> }
+    & { readonly edges?: Maybe<ReadonlyArray<Maybe<{ readonly node: Pick<User, 'id'> }>>> }
   ) };
 
 

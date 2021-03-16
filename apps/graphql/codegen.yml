@@ -23,11 +23,11 @@ generates:
       - typescript-resolvers
     config:
       # __typenameをoptionalにしない
-      nonOptionalTypename: true
+      # nonOptionalTypename: true
 
 config:
   # optionalにならなくなる
-  avoidOptionals: true
+  # avoidOptionals: true
   # enumの代わりにconst assertionのconstを使う
   enumsAsConst: true
   # readonlyが付く
