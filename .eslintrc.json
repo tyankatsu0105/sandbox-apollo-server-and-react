@@ -38,7 +38,7 @@
         "schema": "./apps/schema/schema.graphql"
       },
       "rules": {
-        "@graphql-eslint/no-unreachable-types": ["error"]
+        // "@graphql-eslint/no-unreachable-types": ["error"]
       }
     },
     {

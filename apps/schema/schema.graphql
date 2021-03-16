@@ -8,6 +8,11 @@ type Query {
   nodes(ids: [ID!]!): [Node]!
 }
 
+type Mutation {
+  "実際に使うことはない extendしてMutationを拡張していくために元のMutationが必要なので作っただけ"
+  noop(input: NoopInput): NoopPayload
+}
+
 type PageInfo {
   startCursor: String
   endCursor: String
@@ -31,4 +36,12 @@ interface Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime
+}
+
+input NoopInput {
+  clientMutationId: String
+}
+
+type NoopPayload {
+  clientMutationId: String
 }

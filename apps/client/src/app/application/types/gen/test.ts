@@ -1,9 +1,7 @@
 import * as Api from './api';
 
-const res: Api.UsersQuery = {
-  users: [
-    {
-      name: '',
-    },
-  ],
+const res: Api.UserQuery = {
+  user: {
+    name,
+  },
 };

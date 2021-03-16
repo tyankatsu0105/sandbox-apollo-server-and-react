@@ -63,6 +63,35 @@ export type QueryUsersArgs = {
   ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
 
+export type Mutation = {
+  readonly __typename?: 'Mutation';
+  readonly createUser: CreateUserPayload;
+  readonly createUsers: CreateUsersPayload;
+  readonly deleteUser: DeleteUserPayload;
+  /** 実際に使うことはない extendしてMutationを拡張していくために元のMutationが必要なので作っただけ */
+  readonly noop?: Maybe<NoopPayload>;
+};
+
+
+export type MutationCreateUserArgs = {
+  input: CreateUserInput;
+};
+
+
+export type MutationCreateUsersArgs = {
+  input: ReadonlyArray<CreateUserInput>;
+};
+
+
+export type MutationDeleteUserArgs = {
+  input: DeleteUserInput;
+};
+
+
+export type MutationNoopArgs = {
+  input?: Maybe<NoopInput>;
+};
+
 export type PageInfo = {
   readonly __typename?: 'PageInfo';
   readonly startCursor?: Maybe<Scalars['String']>;
@@ -89,26 +118,13 @@ export type Node = {
   readonly updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type Mutation = {
-  readonly __typename?: 'Mutation';
-  readonly createUser: CreateUserPayload;
-  readonly createUsers: CreateUsersPayload;
-  readonly deleteUser: DeleteUserPayload;
+export type NoopInput = {
+  readonly clientMutationId?: Maybe<Scalars['String']>;
 };
 
-
-export type MutationCreateUserArgs = {
-  input: CreateUserInput;
-};
-
-
-export type MutationCreateUsersArgs = {
-  input: ReadonlyArray<CreateUserInput>;
-};
-
-
-export type MutationDeleteUserArgs = {
-  input: DeleteUserInput;
+export type NoopPayload = {
+  readonly __typename?: 'NoopPayload';
+  readonly clientMutationId?: Maybe<Scalars['String']>;
 };
 
 export type UserConnectionEdge = Edge & {
@@ -194,7 +210,10 @@ export type UserQueryVariables = Exact<{
 
 export type UserQuery = (
   { readonly __typename?: 'Query' }
-  & { readonly user?: Maybe<(
+  & { readonly node?: Maybe<(
+    { readonly __typename?: 'User' }
+    & Pick<User, 'name'>
+  )>, readonly user?: Maybe<(
     { readonly __typename?: 'User' }
     & Pick<User, 'name'>
   )> }
@@ -304,6 +323,7 @@ export type ResolversTypes = {
   Date: ResolverTypeWrapper<Scalars['Date']>;
   Query: ResolverTypeWrapper<{}>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Mutation: ResolverTypeWrapper<{}>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -311,7 +331,8 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Edge: ResolversTypes['UserConnectionEdge'];
   Node: ResolversTypes['User'];
-  Mutation: ResolverTypeWrapper<{}>;
+  NoopInput: NoopInput;
+  NoopPayload: ResolverTypeWrapper<NoopPayload>;
   UserConnectionEdge: ResolverTypeWrapper<UserConnectionEdge>;
   UserConnection: ResolverTypeWrapper<UserConnection>;
   User: ResolverTypeWrapper<User>;
@@ -328,6 +349,7 @@ export type ResolversParentTypes = {
   Date: Scalars['Date'];
   Query: {};
   ID: Scalars['ID'];
+  Mutation: {};
   PageInfo: PageInfo;
   String: Scalars['String'];
   Boolean: Scalars['Boolean'];
@@ -335,7 +357,8 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Edge: ResolversParentTypes['UserConnectionEdge'];
   Node: ResolversParentTypes['User'];
-  Mutation: {};
+  NoopInput: NoopInput;
+  NoopPayload: NoopPayload;
   UserConnectionEdge: UserConnectionEdge;
   UserConnection: UserConnection;
   User: User;
@@ -361,6 +384,13 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersArgs, never>>;
 };
 
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createUser?: Resolver<ResolversTypes['CreateUserPayload'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
+  createUsers?: Resolver<ResolversTypes['CreateUsersPayload'], ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'input'>>;
+  deleteUser?: Resolver<ResolversTypes['DeleteUserPayload'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'input'>>;
+  noop?: Resolver<Maybe<ResolversTypes['NoopPayload']>, ParentType, ContextType, RequireFields<MutationNoopArgs, never>>;
+};
+
 export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
   startCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -382,10 +412,9 @@ export type NodeResolvers<ContextType = any, ParentType extends ResolversParentT
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
 };
 
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createUser?: Resolver<ResolversTypes['CreateUserPayload'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
-  createUsers?: Resolver<ResolversTypes['CreateUsersPayload'], ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'input'>>;
-  deleteUser?: Resolver<ResolversTypes['DeleteUserPayload'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'input'>>;
+export type NoopPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['NoopPayload'] = ResolversParentTypes['NoopPayload']> = {
+  clientMutationId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnectionEdge'] = ResolversParentTypes['UserConnectionEdge']> = {
@@ -434,10 +463,11 @@ export type Resolvers<ContextType = any> = {
   DateTime?: GraphQLScalarType;
   Date?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Edge?: EdgeResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
+  NoopPayload?: NoopPayloadResolvers<ContextType>;
   UserConnectionEdge?: UserConnectionEdgeResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

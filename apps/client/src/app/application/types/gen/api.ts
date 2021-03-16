@@ -62,6 +62,34 @@ export type QueryUsersArgs = {
   ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
 
+export type Mutation = {
+  readonly createUser: CreateUserPayload;
+  readonly createUsers: CreateUsersPayload;
+  readonly deleteUser: DeleteUserPayload;
+  /** 実際に使うことはない extendしてMutationを拡張していくために元のMutationが必要なので作っただけ */
+  readonly noop?: Maybe<NoopPayload>;
+};
+
+
+export type MutationCreateUserArgs = {
+  input: CreateUserInput;
+};
+
+
+export type MutationCreateUsersArgs = {
+  input: ReadonlyArray<CreateUserInput>;
+};
+
+
+export type MutationDeleteUserArgs = {
+  input: DeleteUserInput;
+};
+
+
+export type MutationNoopArgs = {
+  input?: Maybe<NoopInput>;
+};
+
 export type PageInfo = {
   readonly startCursor?: Maybe<Scalars['String']>;
   readonly endCursor?: Maybe<Scalars['String']>;
@@ -87,25 +115,12 @@ export type Node = {
   readonly updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type Mutation = {
-  readonly createUser: CreateUserPayload;
-  readonly createUsers: CreateUsersPayload;
-  readonly deleteUser: DeleteUserPayload;
+export type NoopInput = {
+  readonly clientMutationId?: Maybe<Scalars['String']>;
 };
 
-
-export type MutationCreateUserArgs = {
-  input: CreateUserInput;
-};
-
-
-export type MutationCreateUsersArgs = {
-  input: ReadonlyArray<CreateUserInput>;
-};
-
-
-export type MutationDeleteUserArgs = {
-  input: DeleteUserInput;
+export type NoopPayload = {
+  readonly clientMutationId?: Maybe<Scalars['String']>;
 };
 
 export type UserConnectionEdge = Edge & {
@@ -174,7 +189,7 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { readonly user?: Maybe<Pick<User, 'name'>> };
+export type UserQuery = { readonly node?: Maybe<Pick<User, 'name'>>, readonly user?: Maybe<Pick<User, 'name'>> };
 
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
@@ -203,6 +218,11 @@ export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
 export const UserDocument = gql`
     query User($id: ID!) {
+  node(id: $id) {
+    ... on User {
+      name
+    }
+  }
   user(id: $id) {
     name
   }
