@@ -13,6 +13,7 @@ const book = (): GraphQLTypes.Book => ({
     amount: Number(Faker.finance.amount()),
     symbol: Faker.finance.currencySymbol(),
   },
+  author: `${Faker.name.firstName()} ${Faker.name.middleName()} ${Faker.name.lastName()}`,
   releaseAt: Faker.date.past(1000).toISOString(),
 });
 

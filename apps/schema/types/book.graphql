@@ -21,6 +21,8 @@ type Book implements Node {
   updatedAt: DateTime
   "名前"
   name: String!
+  "著者"
+  author: String!
 
   "金額"
   price: Price!

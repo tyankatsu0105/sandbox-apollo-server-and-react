@@ -1,0 +1,31 @@
+extend type Query {
+  movies(page: PaginationInput, ids: [ID!]): MovieConnection!
+  movie(id: ID!): Movie
+}
+
+type MovieConnectionEdge implements Edge {
+  cursor: String!
+  node: Movie!
+}
+
+type MovieConnection {
+  edges: [MovieConnectionEdge]
+  nodes: [Movie]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type Movie implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  "名前"
+  name: String!
+  "映画監督"
+  director: String!
+
+  "公開日"
+  releaseAt: Date!
+  "公開地域"
+  releaseCountry: [String!]
+}

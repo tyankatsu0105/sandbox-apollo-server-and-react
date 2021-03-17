@@ -73,6 +73,8 @@ export type NoopPayload = {
 export type Query = {
   readonly book?: Maybe<Book>;
   readonly books: BookConnection;
+  readonly movie?: Maybe<Movie>;
+  readonly movies: MovieConnection;
   readonly node?: Maybe<Node>;
   readonly nodes: ReadonlyArray<Maybe<Node>>;
   readonly user?: Maybe<User>;
@@ -86,6 +88,17 @@ export type QueryBookArgs = {
 
 
 export type QueryBooksArgs = {
+  page?: Maybe<PaginationInput>;
+  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+};
+
+
+export type QueryMovieArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryMoviesArgs = {
   page?: Maybe<PaginationInput>;
   ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
@@ -159,10 +172,38 @@ export type Book = Node & {
   readonly updatedAt?: Maybe<Scalars['DateTime']>;
   /** 名前 */
   readonly name: Scalars['String'];
+  /** 著者 */
+  readonly author: Scalars['String'];
   /** 金額 */
   readonly price: Price;
   /** 発売日 */
   readonly releaseAt: Scalars['Date'];
+};
+
+export type MovieConnectionEdge = Edge & {
+  readonly cursor: Scalars['String'];
+  readonly node: Movie;
+};
+
+export type MovieConnection = {
+  readonly edges?: Maybe<ReadonlyArray<Maybe<MovieConnectionEdge>>>;
+  readonly nodes?: Maybe<ReadonlyArray<Maybe<Movie>>>;
+  readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
+};
+
+export type Movie = Node & {
+  readonly id: Scalars['ID'];
+  readonly createdAt: Scalars['DateTime'];
+  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  /** 名前 */
+  readonly name: Scalars['String'];
+  /** 映画監督 */
+  readonly director: Scalars['String'];
+  /** 公開日 */
+  readonly releaseAt: Scalars['Date'];
+  /** 公開地域 */
+  readonly releaseCountry?: Maybe<ReadonlyArray<Scalars['String']>>;
 };
 
 export type UserConnectionEdge = Edge & {
