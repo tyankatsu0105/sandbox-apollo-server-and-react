@@ -1,0 +1,30 @@
+extend type Query {
+  books(page: PaginationInput, ids: [ID!]): BookConnection!
+  book(id: ID!): Book
+}
+
+type BookConnectionEdge implements Edge {
+  cursor: String!
+  node: Book!
+}
+
+type BookConnection {
+  edges: [BookConnectionEdge]
+  nodes: [Book]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type Book implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  "名前"
+  name: String!
+
+  "金額"
+  price: Price!
+
+  "発売日"
+  releaseAt: Date!
+}

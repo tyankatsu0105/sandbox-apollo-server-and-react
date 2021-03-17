@@ -3,14 +3,22 @@ schema {
   mutation: Mutation
 }
 
-type Query {
-  node(id: ID!): Node
-  nodes(ids: [ID!]!): [Node]!
-}
-
 type Mutation {
   "実際に使うことはない extendしてMutationを拡張していくために元のMutationが必要なので作っただけ"
   noop(input: NoopInput): NoopPayload
+}
+
+input NoopInput {
+  clientMutationId: String
+}
+
+type NoopPayload {
+  clientMutationId: String
+}
+
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]!
 }
 
 type PageInfo {
@@ -38,10 +46,7 @@ interface Node {
   updatedAt: DateTime
 }
 
-input NoopInput {
-  clientMutationId: String
-}
-
-type NoopPayload {
-  clientMutationId: String
+type Price {
+  amount: Float!
+  symbol: String!
 }

@@ -1,0 +1,11 @@
+query Books($page: PaginationInput!, $ids: [ID!]!) {
+  books(page: $page, ids: $ids) {
+    totalCount
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}

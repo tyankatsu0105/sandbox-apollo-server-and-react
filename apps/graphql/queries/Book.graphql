@@ -1,6 +1,6 @@
-query User($id: ID!) {
+query Book($id: ID!) {
   node(id: $id) {
-    ... on User {
+    ... on Book {
       id
       name
     }

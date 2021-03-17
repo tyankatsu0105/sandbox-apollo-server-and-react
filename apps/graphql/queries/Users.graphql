@@ -4,6 +4,7 @@ query Users($page: PaginationInput!, $ids: [ID!]!) {
     edges {
       node {
         id
+        name
       }
     }
   }

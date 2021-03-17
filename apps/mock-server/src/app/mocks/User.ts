@@ -19,6 +19,6 @@ const user = (): GraphQLTypes.User => ({
   ]),
 });
 
-export const users: GraphQLTypes.User[] = Utilities.createArray(100).map(() =>
-  user()
-);
+export const users: GraphQLTypes.User[] = Utilities.createArray(
+  Faker.random.number({ min: 200 })
+).map(() => user());

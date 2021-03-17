@@ -34,35 +34,6 @@ export const Blood = {
 export type Blood = typeof Blood[keyof typeof Blood];
 
 
-export type Query = {
-  readonly __typename?: 'Query';
-  readonly node?: Maybe<Node>;
-  readonly nodes: ReadonlyArray<Maybe<Node>>;
-  readonly user?: Maybe<User>;
-  readonly users: UserConnection;
-};
-
-
-export type QueryNodeArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryNodesArgs = {
-  ids: ReadonlyArray<Scalars['ID']>;
-};
-
-
-export type QueryUserArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryUsersArgs = {
-  page?: Maybe<PaginationInput>;
-  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
-};
-
 export type Mutation = {
   readonly __typename?: 'Mutation';
   readonly createUser: CreateUserPayload;
@@ -92,6 +63,57 @@ export type MutationNoopArgs = {
   input?: Maybe<NoopInput>;
 };
 
+export type NoopInput = {
+  readonly clientMutationId?: Maybe<Scalars['String']>;
+};
+
+export type NoopPayload = {
+  readonly __typename?: 'NoopPayload';
+  readonly clientMutationId?: Maybe<Scalars['String']>;
+};
+
+export type Query = {
+  readonly __typename?: 'Query';
+  readonly book?: Maybe<Book>;
+  readonly books: BookConnection;
+  readonly node?: Maybe<Node>;
+  readonly nodes: ReadonlyArray<Maybe<Node>>;
+  readonly user?: Maybe<User>;
+  readonly users: UserConnection;
+};
+
+
+export type QueryBookArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryBooksArgs = {
+  page?: Maybe<PaginationInput>;
+  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+};
+
+
+export type QueryNodeArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryNodesArgs = {
+  ids: ReadonlyArray<Scalars['ID']>;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryUsersArgs = {
+  page?: Maybe<PaginationInput>;
+  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+};
+
 export type PageInfo = {
   readonly __typename?: 'PageInfo';
   readonly startCursor?: Maybe<Scalars['String']>;
@@ -118,13 +140,37 @@ export type Node = {
   readonly updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type NoopInput = {
-  readonly clientMutationId?: Maybe<Scalars['String']>;
+export type Price = {
+  readonly __typename?: 'Price';
+  readonly amount: Scalars['Float'];
+  readonly symbol: Scalars['String'];
 };
 
-export type NoopPayload = {
-  readonly __typename?: 'NoopPayload';
-  readonly clientMutationId?: Maybe<Scalars['String']>;
+export type BookConnectionEdge = Edge & {
+  readonly __typename?: 'BookConnectionEdge';
+  readonly cursor: Scalars['String'];
+  readonly node: Book;
+};
+
+export type BookConnection = {
+  readonly __typename?: 'BookConnection';
+  readonly edges?: Maybe<ReadonlyArray<Maybe<BookConnectionEdge>>>;
+  readonly nodes?: Maybe<ReadonlyArray<Maybe<Book>>>;
+  readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
+};
+
+export type Book = Node & {
+  readonly __typename?: 'Book';
+  readonly id: Scalars['ID'];
+  readonly createdAt: Scalars['DateTime'];
+  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  /** 名前 */
+  readonly name: Scalars['String'];
+  /** 金額 */
+  readonly price: Price;
+  /** 発売日 */
+  readonly releaseAt: Scalars['Date'];
 };
 
 export type UserConnectionEdge = Edge & {
@@ -203,6 +249,40 @@ export type CreateUserMutation = (
   ) }
 );
 
+export type BookQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type BookQuery = (
+  { readonly __typename?: 'Query' }
+  & { readonly node?: Maybe<(
+    { readonly __typename?: 'Book' }
+    & Pick<Book, 'id' | 'name'>
+  ) | { readonly __typename?: 'User' }> }
+);
+
+export type BooksQueryVariables = Exact<{
+  page: PaginationInput;
+  ids: ReadonlyArray<Scalars['ID']> | Scalars['ID'];
+}>;
+
+
+export type BooksQuery = (
+  { readonly __typename?: 'Query' }
+  & { readonly books: (
+    { readonly __typename?: 'BookConnection' }
+    & Pick<BookConnection, 'totalCount'>
+    & { readonly edges?: Maybe<ReadonlyArray<Maybe<(
+      { readonly __typename?: 'BookConnectionEdge' }
+      & { readonly node: (
+        { readonly __typename?: 'Book' }
+        & Pick<Book, 'id' | 'name'>
+      ) }
+    )>>> }
+  ) }
+);
+
 export type UserQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -210,12 +290,9 @@ export type UserQueryVariables = Exact<{
 
 export type UserQuery = (
   { readonly __typename?: 'Query' }
-  & { readonly node?: Maybe<(
+  & { readonly node?: Maybe<{ readonly __typename?: 'Book' } | (
     { readonly __typename?: 'User' }
-    & Pick<User, 'name'>
-  )>, readonly user?: Maybe<(
-    { readonly __typename?: 'User' }
-    & Pick<User, 'name'>
+    & Pick<User, 'id' | 'name'>
   )> }
 );
 
@@ -234,7 +311,7 @@ export type UsersQuery = (
       { readonly __typename?: 'UserConnectionEdge' }
       & { readonly node: (
         { readonly __typename?: 'User' }
-        & Pick<User, 'id'>
+        & Pick<User, 'id' | 'name'>
       ) }
     )>>> }
   ) }
@@ -321,18 +398,23 @@ export type ResolversTypes = {
   Blood: Blood;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  NoopInput: NoopInput;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  NoopPayload: ResolverTypeWrapper<NoopPayload>;
   Query: ResolverTypeWrapper<{}>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
-  Mutation: ResolverTypeWrapper<{}>;
   PageInfo: ResolverTypeWrapper<PageInfo>;
-  String: ResolverTypeWrapper<Scalars['String']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   PaginationInput: PaginationInput;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  Edge: ResolversTypes['UserConnectionEdge'];
-  Node: ResolversTypes['User'];
-  NoopInput: NoopInput;
-  NoopPayload: ResolverTypeWrapper<NoopPayload>;
+  Edge: ResolversTypes['BookConnectionEdge'] | ResolversTypes['UserConnectionEdge'];
+  Node: ResolversTypes['Book'] | ResolversTypes['User'];
+  Price: ResolverTypeWrapper<Price>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
+  BookConnectionEdge: ResolverTypeWrapper<BookConnectionEdge>;
+  BookConnection: ResolverTypeWrapper<BookConnection>;
+  Book: ResolverTypeWrapper<Book>;
   UserConnectionEdge: ResolverTypeWrapper<UserConnectionEdge>;
   UserConnection: ResolverTypeWrapper<UserConnection>;
   User: ResolverTypeWrapper<User>;
@@ -347,18 +429,23 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   DateTime: Scalars['DateTime'];
   Date: Scalars['Date'];
+  Mutation: {};
+  NoopInput: NoopInput;
+  String: Scalars['String'];
+  NoopPayload: NoopPayload;
   Query: {};
   ID: Scalars['ID'];
-  Mutation: {};
   PageInfo: PageInfo;
-  String: Scalars['String'];
   Boolean: Scalars['Boolean'];
   PaginationInput: PaginationInput;
   Int: Scalars['Int'];
-  Edge: ResolversParentTypes['UserConnectionEdge'];
-  Node: ResolversParentTypes['User'];
-  NoopInput: NoopInput;
-  NoopPayload: NoopPayload;
+  Edge: ResolversParentTypes['BookConnectionEdge'] | ResolversParentTypes['UserConnectionEdge'];
+  Node: ResolversParentTypes['Book'] | ResolversParentTypes['User'];
+  Price: Price;
+  Float: Scalars['Float'];
+  BookConnectionEdge: BookConnectionEdge;
+  BookConnection: BookConnection;
+  Book: Book;
   UserConnectionEdge: UserConnectionEdge;
   UserConnection: UserConnection;
   User: User;
@@ -377,18 +464,25 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id'>>;
-  nodes?: Resolver<ReadonlyArray<Maybe<ResolversTypes['Node']>>, ParentType, ContextType, RequireFields<QueryNodesArgs, 'ids'>>;
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
-  users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersArgs, never>>;
-};
-
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createUser?: Resolver<ResolversTypes['CreateUserPayload'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
   createUsers?: Resolver<ResolversTypes['CreateUsersPayload'], ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'input'>>;
   deleteUser?: Resolver<ResolversTypes['DeleteUserPayload'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'input'>>;
   noop?: Resolver<Maybe<ResolversTypes['NoopPayload']>, ParentType, ContextType, RequireFields<MutationNoopArgs, never>>;
+};
+
+export type NoopPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['NoopPayload'] = ResolversParentTypes['NoopPayload']> = {
+  clientMutationId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  book?: Resolver<Maybe<ResolversTypes['Book']>, ParentType, ContextType, RequireFields<QueryBookArgs, 'id'>>;
+  books?: Resolver<ResolversTypes['BookConnection'], ParentType, ContextType, RequireFields<QueryBooksArgs, never>>;
+  node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id'>>;
+  nodes?: Resolver<ReadonlyArray<Maybe<ResolversTypes['Node']>>, ParentType, ContextType, RequireFields<QueryNodesArgs, 'ids'>>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersArgs, never>>;
 };
 
 export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
@@ -400,20 +494,45 @@ export type PageInfoResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type EdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Edge'] = ResolversParentTypes['Edge']> = {
-  __resolveType: TypeResolveFn<'UserConnectionEdge', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'BookConnectionEdge' | 'UserConnectionEdge', ParentType, ContextType>;
   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   node?: Resolver<ResolversTypes['Node'], ParentType, ContextType>;
 };
 
 export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
-  __resolveType: TypeResolveFn<'User', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'Book' | 'User', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
 };
 
-export type NoopPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['NoopPayload'] = ResolversParentTypes['NoopPayload']> = {
-  clientMutationId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+export type PriceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Price'] = ResolversParentTypes['Price']> = {
+  amount?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  symbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type BookConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['BookConnectionEdge'] = ResolversParentTypes['BookConnectionEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['Book'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type BookConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['BookConnection'] = ResolversParentTypes['BookConnection']> = {
+  edges?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['BookConnectionEdge']>>>, ParentType, ContextType>;
+  nodes?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type BookResolvers<ContextType = any, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  price?: Resolver<ResolversTypes['Price'], ParentType, ContextType>;
+  releaseAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -462,12 +581,16 @@ export type DeleteUserPayloadResolvers<ContextType = any, ParentType extends Res
 export type Resolvers<ContextType = any> = {
   DateTime?: GraphQLScalarType;
   Date?: GraphQLScalarType;
-  Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  NoopPayload?: NoopPayloadResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   Edge?: EdgeResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
-  NoopPayload?: NoopPayloadResolvers<ContextType>;
+  Price?: PriceResolvers<ContextType>;
+  BookConnectionEdge?: BookConnectionEdgeResolvers<ContextType>;
+  BookConnection?: BookConnectionResolvers<ContextType>;
+  Book?: BookResolvers<ContextType>;
   UserConnectionEdge?: UserConnectionEdgeResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
