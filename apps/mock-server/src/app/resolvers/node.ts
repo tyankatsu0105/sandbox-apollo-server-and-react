@@ -1,30 +1,30 @@
 import * as GraphQLTypes from '../types/gen/api';
 import * as Mocks from '../mocks';
 
-const nodes = [
+const implementedNodeList = [
   ...Mocks.users,
   ...Mocks.books,
   ...Mocks.movies,
   ...Mocks.musics,
 ];
 
-type Nodes = typeof nodes;
+type ImplementedNodeList = typeof implementedNodeList;
 
 export const resolver: GraphQLTypes.Resolvers['Query']['node'] = (_, args) =>
-  Node.applyArgs(nodes, args);
+  Node.applyArgs(implementedNodeList, args);
 
 class Node {
   public static applyArgs(
-    data: Nodes,
+    data: ImplementedNodeList,
     args: GraphQLTypes.QueryNodeArgs
-  ): Nodes[number] {
+  ): ImplementedNodeList[number] {
     return this.applyId(data, args.id);
   }
 
   public static applyId(
-    data: Nodes,
+    data: ImplementedNodeList,
     id: GraphQLTypes.QueryNodeArgs['id']
-  ): Nodes[number] {
+  ): ImplementedNodeList[number] {
     return data.find((item) => item.id === id);
   }
 }
