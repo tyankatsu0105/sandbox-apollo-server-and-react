@@ -24,6 +24,7 @@ generates:
     config:
       # __typenameをoptionalにしない
       # nonOptionalTypename: true
+      optionalResolveType: true
 
 config:
   # optionalにならなくなる

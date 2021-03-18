@@ -594,13 +594,13 @@ export type PageInfoResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type EdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Edge'] = ResolversParentTypes['Edge']> = {
-  __resolveType: TypeResolveFn<'BookConnectionEdge' | 'MovieConnectionEdge' | 'MusicConnectionEdge' | 'UserConnectionEdge', ParentType, ContextType>;
+  __resolveType?: TypeResolveFn<'BookConnectionEdge' | 'MovieConnectionEdge' | 'MusicConnectionEdge' | 'UserConnectionEdge', ParentType, ContextType>;
   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   node?: Resolver<ResolversTypes['Node'], ParentType, ContextType>;
 };
 
 export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
-  __resolveType: TypeResolveFn<'Book' | 'Movie' | 'Music' | 'User', ParentType, ContextType>;
+  __resolveType?: TypeResolveFn<'Book' | 'Movie' | 'Music' | 'User', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
