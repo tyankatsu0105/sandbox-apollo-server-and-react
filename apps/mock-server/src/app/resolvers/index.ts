@@ -2,20 +2,20 @@ import * as GraphQLTypes from '../types/gen/api';
 
 import * as Utilities from '../shared/utilities';
 
-import * as Nodes from './nodes';
-import * as Node from './node';
+import * as Nodes from './Node/nodes';
+import * as Node from './Node/node';
 
-import * as Users from './users';
-import * as User from './user';
+import * as Users from './Query/users';
+import * as User from './Query/user';
 
-import * as Books from './books';
-import * as Book from './book';
+import * as Books from './Query/books';
+import * as Book from './Query/book';
 
-import * as Movies from './movies';
-import * as Movie from './movie';
+import * as Movies from './Query/movies';
+import * as Movie from './Query/movie';
 
-import * as Musics from './musics';
-import * as Music from './music';
+import * as Musics from './Query/musics';
+import * as Music from './Query/music';
 
 export const resolvers: GraphQLTypes.Resolvers = {
   Node: {

@@ -1,5 +1,5 @@
-import * as GraphQLTypes from '../types/gen/api';
-import * as Mocks from '../mocks';
+import * as GraphQLTypes from '../../types/gen/api';
+import * as Mocks from '../../mocks';
 
 export const resolver: GraphQLTypes.Resolvers['Query']['movie'] = (_, args) => {
   return Movie.applyArgs(Mocks.movies, args);

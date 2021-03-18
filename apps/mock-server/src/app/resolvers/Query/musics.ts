@@ -1,7 +1,7 @@
-import { applyPagination } from '../shared/modules/relay';
+import { applyPagination } from '../../shared/modules/relay';
 
-import * as GraphQLTypes from '../types/gen/api';
-import * as Mocks from '../mocks';
+import * as GraphQLTypes from '../../types/gen/api';
+import * as Mocks from '../../mocks';
 
 export const resolver: GraphQLTypes.Resolvers['Query']['musics'] = (
   _,
