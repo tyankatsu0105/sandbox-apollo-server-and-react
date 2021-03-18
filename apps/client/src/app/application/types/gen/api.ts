@@ -75,6 +75,8 @@ export type Query = {
   readonly books: BookConnection;
   readonly movie?: Maybe<Movie>;
   readonly movies: MovieConnection;
+  readonly music?: Maybe<Music>;
+  readonly musics: MusicConnection;
   readonly node?: Maybe<Node>;
   readonly nodes: ReadonlyArray<Maybe<Node>>;
   readonly user?: Maybe<User>;
@@ -99,6 +101,17 @@ export type QueryMovieArgs = {
 
 
 export type QueryMoviesArgs = {
+  page?: Maybe<PaginationInput>;
+  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+};
+
+
+export type QueryMusicArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryMusicsArgs = {
   page?: Maybe<PaginationInput>;
   ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
@@ -204,6 +217,30 @@ export type Movie = Node & {
   readonly releaseAt: Scalars['Date'];
   /** 公開地域 */
   readonly releaseCountry?: Maybe<ReadonlyArray<Scalars['String']>>;
+};
+
+export type MusicConnectionEdge = Edge & {
+  readonly cursor: Scalars['String'];
+  readonly node: Music;
+};
+
+export type MusicConnection = {
+  readonly edges?: Maybe<ReadonlyArray<Maybe<MusicConnectionEdge>>>;
+  readonly nodes?: Maybe<ReadonlyArray<Maybe<Music>>>;
+  readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
+};
+
+export type Music = Node & {
+  readonly id: Scalars['ID'];
+  readonly createdAt: Scalars['DateTime'];
+  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  /** 楽曲名 */
+  readonly name: Scalars['String'];
+  /** アーティスト名 */
+  readonly artist: Scalars['String'];
+  /** 公開日 */
+  readonly releaseAt: Scalars['Date'];
 };
 
 export type UserConnectionEdge = Edge & {

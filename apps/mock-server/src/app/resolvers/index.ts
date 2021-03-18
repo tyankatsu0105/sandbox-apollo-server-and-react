@@ -9,6 +9,9 @@ import * as Book from './book';
 import * as Movies from './movies';
 import * as Movie from './movie';
 
+import * as Musics from './musics';
+import * as Music from './music';
+
 export const resolvers: GraphQLTypes.Resolvers = {
   Query: {
     users: Users.resolver,
@@ -19,5 +22,8 @@ export const resolvers: GraphQLTypes.Resolvers = {
 
     movies: Movies.resolver,
     movie: Movie.resolver,
+
+    musics: Musics.resolver,
+    music: Music.resolver,
   },
 };

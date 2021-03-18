@@ -1,0 +1,29 @@
+extend type Query {
+  musics(page: PaginationInput, ids: [ID!]): MusicConnection!
+  music(id: ID!): Music
+}
+
+type MusicConnectionEdge implements Edge {
+  cursor: String!
+  node: Music!
+}
+
+type MusicConnection {
+  edges: [MusicConnectionEdge]
+  nodes: [Music]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type Music implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  "楽曲名"
+  name: String!
+  "アーティスト名"
+  artist: String!
+
+  "公開日"
+  releaseAt: Date!
+}
