@@ -4,10 +4,10 @@ import * as GraphQLTypes from '../types/gen/api';
 import * as Mocks from '../mocks';
 
 export const resolver: GraphQLTypes.Resolvers['Query']['users'] = (_, args) => {
-  return applyPagination(User.applyArgs(Mocks.users, args), args.page);
+  return applyPagination(Users.applyArgs(Mocks.users, args), args.page);
 };
 
-class User {
+class Users {
   public static applyArgs(
     data: GraphQLTypes.User[],
     args: GraphQLTypes.QueryUsersArgs
@@ -20,6 +20,6 @@ class User {
   ): GraphQLTypes.User[] {
     if (!ids) return data;
 
-    return ids.map((id) => data.find((user) => user.id === id));
+    return ids.map((id) => data.find((item) => item.id === id));
   }
 }

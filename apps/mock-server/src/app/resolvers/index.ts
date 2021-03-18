@@ -37,6 +37,7 @@ export const resolvers: GraphQLTypes.Resolvers = {
   } as GraphQLTypes.Resolvers['Node'],
   Query: {
     node: Node.resolver,
+    nodes: Nodes.resolver,
 
     users: Users.resolver,
     user: User.resolver,

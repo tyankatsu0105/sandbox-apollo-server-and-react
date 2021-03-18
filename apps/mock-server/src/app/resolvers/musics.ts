@@ -7,10 +7,10 @@ export const resolver: GraphQLTypes.Resolvers['Query']['musics'] = (
   _,
   args
 ) => {
-  return applyPagination(Music.applyArgs(Mocks.musics, args), args.page);
+  return applyPagination(Musics.applyArgs(Mocks.musics, args), args.page);
 };
 
-class Music {
+class Musics {
   public static applyArgs(
     data: GraphQLTypes.Music[],
     args: GraphQLTypes.QueryMusicsArgs
@@ -23,6 +23,6 @@ class Music {
   ): GraphQLTypes.Music[] {
     if (!ids) return data;
 
-    return ids.map((id) => data.find((user) => user.id === id));
+    return ids.map((id) => data.find((item) => item.id === id));
   }
 }

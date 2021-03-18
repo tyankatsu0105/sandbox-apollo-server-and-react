@@ -4,10 +4,10 @@ import * as GraphQLTypes from '../types/gen/api';
 import * as Mocks from '../mocks';
 
 export const resolver: GraphQLTypes.Resolvers['Query']['books'] = (_, args) => {
-  return applyPagination(Book.applyArgs(Mocks.books, args), args.page);
+  return applyPagination(Books.applyArgs(Mocks.books, args), args.page);
 };
 
-class Book {
+class Books {
   public static applyArgs(
     data: GraphQLTypes.Book[],
     args: GraphQLTypes.QueryBooksArgs
@@ -20,6 +20,6 @@ class Book {
   ): GraphQLTypes.Book[] {
     if (!ids) return data;
 
-    return ids.map((id) => data.find((user) => user.id === id));
+    return ids.map((id) => data.find((item) => item.id === id));
   }
 }

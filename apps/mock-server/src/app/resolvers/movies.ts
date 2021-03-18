@@ -7,10 +7,10 @@ export const resolver: GraphQLTypes.Resolvers['Query']['movies'] = (
   _,
   args
 ) => {
-  return applyPagination(Movie.applyArgs(Mocks.movies, args), args.page);
+  return applyPagination(Movies.applyArgs(Mocks.movies, args), args.page);
 };
 
-class Movie {
+class Movies {
   public static applyArgs(
     data: GraphQLTypes.Movie[],
     args: GraphQLTypes.QueryMoviesArgs
@@ -23,6 +23,6 @@ class Movie {
   ): GraphQLTypes.Movie[] {
     if (!ids) return data;
 
-    return ids.map((id) => data.find((user) => user.id === id));
+    return ids.map((id) => data.find((item) => item.id === id));
   }
 }

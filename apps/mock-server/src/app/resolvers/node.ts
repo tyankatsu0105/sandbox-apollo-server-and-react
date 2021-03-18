@@ -8,8 +8,23 @@ const nodes = [
   ...Mocks.musics,
 ];
 
-export const resolver: GraphQLTypes.Resolvers['Query']['node'] = (_, args) => {
-  console.log(args);
+type Nodes = typeof nodes;
 
-  return nodes.find((node) => node.id === args.id);
-};
+export const resolver: GraphQLTypes.Resolvers['Query']['node'] = (_, args) =>
+  Node.applyArgs(nodes, args);
+
+class Node {
+  public static applyArgs(
+    data: Nodes,
+    args: GraphQLTypes.QueryNodeArgs
+  ): Nodes[number] {
+    return this.applyId(data, args.id);
+  }
+
+  public static applyId(
+    data: Nodes,
+    id: GraphQLTypes.QueryNodeArgs['id']
+  ): Nodes[number] {
+    return data.find((item) => item.id === id);
+  }
+}
