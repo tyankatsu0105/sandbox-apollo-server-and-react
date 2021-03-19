@@ -21,5 +21,5 @@ const movie = (): GraphQLTypes.Movie => ({
 });
 
 export const movies: GraphQLTypes.Movie[] = Utilities.createArray(
-  Faker.random.number({ min: 200 })
+  Faker.random.number({ min: 200, max: 1000 })
 ).map(() => movie());

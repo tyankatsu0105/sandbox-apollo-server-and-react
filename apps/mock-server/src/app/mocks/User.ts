@@ -2,6 +2,10 @@ import * as GraphQLTypes from '../types/gen/api';
 import Faker from '../shared/modules/faker';
 import * as Utilities from '../shared/utilities';
 
+import { books } from './Book';
+import { movies } from './Movie';
+import { musics } from './Music';
+
 const user = (): GraphQLTypes.User => ({
   __typename: 'User',
   id: Faker.random.uuid(),
@@ -17,8 +21,13 @@ const user = (): GraphQLTypes.User => ({
     GraphQLTypes.Blood.O,
     GraphQLTypes.Blood.Ab,
   ]),
+  favorites: [
+    ...Faker.random.arrayElements(books, 10),
+    ...Faker.random.arrayElements(movies, 10),
+    ...Faker.random.arrayElements(musics, 10),
+  ],
 });
 
 export const users: GraphQLTypes.User[] = Utilities.createArray(
-  Faker.random.number({ min: 200 })
+  Faker.random.number({ min: 200, max: 1000 })
 ).map(() => user());

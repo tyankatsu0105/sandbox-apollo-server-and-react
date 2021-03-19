@@ -18,5 +18,5 @@ const book = (): GraphQLTypes.Book => ({
 });
 
 export const books: GraphQLTypes.Book[] = Utilities.createArray(
-  Faker.random.number({ min: 200 })
+  Faker.random.number({ min: 200, max: 1000 })
 ).map(() => book());

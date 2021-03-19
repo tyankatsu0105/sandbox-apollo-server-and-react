@@ -35,7 +35,11 @@ type User implements Node {
   country: String
   "誕生日"
   birthDay: Date
+
+  favorites: [Favorite]
 }
+
+union Favorite = Book | Movie | Music
 
 input CreateUserInput {
   "名前"

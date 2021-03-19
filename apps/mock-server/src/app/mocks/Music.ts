@@ -13,5 +13,5 @@ const music = (): GraphQLTypes.Music => ({
 });
 
 export const musics: GraphQLTypes.Music[] = Utilities.createArray(
-  Faker.random.number({ min: 200 })
+  Faker.random.number({ min: 200, max: 1000 })
 ).map(() => music());
