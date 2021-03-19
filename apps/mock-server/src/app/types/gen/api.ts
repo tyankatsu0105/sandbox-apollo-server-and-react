@@ -3,7 +3,6 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -287,10 +286,15 @@ export type User = Node & {
   readonly country?: Maybe<Scalars['String']>;
   /** 誕生日 */
   readonly birthDay?: Maybe<Scalars['Date']>;
-  readonly favorites?: Maybe<ReadonlyArray<Maybe<Favorite>>>;
+  readonly favorites?: Maybe<Favorites>;
 };
 
-export type Favorite = Book | Movie | Music;
+export type Favorites = {
+  readonly __typename?: 'Favorites';
+  readonly books: ReadonlyArray<Maybe<Scalars['ID']>>;
+  readonly movies: ReadonlyArray<Maybe<Scalars['ID']>>;
+  readonly musics: ReadonlyArray<Maybe<Scalars['ID']>>;
+};
 
 export type CreateUserInput = {
   /** 名前 */
@@ -511,8 +515,8 @@ export type ResolversTypes = {
   Music: ResolverTypeWrapper<Music>;
   UserConnectionEdge: ResolverTypeWrapper<UserConnectionEdge>;
   UserConnection: ResolverTypeWrapper<UserConnection>;
-  User: ResolverTypeWrapper<Omit<User, 'favorites'> & { favorites?: Maybe<ReadonlyArray<Maybe<ResolversTypes['Favorite']>>> }>;
-  Favorite: ResolversTypes['Book'] | ResolversTypes['Movie'] | ResolversTypes['Music'];
+  User: ResolverTypeWrapper<User>;
+  Favorites: ResolverTypeWrapper<Favorites>;
   CreateUserInput: CreateUserInput;
   CreateUserPayload: ResolverTypeWrapper<CreateUserPayload>;
   CreateUsersPayload: ResolverTypeWrapper<CreateUsersPayload>;
@@ -549,8 +553,8 @@ export type ResolversParentTypes = {
   Music: Music;
   UserConnectionEdge: UserConnectionEdge;
   UserConnection: UserConnection;
-  User: Omit<User, 'favorites'> & { favorites?: Maybe<ReadonlyArray<Maybe<ResolversParentTypes['Favorite']>>> };
-  Favorite: ResolversParentTypes['Book'] | ResolversParentTypes['Movie'] | ResolversParentTypes['Music'];
+  User: User;
+  Favorites: Favorites;
   CreateUserInput: CreateUserInput;
   CreateUserPayload: CreateUserPayload;
   CreateUsersPayload: CreateUsersPayload;
@@ -715,12 +719,15 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   blood?: Resolver<ResolversTypes['Blood'], ParentType, ContextType>;
   country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   birthDay?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
-  favorites?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['Favorite']>>>, ParentType, ContextType>;
+  favorites?: Resolver<Maybe<ResolversTypes['Favorites']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type FavoriteResolvers<ContextType = any, ParentType extends ResolversParentTypes['Favorite'] = ResolversParentTypes['Favorite']> = {
-  __resolveType?: TypeResolveFn<'Book' | 'Movie' | 'Music', ParentType, ContextType>;
+export type FavoritesResolvers<ContextType = any, ParentType extends ResolversParentTypes['Favorites'] = ResolversParentTypes['Favorites']> = {
+  books?: Resolver<ReadonlyArray<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
+  movies?: Resolver<ReadonlyArray<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
+  musics?: Resolver<ReadonlyArray<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CreateUserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUserPayload'] = ResolversParentTypes['CreateUserPayload']> = {
@@ -761,7 +768,7 @@ export type Resolvers<ContextType = any> = {
   UserConnectionEdge?: UserConnectionEdgeResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
-  Favorite?: FavoriteResolvers<ContextType>;
+  Favorites?: FavoritesResolvers<ContextType>;
   CreateUserPayload?: CreateUserPayloadResolvers<ContextType>;
   CreateUsersPayload?: CreateUsersPayloadResolvers<ContextType>;
   DeleteUserPayload?: DeleteUserPayloadResolvers<ContextType>;

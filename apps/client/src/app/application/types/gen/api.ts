@@ -269,10 +269,14 @@ export type User = Node & {
   readonly country?: Maybe<Scalars['String']>;
   /** 誕生日 */
   readonly birthDay?: Maybe<Scalars['Date']>;
-  readonly favorites?: Maybe<ReadonlyArray<Maybe<Favorite>>>;
+  readonly favorites?: Maybe<Favorites>;
 };
 
-export type Favorite = Book | Movie | Music;
+export type Favorites = {
+  readonly books: ReadonlyArray<Maybe<Scalars['ID']>>;
+  readonly movies: ReadonlyArray<Maybe<Scalars['ID']>>;
+  readonly musics: ReadonlyArray<Maybe<Scalars['ID']>>;
+};
 
 export type CreateUserInput = {
   /** 名前 */

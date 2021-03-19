@@ -21,11 +21,11 @@ const user = (): GraphQLTypes.User => ({
     GraphQLTypes.Blood.O,
     GraphQLTypes.Blood.Ab,
   ]),
-  favorites: [
-    ...Faker.random.arrayElements(books, 10),
-    ...Faker.random.arrayElements(movies, 10),
-    ...Faker.random.arrayElements(musics, 10),
-  ],
+  favorites: {
+    books: Faker.random.arrayElements(books, 10).map(({ id }) => id),
+    movies: Faker.random.arrayElements(movies, 10).map(({ id }) => id),
+    musics: Faker.random.arrayElements(musics, 10).map(({ id }) => id),
+  },
 });
 
 export const users: GraphQLTypes.User[] = Utilities.createArray(

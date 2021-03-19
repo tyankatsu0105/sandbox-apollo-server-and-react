@@ -36,10 +36,14 @@ type User implements Node {
   "誕生日"
   birthDay: Date
 
-  favorites: [Favorite]
+  favorites: Favorites
 }
 
-union Favorite = Book | Movie | Music
+type Favorites {
+  books: [ID]!
+  movies: [ID]!
+  musics: [ID]!
+}
 
 input CreateUserInput {
   "名前"
