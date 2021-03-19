@@ -35,6 +35,23 @@ export const resolvers: GraphQLTypes.Resolvers = {
       }
     },
   } as GraphQLTypes.Resolvers['Node'],
+  Edge: {
+    __resolveType(parent) {
+      switch (parent.__typename) {
+        case 'BookConnectionEdge':
+          return 'BookConnectionEdge';
+        case 'MovieConnectionEdge':
+          return 'MovieConnectionEdge';
+        case 'MusicConnectionEdge':
+          return 'MusicConnectionEdge';
+        case 'UserConnectionEdge':
+          return 'UserConnectionEdge';
+
+        default:
+          return Utilities.assertData(parent, () => null);
+      }
+    },
+  } as GraphQLTypes.Resolvers['Edge'],
   Query: {
     node: Node.resolver,
     nodes: Nodes.resolver,
