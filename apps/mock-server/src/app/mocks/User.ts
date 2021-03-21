@@ -22,6 +22,7 @@ const user = (): GraphQLTypes.User => ({
     GraphQLTypes.Blood.Ab,
   ]),
   favorites: {
+    __typename: 'Favorites',
     books: Faker.random.arrayElements(books, 10).map(({ id }) => id),
     movies: Faker.random.arrayElements(movies, 10).map(({ id }) => id),
     musics: Faker.random.arrayElements(musics, 10).map(({ id }) => id),

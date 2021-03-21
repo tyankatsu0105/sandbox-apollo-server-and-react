@@ -1,7 +1,8 @@
 import * as GraphQLTypes from '../../types/gen/api';
 import * as Mocks from '../../mocks';
+import * as Utilities from '../../shared/utilities';
 
-export const resolver: GraphQLTypes.Resolvers['Query']['movie'] = (_, args) => {
+export const resolver: GraphQLTypes.QueryResolvers['movie'] = (_, args) => {
   return Movie.applyArgs(Mocks.movies, args);
 };
 
@@ -9,14 +10,16 @@ class Movie {
   public static applyArgs(
     data: GraphQLTypes.Movie[],
     args: GraphQLTypes.QueryMovieArgs
-  ): GraphQLTypes.Movie {
+  ): Utilities.Maybe<GraphQLTypes.Movie> {
     return this.applyId(data, args.id);
   }
 
   public static applyId(
     data: GraphQLTypes.Movie[],
     id: GraphQLTypes.QueryMovieArgs['id']
-  ): GraphQLTypes.Movie {
-    return data.find((item) => item.id === id);
+  ): Utilities.Maybe<GraphQLTypes.Movie> {
+    const result = data.find((item) => item.id === id);
+    if (!result) return null;
+    return result;
   }
 }

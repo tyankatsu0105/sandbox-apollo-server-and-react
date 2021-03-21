@@ -1,7 +1,8 @@
 import * as GraphQLTypes from '../../types/gen/api';
 import * as Mocks from '../../mocks';
+import * as Utilities from '../../shared/utilities';
 
-export const resolver: GraphQLTypes.Resolvers['Query']['nodes'] = (_, args) =>
+export const resolver: GraphQLTypes.QueryResolvers['nodes'] = (_, args) =>
   Nodes.applyArgs(Mocks.implementedNodeList, args);
 
 class Nodes {
@@ -16,6 +17,9 @@ class Nodes {
     data: Mocks.ImplementedNodeList,
     ids: GraphQLTypes.QueryNodesArgs['ids']
   ): Mocks.ImplementedNodeList {
-    return ids.map((id) => data.find((item) => item.id === id));
+    if (!ids) return data;
+
+    const result = ids.map((id) => data.find((item) => item.id === id));
+    return Utilities.toNonNullableArray(result);
   }
 }

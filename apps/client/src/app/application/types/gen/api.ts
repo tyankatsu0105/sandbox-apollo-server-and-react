@@ -39,7 +39,7 @@ export type Mutation = {
   readonly createUsers: CreateUsersPayload;
   readonly deleteUser: DeleteUserPayload;
   /** 実際に使うことはない extendしてMutationを拡張していくために元のMutationが必要なので作っただけ */
-  readonly noop?: Maybe<NoopPayload>;
+  readonly noop: Maybe<NoopPayload>;
 };
 
 
@@ -59,27 +59,27 @@ export type MutationDeleteUserArgs = {
 
 
 export type MutationNoopArgs = {
-  input?: Maybe<NoopInput>;
+  input: Maybe<NoopInput>;
 };
 
 export type NoopInput = {
-  readonly clientMutationId?: Maybe<Scalars['String']>;
+  readonly clientMutationId: Maybe<Scalars['String']>;
 };
 
 export type NoopPayload = {
-  readonly clientMutationId?: Maybe<Scalars['String']>;
+  readonly clientMutationId: Maybe<Scalars['String']>;
 };
 
 export type Query = {
-  readonly book?: Maybe<Book>;
+  readonly book: Maybe<Book>;
   readonly books: BookConnection;
-  readonly movie?: Maybe<Movie>;
+  readonly movie: Maybe<Movie>;
   readonly movies: MovieConnection;
-  readonly music?: Maybe<Music>;
+  readonly music: Maybe<Music>;
   readonly musics: MusicConnection;
-  readonly node?: Maybe<Node>;
+  readonly node: Maybe<Node>;
   readonly nodes: ReadonlyArray<Maybe<Node>>;
-  readonly user?: Maybe<User>;
+  readonly user: Maybe<User>;
   readonly users: UserConnection;
 };
 
@@ -90,8 +90,8 @@ export type QueryBookArgs = {
 
 
 export type QueryBooksArgs = {
-  page?: Maybe<PaginationInput>;
-  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+  page: PaginationInput;
+  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
 
 
@@ -101,8 +101,8 @@ export type QueryMovieArgs = {
 
 
 export type QueryMoviesArgs = {
-  page?: Maybe<PaginationInput>;
-  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+  page: PaginationInput;
+  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
 
 
@@ -112,8 +112,8 @@ export type QueryMusicArgs = {
 
 
 export type QueryMusicsArgs = {
-  page?: Maybe<PaginationInput>;
-  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+  page: PaginationInput;
+  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
 
 
@@ -133,22 +133,22 @@ export type QueryUserArgs = {
 
 
 export type QueryUsersArgs = {
-  page?: Maybe<PaginationInput>;
-  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+  page: PaginationInput;
+  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
 };
 
 export type PageInfo = {
-  readonly startCursor?: Maybe<Scalars['String']>;
-  readonly endCursor?: Maybe<Scalars['String']>;
-  readonly hasNextPage?: Maybe<Scalars['Boolean']>;
-  readonly hasPreviousPage?: Maybe<Scalars['Boolean']>;
+  readonly startCursor: Maybe<Scalars['String']>;
+  readonly endCursor: Maybe<Scalars['String']>;
+  readonly hasNextPage: Maybe<Scalars['Boolean']>;
+  readonly hasPreviousPage: Maybe<Scalars['Boolean']>;
 };
 
 export type PaginationInput = {
-  readonly first?: Maybe<Scalars['Int']>;
-  readonly last?: Maybe<Scalars['Int']>;
-  readonly after?: Maybe<Scalars['String']>;
-  readonly before?: Maybe<Scalars['String']>;
+  readonly first: Maybe<Scalars['Int']>;
+  readonly last: Maybe<Scalars['Int']>;
+  readonly after: Maybe<Scalars['String']>;
+  readonly before: Maybe<Scalars['String']>;
 };
 
 export type Edge = {
@@ -159,7 +159,7 @@ export type Edge = {
 export type Node = {
   readonly id: Scalars['ID'];
   readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  readonly updatedAt: Maybe<Scalars['DateTime']>;
 };
 
 export type Price = {
@@ -173,8 +173,8 @@ export type BookConnectionEdge = Edge & {
 };
 
 export type BookConnection = {
-  readonly edges?: Maybe<ReadonlyArray<Maybe<BookConnectionEdge>>>;
-  readonly nodes?: Maybe<ReadonlyArray<Maybe<Book>>>;
+  readonly edges: ReadonlyArray<Maybe<BookConnectionEdge>>;
+  readonly nodes: ReadonlyArray<Maybe<Book>>;
   readonly pageInfo: PageInfo;
   readonly totalCount: Scalars['Int'];
 };
@@ -182,7 +182,7 @@ export type BookConnection = {
 export type Book = Node & {
   readonly id: Scalars['ID'];
   readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  readonly updatedAt: Maybe<Scalars['DateTime']>;
   /** 名前 */
   readonly name: Scalars['String'];
   /** 著者 */
@@ -199,8 +199,8 @@ export type MovieConnectionEdge = Edge & {
 };
 
 export type MovieConnection = {
-  readonly edges?: Maybe<ReadonlyArray<Maybe<MovieConnectionEdge>>>;
-  readonly nodes?: Maybe<ReadonlyArray<Maybe<Movie>>>;
+  readonly edges: ReadonlyArray<Maybe<MovieConnectionEdge>>;
+  readonly nodes: ReadonlyArray<Maybe<Movie>>;
   readonly pageInfo: PageInfo;
   readonly totalCount: Scalars['Int'];
 };
@@ -208,7 +208,7 @@ export type MovieConnection = {
 export type Movie = Node & {
   readonly id: Scalars['ID'];
   readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  readonly updatedAt: Maybe<Scalars['DateTime']>;
   /** 名前 */
   readonly name: Scalars['String'];
   /** 映画監督 */
@@ -216,7 +216,7 @@ export type Movie = Node & {
   /** 公開日 */
   readonly releaseAt: Scalars['Date'];
   /** 公開地域 */
-  readonly releaseCountry?: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly releaseCountry: Maybe<ReadonlyArray<Scalars['String']>>;
 };
 
 export type MusicConnectionEdge = Edge & {
@@ -225,8 +225,8 @@ export type MusicConnectionEdge = Edge & {
 };
 
 export type MusicConnection = {
-  readonly edges?: Maybe<ReadonlyArray<Maybe<MusicConnectionEdge>>>;
-  readonly nodes?: Maybe<ReadonlyArray<Maybe<Music>>>;
+  readonly edges: ReadonlyArray<Maybe<MusicConnectionEdge>>;
+  readonly nodes: ReadonlyArray<Maybe<Music>>;
   readonly pageInfo: PageInfo;
   readonly totalCount: Scalars['Int'];
 };
@@ -234,7 +234,7 @@ export type MusicConnection = {
 export type Music = Node & {
   readonly id: Scalars['ID'];
   readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  readonly updatedAt: Maybe<Scalars['DateTime']>;
   /** 楽曲名 */
   readonly name: Scalars['String'];
   /** アーティスト名 */
@@ -249,8 +249,8 @@ export type UserConnectionEdge = Edge & {
 };
 
 export type UserConnection = {
-  readonly edges?: Maybe<ReadonlyArray<Maybe<UserConnectionEdge>>>;
-  readonly nodes?: Maybe<ReadonlyArray<Maybe<User>>>;
+  readonly edges: ReadonlyArray<Maybe<UserConnectionEdge>>;
+  readonly nodes: ReadonlyArray<Maybe<User>>;
   readonly pageInfo: PageInfo;
   readonly totalCount: Scalars['Int'];
 };
@@ -258,7 +258,7 @@ export type UserConnection = {
 export type User = Node & {
   readonly id: Scalars['ID'];
   readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  readonly updatedAt: Maybe<Scalars['DateTime']>;
   /** 名前 */
   readonly name: Scalars['String'];
   /** 年齢 */
@@ -266,10 +266,10 @@ export type User = Node & {
   /** 血液型 */
   readonly blood: Blood;
   /** 出身国 */
-  readonly country?: Maybe<Scalars['String']>;
+  readonly country: Maybe<Scalars['String']>;
   /** 誕生日 */
-  readonly birthDay?: Maybe<Scalars['Date']>;
-  readonly favorites?: Maybe<Favorites>;
+  readonly birthDay: Maybe<Scalars['Date']>;
+  readonly favorites: Maybe<Favorites>;
 };
 
 export type Favorites = {
@@ -288,11 +288,11 @@ export type CreateUserInput = {
 };
 
 export type CreateUserPayload = {
-  readonly user?: Maybe<User>;
+  readonly user: Maybe<User>;
 };
 
 export type CreateUsersPayload = {
-  readonly users?: Maybe<ReadonlyArray<Maybe<User>>>;
+  readonly users: Maybe<ReadonlyArray<Maybe<User>>>;
 };
 
 export type DeleteUserInput = {
@@ -301,7 +301,7 @@ export type DeleteUserInput = {
 
 export type DeleteUserPayload = {
   readonly DeletedUserID: Scalars['ID'];
-  readonly user?: Maybe<User>;
+  readonly user: Maybe<User>;
 };
 
 export type CreateUserMutationVariables = Exact<{
@@ -309,14 +309,14 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { readonly createUser: { readonly user?: Maybe<Pick<User, 'id' | 'name'>> } };
+export type CreateUserMutation = { readonly createUser: { readonly user: Maybe<Pick<User, 'id' | 'name'>> } };
 
 export type BookQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type BookQuery = { readonly node?: Maybe<Pick<Book, 'id' | 'name'>> };
+export type BookQuery = { readonly node: Maybe<Pick<Book, 'id' | 'name'>> };
 
 export type BooksQueryVariables = Exact<{
   page: PaginationInput;
@@ -326,7 +326,7 @@ export type BooksQueryVariables = Exact<{
 
 export type BooksQuery = { readonly books: (
     Pick<BookConnection, 'totalCount'>
-    & { readonly edges?: Maybe<ReadonlyArray<Maybe<{ readonly node: Pick<Book, 'id' | 'name'> }>>> }
+    & { readonly edges: ReadonlyArray<Maybe<{ readonly node: Pick<Book, 'id' | 'name'> }>> }
   ) };
 
 export type UserQueryVariables = Exact<{
@@ -334,7 +334,7 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { readonly node?: Maybe<Pick<User, 'id' | 'name'>> };
+export type UserQuery = { readonly node: Maybe<Pick<User, 'id' | 'name'>> };
 
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
@@ -344,7 +344,7 @@ export type UsersQueryVariables = Exact<{
 
 export type UsersQuery = { readonly users: (
     Pick<UserConnection, 'totalCount'>
-    & { readonly edges?: Maybe<ReadonlyArray<Maybe<{ readonly node: Pick<User, 'id' | 'name'> }>>> }
+    & { readonly edges: ReadonlyArray<Maybe<{ readonly node: Pick<User, 'id' | 'name'> }>> }
   ) };
 
 

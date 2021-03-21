@@ -1,7 +1,5 @@
 import * as GraphQLTypes from '../types/gen/api';
 
-import * as Utilities from '../shared/utilities';
-
 import * as Nodes from './Node/nodes';
 import * as Node from './Node/node';
 
@@ -29,12 +27,11 @@ export const resolvers: GraphQLTypes.Resolvers = {
           return 'Movie';
         case 'Music':
           return 'Music';
-
         default:
-          return Utilities.assertData(parent, () => null);
+          return null;
       }
     },
-  } as GraphQLTypes.Resolvers['Node'],
+  },
   Edge: {
     __resolveType(parent) {
       switch (parent.__typename) {
@@ -48,10 +45,10 @@ export const resolvers: GraphQLTypes.Resolvers = {
           return 'UserConnectionEdge';
 
         default:
-          return Utilities.assertData(parent, () => null);
+          return null;
       }
     },
-  } as GraphQLTypes.Resolvers['Edge'],
+  },
   Query: {
     node: Node.resolver,
     nodes: Nodes.resolver,

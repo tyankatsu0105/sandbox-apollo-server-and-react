@@ -1,5 +1,5 @@
 extend type Query {
-  musics(page: PaginationInput, ids: [ID!]): MusicConnection!
+  musics(page: PaginationInput!, ids: [ID!]): MusicConnection!
   music(id: ID!): Music
 }
 
@@ -9,8 +9,8 @@ type MusicConnectionEdge implements Edge {
 }
 
 type MusicConnection {
-  edges: [MusicConnectionEdge]
-  nodes: [Music]
+  edges: [MusicConnectionEdge]!
+  nodes: [Music]!
   pageInfo: PageInfo!
   totalCount: Int!
 }

@@ -16,6 +16,9 @@ generates:
       skipTypename: true
       # カスタムフックの生成を行う
       withHooks: false
+      # optionalにならなくなる
+      avoidOptionals: true
+
   apps/mock-server/src/app/types/gen/api.ts:
     plugins:
       - typescript
@@ -27,8 +30,6 @@ generates:
       optionalResolveType: true
 
 config:
-  # optionalにならなくなる
-  # avoidOptionals: true
   # enumの代わりにconst assertionのconstを使う
   enumsAsConst: true
   # readonlyが付く

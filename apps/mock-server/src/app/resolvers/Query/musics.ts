@@ -2,27 +2,26 @@ import { applyPagination } from '../../shared/modules/relay';
 
 import * as GraphQLTypes from '../../types/gen/api';
 import * as Mocks from '../../mocks';
+import * as Utilities from '../../shared/utilities';
 
-export const resolver: GraphQLTypes.Resolvers['Query']['musics'] = (
-  _,
-  args
-) => {
+export const resolver: GraphQLTypes.QueryResolvers['musics'] = (_, args) => {
   return applyPagination(Musics.applyArgs(Mocks.musics, args), args.page);
 };
 
 class Musics {
   public static applyArgs(
     data: GraphQLTypes.Music[],
-    args: GraphQLTypes.QueryMusicsArgs
+    args: GraphQLTypes.RequireFields<GraphQLTypes.QueryMusicsArgs, 'page'>
   ): GraphQLTypes.Music[] {
     return this.applyIds(data, args.ids);
   }
   public static applyIds(
     data: GraphQLTypes.Music[],
-    ids: GraphQLTypes.QueryMusicsArgs['ids']
+    ids?: GraphQLTypes.QueryMusicsArgs['ids']
   ): GraphQLTypes.Music[] {
     if (!ids) return data;
 
-    return ids.map((id) => data.find((item) => item.id === id));
+    const result = ids.map((id) => data.find((item) => item.id === id));
+    return Utilities.toNonNullableArray(result);
   }
 }

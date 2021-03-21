@@ -1,5 +1,5 @@
 extend type Query {
-  movies(page: PaginationInput, ids: [ID!]): MovieConnection!
+  movies(page: PaginationInput!, ids: [ID!]): MovieConnection!
   movie(id: ID!): Movie
 }
 
@@ -9,8 +9,8 @@ type MovieConnectionEdge implements Edge {
 }
 
 type MovieConnection {
-  edges: [MovieConnectionEdge]
-  nodes: [Movie]
+  edges: [MovieConnectionEdge]!
+  nodes: [Movie]!
   pageInfo: PageInfo!
   totalCount: Int!
 }
