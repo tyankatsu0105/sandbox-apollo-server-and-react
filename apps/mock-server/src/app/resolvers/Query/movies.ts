@@ -1,8 +1,7 @@
-import { applyPagination } from '../../shared/modules/relay';
-
-import * as GraphQLTypes from '../../types/gen/api';
 import * as Mocks from '../../mocks';
+import { applyPagination } from '../../shared/modules/relay';
 import * as Utilities from '../../shared/utilities';
+import * as GraphQLTypes from '../../types/gen/api';
 
 export const resolver: GraphQLTypes.QueryResolvers['movies'] = (_, args) => {
   return applyPagination(Movies.applyArgs(Mocks.movies, args), args.page);

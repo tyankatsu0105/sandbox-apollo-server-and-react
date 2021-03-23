@@ -401,9 +401,14 @@ export type UsersQuery = (
     & Pick<UserConnection, 'totalCount'>
     & { readonly edges: ReadonlyArray<Maybe<(
       { readonly __typename?: 'UserConnectionEdge' }
+      & Pick<UserConnectionEdge, 'cursor'>
       & { readonly node: (
         { readonly __typename?: 'User' }
-        & Pick<User, 'id' | 'name'>
+        & Pick<User, 'id' | 'name' | 'birthDay' | 'createdAt'>
+        & { readonly favorites?: Maybe<(
+          { readonly __typename?: 'Favorites' }
+          & Pick<Favorites, 'books' | 'movies' | 'musics'>
+        )> }
       ) }
     )>> }
   ) }

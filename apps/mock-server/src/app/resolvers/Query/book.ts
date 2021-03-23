@@ -1,6 +1,6 @@
-import * as GraphQLTypes from '../../types/gen/api';
 import * as Mocks from '../../mocks';
 import * as Utilities from '../../shared/utilities';
+import * as GraphQLTypes from '../../types/gen/api';
 
 export const resolver: GraphQLTypes.QueryResolvers['book'] = (_, args) => {
   return Book.applyArgs(Mocks.books, args);

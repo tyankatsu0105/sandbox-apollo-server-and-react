@@ -344,7 +344,13 @@ export type UsersQueryVariables = Exact<{
 
 export type UsersQuery = { readonly users: (
     Pick<UserConnection, 'totalCount'>
-    & { readonly edges: ReadonlyArray<Maybe<{ readonly node: Pick<User, 'id' | 'name'> }>> }
+    & { readonly edges: ReadonlyArray<Maybe<(
+      Pick<UserConnectionEdge, 'cursor'>
+      & { readonly node: (
+        Pick<User, 'id' | 'name' | 'birthDay' | 'createdAt'>
+        & { readonly favorites: Maybe<Pick<Favorites, 'books' | 'movies' | 'musics'>> }
+      ) }
+    )>> }
   ) };
 
 
@@ -402,9 +408,17 @@ export const UsersDocument = gql`
   users(page: $page, ids: $ids) {
     totalCount
     edges {
+      cursor
       node {
         id
         name
+        birthDay
+        createdAt
+        favorites {
+          books
+          movies
+          musics
+        }
       }
     }
   }

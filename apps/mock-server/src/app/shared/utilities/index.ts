@@ -1,3 +1,3 @@
-export * from './assert';
 export * from './array';
+export * from './assert';
 export * from './type';

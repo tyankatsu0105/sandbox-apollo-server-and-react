@@ -1,37 +1,16 @@
 import * as GraphQLTypes from '../types/gen/api';
-
-import * as Nodes from './Node/nodes';
 import * as Node from './Node/node';
-
-import * as Users from './Query/users';
-import * as User from './Query/user';
-
-import * as Books from './Query/books';
+import * as Nodes from './Node/nodes';
 import * as Book from './Query/book';
-
-import * as Movies from './Query/movies';
+import * as Books from './Query/books';
 import * as Movie from './Query/movie';
-
-import * as Musics from './Query/musics';
+import * as Movies from './Query/movies';
 import * as Music from './Query/music';
+import * as Musics from './Query/musics';
+import * as User from './Query/user';
+import * as Users from './Query/users';
 
 export const resolvers: GraphQLTypes.Resolvers = {
-  Node: {
-    __resolveType(parent) {
-      switch (parent.__typename) {
-        case 'User':
-          return 'User';
-        case 'Book':
-          return 'Book';
-        case 'Movie':
-          return 'Movie';
-        case 'Music':
-          return 'Music';
-        default:
-          return null;
-      }
-    },
-  },
   Edge: {
     __resolveType(parent) {
       switch (parent.__typename) {
@@ -49,20 +28,36 @@ export const resolvers: GraphQLTypes.Resolvers = {
       }
     },
   },
+  Node: {
+    __resolveType(parent) {
+      switch (parent.__typename) {
+        case 'User':
+          return 'User';
+        case 'Book':
+          return 'Book';
+        case 'Movie':
+          return 'Movie';
+        case 'Music':
+          return 'Music';
+        default:
+          return null;
+      }
+    },
+  },
   Query: {
+    book: Book.resolver,
+    books: Books.resolver,
+
+    movie: Movie.resolver,
+    movies: Movies.resolver,
+
+    music: Music.resolver,
+    musics: Musics.resolver,
+
     node: Node.resolver,
     nodes: Nodes.resolver,
 
-    users: Users.resolver,
     user: User.resolver,
-
-    books: Books.resolver,
-    book: Book.resolver,
-
-    movies: Movies.resolver,
-    movie: Movie.resolver,
-
-    musics: Musics.resolver,
-    music: Music.resolver,
+    users: Users.resolver,
   },
 };
