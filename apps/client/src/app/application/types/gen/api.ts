@@ -344,7 +344,7 @@ export type UsersQueryVariables = Exact<{
 
 export type UsersQuery = { users: (
     Pick<UserConnection, 'totalCount'>
-    & { edges: Array<Maybe<(
+    & { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges: Array<Maybe<(
       Pick<UserConnectionEdge, 'cursor'>
       & { node: (
         Pick<User, 'id' | 'name' | 'birthDay' | 'createdAt'>
@@ -415,6 +415,12 @@ export function refetchUserQuery(variables?: UserQueryVariables) {
 export const UsersDocument = gql`
     query Users($page: PaginationInput!, $ids: [ID!]) {
   users(page: $page, ids: $ids) {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
     totalCount
     edges {
       cursor

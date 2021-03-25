@@ -14,11 +14,23 @@ export type Edge = UtilityTypes.PossibleNull<{
   readonly node: User;
 }>;
 
+export type PageInfo = {
+  endCursor: UtilityTypes.Nullable<string>;
+  hasNextPage: UtilityTypes.Nullable<boolean>;
+  hasPreviousPage: UtilityTypes.Nullable<boolean>;
+  startCursor: UtilityTypes.Nullable<string>;
+};
+
 export type Data = {
   readonly edges: Edge[];
+  readonly pageInfo: PageInfo;
   readonly totalCount: number;
 };
 
 export class Entity {
   constructor(public data: Data) {}
+
+  get nodes() {
+    return this.data.edges.map((edge) => edge?.node);
+  }
 }

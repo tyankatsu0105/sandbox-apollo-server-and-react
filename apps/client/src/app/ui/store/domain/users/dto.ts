@@ -8,6 +8,12 @@ export class Users {
 
     return {
       edges: data.users.edges.map(this.toEntityDataEdge),
+      pageInfo: {
+        endCursor: data.users.pageInfo.endCursor,
+        hasNextPage: data.users.pageInfo.hasNextPage,
+        hasPreviousPage: data.users.pageInfo.hasPreviousPage,
+        startCursor: data.users.pageInfo.startCursor,
+      },
       totalCount,
     };
   }
@@ -29,8 +35,8 @@ export class Users {
         ).getFormattedValue('yyyy-MM-dd HH:mm'),
         favorites: {
           books: edge.node.favorites?.books,
-          movies: null,
-          musics: null,
+          movies: edge.node.favorites?.movies,
+          musics: edge.node.favorites?.musics,
         },
         id: new Scalars.ScalarID(edge.node.id).id,
         name: edge.node.name,

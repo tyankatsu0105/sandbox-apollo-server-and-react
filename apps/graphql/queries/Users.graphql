@@ -1,5 +1,11 @@
 query Users($page: PaginationInput!, $ids: [ID!]) {
   users(page: $page, ids: $ids) {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
     totalCount
     edges {
       cursor

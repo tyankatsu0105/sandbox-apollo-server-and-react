@@ -399,7 +399,10 @@ export type UsersQuery = (
   & { users: (
     { __typename?: 'UserConnection' }
     & Pick<UserConnection, 'totalCount'>
-    & { edges: Array<Maybe<(
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+    ), edges: Array<Maybe<(
       { __typename?: 'UserConnectionEdge' }
       & Pick<UserConnectionEdge, 'cursor'>
       & { node: (

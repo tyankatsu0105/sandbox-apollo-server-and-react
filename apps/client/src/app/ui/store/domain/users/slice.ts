@@ -14,6 +14,12 @@ import * as Types from './types';
 export const initialState: Types.State = {
   data: {
     edges: [],
+    pageInfo: {
+      endCursor: '',
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: '',
+    },
     totalCount: 0,
   },
   status: Status.status.PRISTINE,
@@ -33,7 +39,7 @@ const slice = ReduxToolkit.createSlice({
       })
       .addCase(Operations.fetchUsers.fulfilled, (state, action) => {
         state.status = Status.status.SUCCESS;
-        state.data = action.payload;
+        state.data = new Entity.Entity(action.payload).data;
       })
       .addCase(Operations.fetchUsers.rejected, (state, action) => {
         state.status = Status.status.INVALID;
