@@ -35,11 +35,11 @@ export type Blood = typeof Blood[keyof typeof Blood];
 
 
 export type Mutation = {
-  readonly createUser: CreateUserPayload;
-  readonly createUsers: CreateUsersPayload;
-  readonly deleteUser: DeleteUserPayload;
+  createUser: CreateUserPayload;
+  createUsers: CreateUsersPayload;
+  deleteUser: DeleteUserPayload;
   /** 実際に使うことはない extendしてMutationを拡張していくために元のMutationが必要なので作っただけ */
-  readonly noop: Maybe<NoopPayload>;
+  noop?: Maybe<NoopPayload>;
 };
 
 
@@ -49,7 +49,7 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationCreateUsersArgs = {
-  input: ReadonlyArray<CreateUserInput>;
+  input: Array<CreateUserInput>;
 };
 
 
@@ -59,28 +59,28 @@ export type MutationDeleteUserArgs = {
 
 
 export type MutationNoopArgs = {
-  input: Maybe<NoopInput>;
+  input?: Maybe<NoopInput>;
 };
 
 export type NoopInput = {
-  readonly clientMutationId: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']>;
 };
 
 export type NoopPayload = {
-  readonly clientMutationId: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
-  readonly book: Maybe<Book>;
-  readonly books: BookConnection;
-  readonly movie: Maybe<Movie>;
-  readonly movies: MovieConnection;
-  readonly music: Maybe<Music>;
-  readonly musics: MusicConnection;
-  readonly node: Maybe<Node>;
-  readonly nodes: ReadonlyArray<Maybe<Node>>;
-  readonly user: Maybe<User>;
-  readonly users: UserConnection;
+  book?: Maybe<Book>;
+  books: BookConnection;
+  movie?: Maybe<Movie>;
+  movies: MovieConnection;
+  music?: Maybe<Music>;
+  musics: MusicConnection;
+  node?: Maybe<Node>;
+  nodes: Array<Maybe<Node>>;
+  user?: Maybe<User>;
+  users: UserConnection;
 };
 
 
@@ -91,7 +91,7 @@ export type QueryBookArgs = {
 
 export type QueryBooksArgs = {
   page: PaginationInput;
-  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
+  ids?: Maybe<Array<Scalars['ID']>>;
 };
 
 
@@ -102,7 +102,7 @@ export type QueryMovieArgs = {
 
 export type QueryMoviesArgs = {
   page: PaginationInput;
-  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
+  ids?: Maybe<Array<Scalars['ID']>>;
 };
 
 
@@ -113,7 +113,7 @@ export type QueryMusicArgs = {
 
 export type QueryMusicsArgs = {
   page: PaginationInput;
-  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
+  ids?: Maybe<Array<Scalars['ID']>>;
 };
 
 
@@ -123,7 +123,7 @@ export type QueryNodeArgs = {
 
 
 export type QueryNodesArgs = {
-  ids: ReadonlyArray<Scalars['ID']>;
+  ids: Array<Scalars['ID']>;
 };
 
 
@@ -134,174 +134,174 @@ export type QueryUserArgs = {
 
 export type QueryUsersArgs = {
   page: PaginationInput;
-  ids: Maybe<ReadonlyArray<Scalars['ID']>>;
+  ids?: Maybe<Array<Scalars['ID']>>;
 };
 
 export type PageInfo = {
-  readonly startCursor: Maybe<Scalars['String']>;
-  readonly endCursor: Maybe<Scalars['String']>;
-  readonly hasNextPage: Maybe<Scalars['Boolean']>;
-  readonly hasPreviousPage: Maybe<Scalars['Boolean']>;
+  startCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']>;
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  hasPreviousPage?: Maybe<Scalars['Boolean']>;
 };
 
 export type PaginationInput = {
-  readonly first: Maybe<Scalars['Int']>;
-  readonly last: Maybe<Scalars['Int']>;
-  readonly after: Maybe<Scalars['String']>;
-  readonly before: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
 };
 
 export type Edge = {
-  readonly cursor: Scalars['String'];
-  readonly node: Node;
+  cursor: Scalars['String'];
+  node: Node;
 };
 
 export type Node = {
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type Price = {
-  readonly amount: Scalars['Float'];
-  readonly symbol: Scalars['String'];
+  amount: Scalars['Float'];
+  symbol: Scalars['String'];
 };
 
 export type BookConnectionEdge = Edge & {
-  readonly cursor: Scalars['String'];
-  readonly node: Book;
+  cursor: Scalars['String'];
+  node: Book;
 };
 
 export type BookConnection = {
-  readonly edges: ReadonlyArray<Maybe<BookConnectionEdge>>;
-  readonly nodes: ReadonlyArray<Maybe<Book>>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  edges: Array<Maybe<BookConnectionEdge>>;
+  nodes: Array<Maybe<Book>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type Book = Node & {
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
   /** 名前 */
-  readonly name: Scalars['String'];
+  name: Scalars['String'];
   /** 著者 */
-  readonly author: Scalars['String'];
+  author: Scalars['String'];
   /** 金額 */
-  readonly price: Price;
+  price: Price;
   /** 発売日 */
-  readonly releaseAt: Scalars['Date'];
+  releaseAt: Scalars['Date'];
 };
 
 export type MovieConnectionEdge = Edge & {
-  readonly cursor: Scalars['String'];
-  readonly node: Movie;
+  cursor: Scalars['String'];
+  node: Movie;
 };
 
 export type MovieConnection = {
-  readonly edges: ReadonlyArray<Maybe<MovieConnectionEdge>>;
-  readonly nodes: ReadonlyArray<Maybe<Movie>>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  edges: Array<Maybe<MovieConnectionEdge>>;
+  nodes: Array<Maybe<Movie>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type Movie = Node & {
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
   /** 名前 */
-  readonly name: Scalars['String'];
+  name: Scalars['String'];
   /** 映画監督 */
-  readonly director: Scalars['String'];
+  director: Scalars['String'];
   /** 公開日 */
-  readonly releaseAt: Scalars['Date'];
+  releaseAt: Scalars['Date'];
   /** 公開地域 */
-  readonly releaseCountry: Maybe<ReadonlyArray<Scalars['String']>>;
+  releaseCountry?: Maybe<Array<Scalars['String']>>;
 };
 
 export type MusicConnectionEdge = Edge & {
-  readonly cursor: Scalars['String'];
-  readonly node: Music;
+  cursor: Scalars['String'];
+  node: Music;
 };
 
 export type MusicConnection = {
-  readonly edges: ReadonlyArray<Maybe<MusicConnectionEdge>>;
-  readonly nodes: ReadonlyArray<Maybe<Music>>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  edges: Array<Maybe<MusicConnectionEdge>>;
+  nodes: Array<Maybe<Music>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type Music = Node & {
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
   /** 楽曲名 */
-  readonly name: Scalars['String'];
+  name: Scalars['String'];
   /** アーティスト名 */
-  readonly artist: Scalars['String'];
+  artist: Scalars['String'];
   /** 公開日 */
-  readonly releaseAt: Scalars['Date'];
+  releaseAt: Scalars['Date'];
 };
 
 export type UserConnectionEdge = Edge & {
-  readonly cursor: Scalars['String'];
-  readonly node: User;
+  cursor: Scalars['String'];
+  node: User;
 };
 
 export type UserConnection = {
-  readonly edges: ReadonlyArray<Maybe<UserConnectionEdge>>;
-  readonly nodes: ReadonlyArray<Maybe<User>>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  edges: Array<Maybe<UserConnectionEdge>>;
+  nodes: Array<Maybe<User>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type User = Node & {
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
   /** 名前 */
-  readonly name: Scalars['String'];
+  name: Scalars['String'];
   /** 年齢 */
-  readonly age: Scalars['Int'];
+  age: Scalars['Int'];
   /** 血液型 */
-  readonly blood: Blood;
+  blood: Blood;
   /** 出身国 */
-  readonly country: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
   /** 誕生日 */
-  readonly birthDay: Maybe<Scalars['Date']>;
-  readonly favorites: Maybe<Favorites>;
+  birthDay?: Maybe<Scalars['Date']>;
+  favorites?: Maybe<Favorites>;
 };
 
 export type Favorites = {
-  readonly books: ReadonlyArray<Maybe<Scalars['ID']>>;
-  readonly movies: ReadonlyArray<Maybe<Scalars['ID']>>;
-  readonly musics: ReadonlyArray<Maybe<Scalars['ID']>>;
+  books?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  musics?: Maybe<Array<Maybe<Scalars['ID']>>>;
 };
 
 export type CreateUserInput = {
   /** 名前 */
-  readonly name: Scalars['String'];
+  name: Scalars['String'];
   /** 年齢 */
-  readonly age: Scalars['Int'];
+  age: Scalars['Int'];
   /** 血液型 */
-  readonly blood: Blood;
+  blood: Blood;
 };
 
 export type CreateUserPayload = {
-  readonly user: Maybe<User>;
+  user?: Maybe<User>;
 };
 
 export type CreateUsersPayload = {
-  readonly users: Maybe<ReadonlyArray<Maybe<User>>>;
+  users?: Maybe<Array<Maybe<User>>>;
 };
 
 export type DeleteUserInput = {
-  readonly userID: Scalars['ID'];
+  userID: Scalars['ID'];
 };
 
 export type DeleteUserPayload = {
-  readonly DeletedUserID: Scalars['ID'];
-  readonly user: Maybe<User>;
+  DeletedUserID: Scalars['ID'];
+  user?: Maybe<User>;
 };
 
 export type CreateUserMutationVariables = Exact<{
@@ -309,24 +309,24 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { readonly createUser: { readonly user: Maybe<Pick<User, 'id' | 'name'>> } };
+export type CreateUserMutation = { createUser: { user?: Maybe<Pick<User, 'id' | 'name'>> } };
 
 export type BookQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type BookQuery = { readonly node: Maybe<Pick<Book, 'id' | 'name'>> };
+export type BookQuery = { node?: Maybe<Pick<Book, 'id' | 'name'>> };
 
 export type BooksQueryVariables = Exact<{
   page: PaginationInput;
-  ids: ReadonlyArray<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
-export type BooksQuery = { readonly books: (
+export type BooksQuery = { books: (
     Pick<BookConnection, 'totalCount'>
-    & { readonly edges: ReadonlyArray<Maybe<{ readonly node: Pick<Book, 'id' | 'name'> }>> }
+    & { edges: Array<Maybe<{ node: Pick<Book, 'id' | 'name'> }>> }
   ) };
 
 export type UserQueryVariables = Exact<{
@@ -334,21 +334,21 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { readonly node: Maybe<Pick<User, 'id' | 'name'>> };
+export type UserQuery = { node?: Maybe<Pick<User, 'id' | 'name'>> };
 
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
-  ids: ReadonlyArray<Scalars['ID']> | Scalars['ID'];
+  ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
 }>;
 
 
-export type UsersQuery = { readonly users: (
+export type UsersQuery = { users: (
     Pick<UserConnection, 'totalCount'>
-    & { readonly edges: ReadonlyArray<Maybe<(
+    & { edges: Array<Maybe<(
       Pick<UserConnectionEdge, 'cursor'>
-      & { readonly node: (
+      & { node: (
         Pick<User, 'id' | 'name' | 'birthDay' | 'createdAt'>
-        & { readonly favorites: Maybe<Pick<Favorites, 'books' | 'movies' | 'musics'>> }
+        & { favorites?: Maybe<Pick<Favorites, 'books' | 'movies' | 'musics'>> }
       ) }
     )>> }
   ) };
@@ -378,6 +378,9 @@ export const BookDocument = gql`
 }
     `;
 export type BookQueryResult = Apollo.QueryResult<BookQuery, BookQueryVariables>;
+export function refetchBookQuery(variables?: BookQueryVariables) {
+      return { query: BookDocument, variables: variables }
+    }
 export const BooksDocument = gql`
     query Books($page: PaginationInput!, $ids: [ID!]!) {
   books(page: $page, ids: $ids) {
@@ -392,6 +395,9 @@ export const BooksDocument = gql`
 }
     `;
 export type BooksQueryResult = Apollo.QueryResult<BooksQuery, BooksQueryVariables>;
+export function refetchBooksQuery(variables?: BooksQueryVariables) {
+      return { query: BooksDocument, variables: variables }
+    }
 export const UserDocument = gql`
     query User($id: ID!) {
   node(id: $id) {
@@ -403,8 +409,11 @@ export const UserDocument = gql`
 }
     `;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
+export function refetchUserQuery(variables?: UserQueryVariables) {
+      return { query: UserDocument, variables: variables }
+    }
 export const UsersDocument = gql`
-    query Users($page: PaginationInput!, $ids: [ID!]!) {
+    query Users($page: PaginationInput!, $ids: [ID!]) {
   users(page: $page, ids: $ids) {
     totalCount
     edges {
@@ -425,3 +434,6 @@ export const UsersDocument = gql`
 }
     `;
 export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariables>;
+export function refetchUsersQuery(variables?: UsersQueryVariables) {
+      return { query: UsersDocument, variables: variables }
+    }

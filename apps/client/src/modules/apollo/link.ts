@@ -1,9 +1,5 @@
-import { ApolloLink, HttpLink } from '@apollo/client';
+import { ApolloLink } from '@apollo/client';
 import { onError } from '@apollo/link-error';
-
-import { environment } from '../../environments/environment';
-
-const httpLink = new HttpLink({ uri: environment.apiEndpoint });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => ({
@@ -16,12 +12,13 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 });
 
 // @see https://www.apollographql.com/docs/link/links/error/#callback
-const errorLink = onError(({ operation, graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors, networkError, operation }) => {
   if (graphQLErrors) {
+    console.error('あーあ');
   }
 
   if (networkError) {
   }
 });
 
-export const link = ApolloLink.from([authMiddleware, errorLink, httpLink]);
+export const link = ApolloLink.from([authMiddleware, errorLink]);

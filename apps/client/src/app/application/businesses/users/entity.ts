@@ -1,21 +1,24 @@
-import * as User from '~client/app/application/types/user';
+import * as UtilityTypes from '~client/app/application/shared/utility-types';
+import * as TypesUser from '~client/app/application/types/user';
 
-type User = {
-  readonly birthDay: User.User['birthDay'];
-  readonly createdAt: User.User['createdAt'];
-  readonly favorites: User.User['favorites'];
-  readonly id: User.User['id'];
-  readonly name: User.User['name'];
+export type User = {
+  readonly birthDay: TypesUser.User['birthDay'];
+  readonly createdAt: TypesUser.User['createdAt'];
+  readonly favorites: TypesUser.User['favorites'];
+  readonly id: TypesUser.User['id'];
+  readonly name: TypesUser.User['name'];
 };
 
-type Data = {
-  readonly edges: {
-    readonly cursor: string;
-    readonly node: User;
-  };
+export type Edge = UtilityTypes.PossibleNull<{
+  readonly cursor: string;
+  readonly node: User;
+}>;
+
+export type Data = {
+  readonly edges: Edge[];
   readonly totalCount: number;
 };
 
-export class Users {
+export class Entity {
   constructor(public data: Data) {}
 }

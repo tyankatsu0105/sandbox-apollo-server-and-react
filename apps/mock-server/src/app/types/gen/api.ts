@@ -35,12 +35,12 @@ export type Blood = typeof Blood[keyof typeof Blood];
 
 
 export type Mutation = {
-  readonly __typename?: 'Mutation';
-  readonly createUser: CreateUserPayload;
-  readonly createUsers: CreateUsersPayload;
-  readonly deleteUser: DeleteUserPayload;
+  __typename?: 'Mutation';
+  createUser: CreateUserPayload;
+  createUsers: CreateUsersPayload;
+  deleteUser: DeleteUserPayload;
   /** 実際に使うことはない extendしてMutationを拡張していくために元のMutationが必要なので作っただけ */
-  readonly noop?: Maybe<NoopPayload>;
+  noop?: Maybe<NoopPayload>;
 };
 
 
@@ -50,7 +50,7 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationCreateUsersArgs = {
-  input: ReadonlyArray<CreateUserInput>;
+  input: Array<CreateUserInput>;
 };
 
 
@@ -64,26 +64,26 @@ export type MutationNoopArgs = {
 };
 
 export type NoopInput = {
-  readonly clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']>;
 };
 
 export type NoopPayload = {
-  readonly __typename?: 'NoopPayload';
-  readonly clientMutationId?: Maybe<Scalars['String']>;
+  __typename?: 'NoopPayload';
+  clientMutationId?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
-  readonly __typename?: 'Query';
-  readonly book?: Maybe<Book>;
-  readonly books: BookConnection;
-  readonly movie?: Maybe<Movie>;
-  readonly movies: MovieConnection;
-  readonly music?: Maybe<Music>;
-  readonly musics: MusicConnection;
-  readonly node?: Maybe<Node>;
-  readonly nodes: ReadonlyArray<Maybe<Node>>;
-  readonly user?: Maybe<User>;
-  readonly users: UserConnection;
+  __typename?: 'Query';
+  book?: Maybe<Book>;
+  books: BookConnection;
+  movie?: Maybe<Movie>;
+  movies: MovieConnection;
+  music?: Maybe<Music>;
+  musics: MusicConnection;
+  node?: Maybe<Node>;
+  nodes: Array<Maybe<Node>>;
+  user?: Maybe<User>;
+  users: UserConnection;
 };
 
 
@@ -94,7 +94,7 @@ export type QueryBookArgs = {
 
 export type QueryBooksArgs = {
   page: PaginationInput;
-  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+  ids?: Maybe<Array<Scalars['ID']>>;
 };
 
 
@@ -105,7 +105,7 @@ export type QueryMovieArgs = {
 
 export type QueryMoviesArgs = {
   page: PaginationInput;
-  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+  ids?: Maybe<Array<Scalars['ID']>>;
 };
 
 
@@ -116,7 +116,7 @@ export type QueryMusicArgs = {
 
 export type QueryMusicsArgs = {
   page: PaginationInput;
-  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+  ids?: Maybe<Array<Scalars['ID']>>;
 };
 
 
@@ -126,7 +126,7 @@ export type QueryNodeArgs = {
 
 
 export type QueryNodesArgs = {
-  ids: ReadonlyArray<Scalars['ID']>;
+  ids: Array<Scalars['ID']>;
 };
 
 
@@ -137,192 +137,192 @@ export type QueryUserArgs = {
 
 export type QueryUsersArgs = {
   page: PaginationInput;
-  ids?: Maybe<ReadonlyArray<Scalars['ID']>>;
+  ids?: Maybe<Array<Scalars['ID']>>;
 };
 
 export type PageInfo = {
-  readonly __typename?: 'PageInfo';
-  readonly startCursor?: Maybe<Scalars['String']>;
-  readonly endCursor?: Maybe<Scalars['String']>;
-  readonly hasNextPage?: Maybe<Scalars['Boolean']>;
-  readonly hasPreviousPage?: Maybe<Scalars['Boolean']>;
+  __typename?: 'PageInfo';
+  startCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']>;
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  hasPreviousPage?: Maybe<Scalars['Boolean']>;
 };
 
 export type PaginationInput = {
-  readonly first?: Maybe<Scalars['Int']>;
-  readonly last?: Maybe<Scalars['Int']>;
-  readonly after?: Maybe<Scalars['String']>;
-  readonly before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
 };
 
 export type Edge = {
-  readonly cursor: Scalars['String'];
-  readonly node: Node;
+  cursor: Scalars['String'];
+  node: Node;
 };
 
 export type Node = {
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type Price = {
-  readonly __typename?: 'Price';
-  readonly amount: Scalars['Float'];
-  readonly symbol: Scalars['String'];
+  __typename?: 'Price';
+  amount: Scalars['Float'];
+  symbol: Scalars['String'];
 };
 
 export type BookConnectionEdge = Edge & {
-  readonly __typename?: 'BookConnectionEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: Book;
+  __typename?: 'BookConnectionEdge';
+  cursor: Scalars['String'];
+  node: Book;
 };
 
 export type BookConnection = {
-  readonly __typename?: 'BookConnection';
-  readonly edges: ReadonlyArray<Maybe<BookConnectionEdge>>;
-  readonly nodes: ReadonlyArray<Maybe<Book>>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'BookConnection';
+  edges: Array<Maybe<BookConnectionEdge>>;
+  nodes: Array<Maybe<Book>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type Book = Node & {
-  readonly __typename?: 'Book';
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  __typename?: 'Book';
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
   /** 名前 */
-  readonly name: Scalars['String'];
+  name: Scalars['String'];
   /** 著者 */
-  readonly author: Scalars['String'];
+  author: Scalars['String'];
   /** 金額 */
-  readonly price: Price;
+  price: Price;
   /** 発売日 */
-  readonly releaseAt: Scalars['Date'];
+  releaseAt: Scalars['Date'];
 };
 
 export type MovieConnectionEdge = Edge & {
-  readonly __typename?: 'MovieConnectionEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: Movie;
+  __typename?: 'MovieConnectionEdge';
+  cursor: Scalars['String'];
+  node: Movie;
 };
 
 export type MovieConnection = {
-  readonly __typename?: 'MovieConnection';
-  readonly edges: ReadonlyArray<Maybe<MovieConnectionEdge>>;
-  readonly nodes: ReadonlyArray<Maybe<Movie>>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'MovieConnection';
+  edges: Array<Maybe<MovieConnectionEdge>>;
+  nodes: Array<Maybe<Movie>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type Movie = Node & {
-  readonly __typename?: 'Movie';
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  __typename?: 'Movie';
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
   /** 名前 */
-  readonly name: Scalars['String'];
+  name: Scalars['String'];
   /** 映画監督 */
-  readonly director: Scalars['String'];
+  director: Scalars['String'];
   /** 公開日 */
-  readonly releaseAt: Scalars['Date'];
+  releaseAt: Scalars['Date'];
   /** 公開地域 */
-  readonly releaseCountry?: Maybe<ReadonlyArray<Scalars['String']>>;
+  releaseCountry?: Maybe<Array<Scalars['String']>>;
 };
 
 export type MusicConnectionEdge = Edge & {
-  readonly __typename?: 'MusicConnectionEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: Music;
+  __typename?: 'MusicConnectionEdge';
+  cursor: Scalars['String'];
+  node: Music;
 };
 
 export type MusicConnection = {
-  readonly __typename?: 'MusicConnection';
-  readonly edges: ReadonlyArray<Maybe<MusicConnectionEdge>>;
-  readonly nodes: ReadonlyArray<Maybe<Music>>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'MusicConnection';
+  edges: Array<Maybe<MusicConnectionEdge>>;
+  nodes: Array<Maybe<Music>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type Music = Node & {
-  readonly __typename?: 'Music';
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  __typename?: 'Music';
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
   /** 楽曲名 */
-  readonly name: Scalars['String'];
+  name: Scalars['String'];
   /** アーティスト名 */
-  readonly artist: Scalars['String'];
+  artist: Scalars['String'];
   /** 公開日 */
-  readonly releaseAt: Scalars['Date'];
+  releaseAt: Scalars['Date'];
 };
 
 export type UserConnectionEdge = Edge & {
-  readonly __typename?: 'UserConnectionEdge';
-  readonly cursor: Scalars['String'];
-  readonly node: User;
+  __typename?: 'UserConnectionEdge';
+  cursor: Scalars['String'];
+  node: User;
 };
 
 export type UserConnection = {
-  readonly __typename?: 'UserConnection';
-  readonly edges: ReadonlyArray<Maybe<UserConnectionEdge>>;
-  readonly nodes: ReadonlyArray<Maybe<User>>;
-  readonly pageInfo: PageInfo;
-  readonly totalCount: Scalars['Int'];
+  __typename?: 'UserConnection';
+  edges: Array<Maybe<UserConnectionEdge>>;
+  nodes: Array<Maybe<User>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
 export type User = Node & {
-  readonly __typename?: 'User';
-  readonly id: Scalars['ID'];
-  readonly createdAt: Scalars['DateTime'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']>;
+  __typename?: 'User';
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
   /** 名前 */
-  readonly name: Scalars['String'];
+  name: Scalars['String'];
   /** 年齢 */
-  readonly age: Scalars['Int'];
+  age: Scalars['Int'];
   /** 血液型 */
-  readonly blood: Blood;
+  blood: Blood;
   /** 出身国 */
-  readonly country?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
   /** 誕生日 */
-  readonly birthDay?: Maybe<Scalars['Date']>;
-  readonly favorites?: Maybe<Favorites>;
+  birthDay?: Maybe<Scalars['Date']>;
+  favorites?: Maybe<Favorites>;
 };
 
 export type Favorites = {
-  readonly __typename?: 'Favorites';
-  readonly books: ReadonlyArray<Maybe<Scalars['ID']>>;
-  readonly movies: ReadonlyArray<Maybe<Scalars['ID']>>;
-  readonly musics: ReadonlyArray<Maybe<Scalars['ID']>>;
+  __typename?: 'Favorites';
+  books?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  musics?: Maybe<Array<Maybe<Scalars['ID']>>>;
 };
 
 export type CreateUserInput = {
   /** 名前 */
-  readonly name: Scalars['String'];
+  name: Scalars['String'];
   /** 年齢 */
-  readonly age: Scalars['Int'];
+  age: Scalars['Int'];
   /** 血液型 */
-  readonly blood: Blood;
+  blood: Blood;
 };
 
 export type CreateUserPayload = {
-  readonly __typename?: 'CreateUserPayload';
-  readonly user?: Maybe<User>;
+  __typename?: 'CreateUserPayload';
+  user?: Maybe<User>;
 };
 
 export type CreateUsersPayload = {
-  readonly __typename?: 'CreateUsersPayload';
-  readonly users?: Maybe<ReadonlyArray<Maybe<User>>>;
+  __typename?: 'CreateUsersPayload';
+  users?: Maybe<Array<Maybe<User>>>;
 };
 
 export type DeleteUserInput = {
-  readonly userID: Scalars['ID'];
+  userID: Scalars['ID'];
 };
 
 export type DeleteUserPayload = {
-  readonly __typename?: 'DeleteUserPayload';
-  readonly DeletedUserID: Scalars['ID'];
-  readonly user?: Maybe<User>;
+  __typename?: 'DeleteUserPayload';
+  DeletedUserID: Scalars['ID'];
+  user?: Maybe<User>;
 };
 
 export type CreateUserMutationVariables = Exact<{
@@ -331,11 +331,11 @@ export type CreateUserMutationVariables = Exact<{
 
 
 export type CreateUserMutation = (
-  { readonly __typename?: 'Mutation' }
-  & { readonly createUser: (
-    { readonly __typename?: 'CreateUserPayload' }
-    & { readonly user?: Maybe<(
-      { readonly __typename?: 'User' }
+  { __typename?: 'Mutation' }
+  & { createUser: (
+    { __typename?: 'CreateUserPayload' }
+    & { user?: Maybe<(
+      { __typename?: 'User' }
       & Pick<User, 'id' | 'name'>
     )> }
   ) }
@@ -347,28 +347,28 @@ export type BookQueryVariables = Exact<{
 
 
 export type BookQuery = (
-  { readonly __typename?: 'Query' }
-  & { readonly node?: Maybe<(
-    { readonly __typename?: 'Book' }
+  { __typename?: 'Query' }
+  & { node?: Maybe<(
+    { __typename?: 'Book' }
     & Pick<Book, 'id' | 'name'>
-  ) | { readonly __typename?: 'Movie' } | { readonly __typename?: 'Music' } | { readonly __typename?: 'User' }> }
+  ) | { __typename?: 'Movie' } | { __typename?: 'Music' } | { __typename?: 'User' }> }
 );
 
 export type BooksQueryVariables = Exact<{
   page: PaginationInput;
-  ids: ReadonlyArray<Scalars['ID']> | Scalars['ID'];
+  ids: Array<Scalars['ID']> | Scalars['ID'];
 }>;
 
 
 export type BooksQuery = (
-  { readonly __typename?: 'Query' }
-  & { readonly books: (
-    { readonly __typename?: 'BookConnection' }
+  { __typename?: 'Query' }
+  & { books: (
+    { __typename?: 'BookConnection' }
     & Pick<BookConnection, 'totalCount'>
-    & { readonly edges: ReadonlyArray<Maybe<(
-      { readonly __typename?: 'BookConnectionEdge' }
-      & { readonly node: (
-        { readonly __typename?: 'Book' }
+    & { edges: Array<Maybe<(
+      { __typename?: 'BookConnectionEdge' }
+      & { node: (
+        { __typename?: 'Book' }
         & Pick<Book, 'id' | 'name'>
       ) }
     )>> }
@@ -381,32 +381,32 @@ export type UserQueryVariables = Exact<{
 
 
 export type UserQuery = (
-  { readonly __typename?: 'Query' }
-  & { readonly node?: Maybe<{ readonly __typename?: 'Book' } | { readonly __typename?: 'Movie' } | { readonly __typename?: 'Music' } | (
-    { readonly __typename?: 'User' }
+  { __typename?: 'Query' }
+  & { node?: Maybe<{ __typename?: 'Book' } | { __typename?: 'Movie' } | { __typename?: 'Music' } | (
+    { __typename?: 'User' }
     & Pick<User, 'id' | 'name'>
   )> }
 );
 
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
-  ids: ReadonlyArray<Scalars['ID']> | Scalars['ID'];
+  ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
 }>;
 
 
 export type UsersQuery = (
-  { readonly __typename?: 'Query' }
-  & { readonly users: (
-    { readonly __typename?: 'UserConnection' }
+  { __typename?: 'Query' }
+  & { users: (
+    { __typename?: 'UserConnection' }
     & Pick<UserConnection, 'totalCount'>
-    & { readonly edges: ReadonlyArray<Maybe<(
-      { readonly __typename?: 'UserConnectionEdge' }
+    & { edges: Array<Maybe<(
+      { __typename?: 'UserConnectionEdge' }
       & Pick<UserConnectionEdge, 'cursor'>
-      & { readonly node: (
-        { readonly __typename?: 'User' }
+      & { node: (
+        { __typename?: 'User' }
         & Pick<User, 'id' | 'name' | 'birthDay' | 'createdAt'>
-        & { readonly favorites?: Maybe<(
-          { readonly __typename?: 'Favorites' }
+        & { favorites?: Maybe<(
+          { __typename?: 'Favorites' }
           & Pick<Favorites, 'books' | 'movies' | 'musics'>
         )> }
       ) }
@@ -414,7 +414,8 @@ export type UsersQuery = (
   ) }
 );
 
-
+export type WithIndex<TObject> = TObject & Record<string, any>;
+export type ResolversObject<TObject> = WithIndex<TObject>;
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -491,7 +492,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>;
 
 /** Mapping between all available schema types and the resolvers types */
-export type ResolversTypes = {
+export type ResolversTypes = ResolversObject<{
   Blood: Blood;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
@@ -527,10 +528,10 @@ export type ResolversTypes = {
   CreateUsersPayload: ResolverTypeWrapper<CreateUsersPayload>;
   DeleteUserInput: DeleteUserInput;
   DeleteUserPayload: ResolverTypeWrapper<DeleteUserPayload>;
-};
+}>;
 
 /** Mapping between all available schema types and the resolvers parents */
-export type ResolversParentTypes = {
+export type ResolversParentTypes = ResolversObject<{
   DateTime: Scalars['DateTime'];
   Date: Scalars['Date'];
   Mutation: {};
@@ -565,7 +566,7 @@ export type ResolversParentTypes = {
   CreateUsersPayload: CreateUsersPayload;
   DeleteUserInput: DeleteUserInput;
   DeleteUserPayload: DeleteUserPayload;
-};
+}>;
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
@@ -575,19 +576,19 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createUser?: Resolver<ResolversTypes['CreateUserPayload'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
   createUsers?: Resolver<ResolversTypes['CreateUsersPayload'], ParentType, ContextType, RequireFields<MutationCreateUsersArgs, 'input'>>;
   deleteUser?: Resolver<ResolversTypes['DeleteUserPayload'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'input'>>;
   noop?: Resolver<Maybe<ResolversTypes['NoopPayload']>, ParentType, ContextType, RequireFields<MutationNoopArgs, never>>;
-};
+}>;
 
-export type NoopPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['NoopPayload'] = ResolversParentTypes['NoopPayload']> = {
+export type NoopPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['NoopPayload'] = ResolversParentTypes['NoopPayload']> = ResolversObject<{
   clientMutationId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   book?: Resolver<Maybe<ResolversTypes['Book']>, ParentType, ContextType, RequireFields<QueryBookArgs, 'id'>>;
   books?: Resolver<ResolversTypes['BookConnection'], ParentType, ContextType, RequireFields<QueryBooksArgs, 'page'>>;
   movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'id'>>;
@@ -595,53 +596,53 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   music?: Resolver<Maybe<ResolversTypes['Music']>, ParentType, ContextType, RequireFields<QueryMusicArgs, 'id'>>;
   musics?: Resolver<ResolversTypes['MusicConnection'], ParentType, ContextType, RequireFields<QueryMusicsArgs, 'page'>>;
   node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id'>>;
-  nodes?: Resolver<ReadonlyArray<Maybe<ResolversTypes['Node']>>, ParentType, ContextType, RequireFields<QueryNodesArgs, 'ids'>>;
+  nodes?: Resolver<Array<Maybe<ResolversTypes['Node']>>, ParentType, ContextType, RequireFields<QueryNodesArgs, 'ids'>>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersArgs, 'page'>>;
-};
+}>;
 
-export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
+export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = ResolversObject<{
   startCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   hasNextPage?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   hasPreviousPage?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type EdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Edge'] = ResolversParentTypes['Edge']> = {
+export type EdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Edge'] = ResolversParentTypes['Edge']> = ResolversObject<{
   __resolveType?: TypeResolveFn<'BookConnectionEdge' | 'MovieConnectionEdge' | 'MusicConnectionEdge' | 'UserConnectionEdge', ParentType, ContextType>;
   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   node?: Resolver<ResolversTypes['Node'], ParentType, ContextType>;
-};
+}>;
 
-export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
+export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = ResolversObject<{
   __resolveType?: TypeResolveFn<'Book' | 'Movie' | 'Music' | 'User', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-};
+}>;
 
-export type PriceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Price'] = ResolversParentTypes['Price']> = {
+export type PriceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Price'] = ResolversParentTypes['Price']> = ResolversObject<{
   amount?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   symbol?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type BookConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['BookConnectionEdge'] = ResolversParentTypes['BookConnectionEdge']> = {
+export type BookConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['BookConnectionEdge'] = ResolversParentTypes['BookConnectionEdge']> = ResolversObject<{
   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   node?: Resolver<ResolversTypes['Book'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type BookConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['BookConnection'] = ResolversParentTypes['BookConnection']> = {
-  edges?: Resolver<ReadonlyArray<Maybe<ResolversTypes['BookConnectionEdge']>>, ParentType, ContextType>;
-  nodes?: Resolver<ReadonlyArray<Maybe<ResolversTypes['Book']>>, ParentType, ContextType>;
+export type BookConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['BookConnection'] = ResolversParentTypes['BookConnection']> = ResolversObject<{
+  edges?: Resolver<Array<Maybe<ResolversTypes['BookConnectionEdge']>>, ParentType, ContextType>;
+  nodes?: Resolver<Array<Maybe<ResolversTypes['Book']>>, ParentType, ContextType>;
   pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
   totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type BookResolvers<ContextType = any, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = {
+export type BookResolvers<ContextType = any, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
@@ -650,48 +651,48 @@ export type BookResolvers<ContextType = any, ParentType extends ResolversParentT
   price?: Resolver<ResolversTypes['Price'], ParentType, ContextType>;
   releaseAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type MovieConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['MovieConnectionEdge'] = ResolversParentTypes['MovieConnectionEdge']> = {
+export type MovieConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['MovieConnectionEdge'] = ResolversParentTypes['MovieConnectionEdge']> = ResolversObject<{
   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   node?: Resolver<ResolversTypes['Movie'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type MovieConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MovieConnection'] = ResolversParentTypes['MovieConnection']> = {
-  edges?: Resolver<ReadonlyArray<Maybe<ResolversTypes['MovieConnectionEdge']>>, ParentType, ContextType>;
-  nodes?: Resolver<ReadonlyArray<Maybe<ResolversTypes['Movie']>>, ParentType, ContextType>;
+export type MovieConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MovieConnection'] = ResolversParentTypes['MovieConnection']> = ResolversObject<{
+  edges?: Resolver<Array<Maybe<ResolversTypes['MovieConnectionEdge']>>, ParentType, ContextType>;
+  nodes?: Resolver<Array<Maybe<ResolversTypes['Movie']>>, ParentType, ContextType>;
   pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
   totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type MovieResolvers<ContextType = any, ParentType extends ResolversParentTypes['Movie'] = ResolversParentTypes['Movie']> = {
+export type MovieResolvers<ContextType = any, ParentType extends ResolversParentTypes['Movie'] = ResolversParentTypes['Movie']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   director?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   releaseAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
-  releaseCountry?: Resolver<Maybe<ReadonlyArray<ResolversTypes['String']>>, ParentType, ContextType>;
+  releaseCountry?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type MusicConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['MusicConnectionEdge'] = ResolversParentTypes['MusicConnectionEdge']> = {
+export type MusicConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['MusicConnectionEdge'] = ResolversParentTypes['MusicConnectionEdge']> = ResolversObject<{
   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   node?: Resolver<ResolversTypes['Music'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type MusicConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MusicConnection'] = ResolversParentTypes['MusicConnection']> = {
-  edges?: Resolver<ReadonlyArray<Maybe<ResolversTypes['MusicConnectionEdge']>>, ParentType, ContextType>;
-  nodes?: Resolver<ReadonlyArray<Maybe<ResolversTypes['Music']>>, ParentType, ContextType>;
+export type MusicConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MusicConnection'] = ResolversParentTypes['MusicConnection']> = ResolversObject<{
+  edges?: Resolver<Array<Maybe<ResolversTypes['MusicConnectionEdge']>>, ParentType, ContextType>;
+  nodes?: Resolver<Array<Maybe<ResolversTypes['Music']>>, ParentType, ContextType>;
   pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
   totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type MusicResolvers<ContextType = any, ParentType extends ResolversParentTypes['Music'] = ResolversParentTypes['Music']> = {
+export type MusicResolvers<ContextType = any, ParentType extends ResolversParentTypes['Music'] = ResolversParentTypes['Music']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
@@ -699,23 +700,23 @@ export type MusicResolvers<ContextType = any, ParentType extends ResolversParent
   artist?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   releaseAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type UserConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnectionEdge'] = ResolversParentTypes['UserConnectionEdge']> = {
+export type UserConnectionEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnectionEdge'] = ResolversParentTypes['UserConnectionEdge']> = ResolversObject<{
   cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   node?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type UserConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection']> = {
-  edges?: Resolver<ReadonlyArray<Maybe<ResolversTypes['UserConnectionEdge']>>, ParentType, ContextType>;
-  nodes?: Resolver<ReadonlyArray<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
+export type UserConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection']> = ResolversObject<{
+  edges?: Resolver<Array<Maybe<ResolversTypes['UserConnectionEdge']>>, ParentType, ContextType>;
+  nodes?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
   pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
   totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
@@ -726,32 +727,32 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   birthDay?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   favorites?: Resolver<Maybe<ResolversTypes['Favorites']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type FavoritesResolvers<ContextType = any, ParentType extends ResolversParentTypes['Favorites'] = ResolversParentTypes['Favorites']> = {
-  books?: Resolver<ReadonlyArray<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
-  movies?: Resolver<ReadonlyArray<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
-  musics?: Resolver<ReadonlyArray<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
+export type FavoritesResolvers<ContextType = any, ParentType extends ResolversParentTypes['Favorites'] = ResolversParentTypes['Favorites']> = ResolversObject<{
+  books?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
+  movies?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
+  musics?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type CreateUserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUserPayload'] = ResolversParentTypes['CreateUserPayload']> = {
+export type CreateUserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUserPayload'] = ResolversParentTypes['CreateUserPayload']> = ResolversObject<{
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type CreateUsersPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUsersPayload'] = ResolversParentTypes['CreateUsersPayload']> = {
-  users?: Resolver<Maybe<ReadonlyArray<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+export type CreateUsersPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUsersPayload'] = ResolversParentTypes['CreateUsersPayload']> = ResolversObject<{
+  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type DeleteUserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteUserPayload'] = ResolversParentTypes['DeleteUserPayload']> = {
+export type DeleteUserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteUserPayload'] = ResolversParentTypes['DeleteUserPayload']> = ResolversObject<{
   DeletedUserID?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
+}>;
 
-export type Resolvers<ContextType = any> = {
+export type Resolvers<ContextType = any> = ResolversObject<{
   DateTime?: GraphQLScalarType;
   Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
@@ -777,7 +778,7 @@ export type Resolvers<ContextType = any> = {
   CreateUserPayload?: CreateUserPayloadResolvers<ContextType>;
   CreateUsersPayload?: CreateUsersPayloadResolvers<ContextType>;
   DeleteUserPayload?: DeleteUserPayloadResolvers<ContextType>;
-};
+}>;
 
 
 /**

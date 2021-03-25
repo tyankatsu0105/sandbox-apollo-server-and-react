@@ -1,9 +1,12 @@
 import * as React from 'react';
+import * as ReactRedux from 'react-redux';
+
+import * as Operations from '~client/app/ui/store/domain/users/operations';
 
 export const usePage = () => {
-  React.useEffect(() => {
-    alert('aaa');
-  }, []);
+  const dispatch = ReactRedux.useDispatch();
 
-  throw new Error('aaaaaaaaaaa');
+  React.useEffect(() => {
+    dispatch(Operations.fetchUsers());
+  }, [dispatch]);
 };
