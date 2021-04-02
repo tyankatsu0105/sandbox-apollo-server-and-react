@@ -173,8 +173,8 @@ export type BookConnectionEdge = Edge & {
 };
 
 export type BookConnection = {
-  edges: Array<Maybe<BookConnectionEdge>>;
-  nodes: Array<Maybe<Book>>;
+  edges?: Maybe<Array<BookConnectionEdge>>;
+  nodes?: Maybe<Array<Book>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
@@ -199,8 +199,8 @@ export type MovieConnectionEdge = Edge & {
 };
 
 export type MovieConnection = {
-  edges: Array<Maybe<MovieConnectionEdge>>;
-  nodes: Array<Maybe<Movie>>;
+  edges?: Maybe<Array<MovieConnectionEdge>>;
+  nodes?: Maybe<Array<Movie>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
@@ -225,8 +225,8 @@ export type MusicConnectionEdge = Edge & {
 };
 
 export type MusicConnection = {
-  edges: Array<Maybe<MusicConnectionEdge>>;
-  nodes: Array<Maybe<Music>>;
+  edges?: Maybe<Array<MusicConnectionEdge>>;
+  nodes?: Maybe<Array<Music>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
@@ -249,8 +249,8 @@ export type UserConnectionEdge = Edge & {
 };
 
 export type UserConnection = {
-  edges: Array<Maybe<UserConnectionEdge>>;
-  nodes: Array<Maybe<User>>;
+  edges?: Maybe<Array<UserConnectionEdge>>;
+  nodes?: Maybe<Array<User>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
 };
@@ -326,7 +326,7 @@ export type BooksQueryVariables = Exact<{
 
 export type BooksQuery = { books: (
     Pick<BookConnection, 'totalCount'>
-    & { edges: Array<Maybe<{ node: Pick<Book, 'id' | 'name'> }>> }
+    & { edges?: Maybe<Array<{ node: Pick<Book, 'id' | 'name'> }>> }
   ) };
 
 export type UserQueryVariables = Exact<{
@@ -344,7 +344,7 @@ export type UsersQueryVariables = Exact<{
 
 export type UsersQuery = { users: (
     Pick<UserConnection, 'totalCount'>
-    & { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges: Array<Maybe<(
+    & { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges?: Maybe<Array<(
       Pick<UserConnectionEdge, 'cursor'>
       & { node: (
         Pick<User, 'id' | 'name' | 'birthDay' | 'createdAt'>

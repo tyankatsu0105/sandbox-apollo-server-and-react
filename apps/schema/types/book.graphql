@@ -9,8 +9,8 @@ type BookConnectionEdge implements Edge {
 }
 
 type BookConnection {
-  edges: [BookConnectionEdge]!
-  nodes: [Book]!
+  edges: [BookConnectionEdge!]
+  nodes: [Book!]
   pageInfo: PageInfo!
   totalCount: Int!
 }

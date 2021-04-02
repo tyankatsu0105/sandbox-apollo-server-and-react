@@ -1,4 +1,6 @@
 import * as Entity from '~client/app/application/businesses/users/entity';
+import * as UtilityTypes from '~client/app/application/shared/utility-types';
+import * as Connection from '~client/app/application/types/connection';
 import * as Status from '~client/app/ui/store/status';
 
 // ==================================================
@@ -6,8 +8,10 @@ import * as Status from '~client/app/ui/store/status';
 // ==================================================
 
 export type State = {
-  data: Entity.Data;
+  entities: UtilityTypes.Entities<Entity.User>['entities'];
+  ids: UtilityTypes.Entities<Entity.User>['ids'];
   status: Status.Status;
+  totalCount: Connection.TotalCount;
 };
 
 // ==================================================
@@ -17,6 +21,6 @@ export type State = {
 export type Payload = {
   action: {};
   operation: {
-    fetchUsers: Entity.Data;
+    fetchUsers: Entity.User[] | null;
   };
 };

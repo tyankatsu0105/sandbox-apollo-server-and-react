@@ -15,8 +15,8 @@ type UserConnectionEdge implements Edge {
 }
 
 type UserConnection {
-  edges: [UserConnectionEdge]!
-  nodes: [User]!
+  edges: [UserConnectionEdge!]
+  nodes: [User!]
   pageInfo: PageInfo!
   totalCount: Int!
 }

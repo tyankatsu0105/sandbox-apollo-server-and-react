@@ -11,19 +11,14 @@ import * as Types from './types';
 // Setups
 // ==================================================
 
-export const initialState: Types.State = {
-  data: {
-    edges: [],
-    pageInfo: {
-      endCursor: '',
-      hasNextPage: false,
-      hasPreviousPage: false,
-      startCursor: '',
-    },
-    totalCount: 0,
-  },
+export const adapter = ReduxToolkit.createEntityAdapter<Entity.User>({
+  selectId: (user) => user.id,
+});
+
+export const initialState: Types.State = adapter.getInitialState({
   status: Status.status.PRISTINE,
-};
+  totalCount: 0,
+});
 
 const name = `${Constants.parentsKey}/${Constants.featureKey}`;
 
@@ -39,7 +34,7 @@ const slice = ReduxToolkit.createSlice({
       })
       .addCase(Operations.fetchUsers.fulfilled, (state, action) => {
         state.status = Status.status.SUCCESS;
-        state.data = new Entity.Entity(action.payload).data;
+        if (action.payload) adapter.addMany(state, action.payload);
       })
       .addCase(Operations.fetchUsers.rejected, (state, action) => {
         state.status = Status.status.INVALID;

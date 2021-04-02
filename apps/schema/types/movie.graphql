@@ -9,8 +9,8 @@ type MovieConnectionEdge implements Edge {
 }
 
 type MovieConnection {
-  edges: [MovieConnectionEdge]!
-  nodes: [Movie]!
+  edges: [MovieConnectionEdge!]
+  nodes: [Movie!]
   pageInfo: PageInfo!
   totalCount: Int!
 }

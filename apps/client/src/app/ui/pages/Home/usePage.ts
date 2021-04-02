@@ -1,12 +1,14 @@
 import * as React from 'react';
 import * as ReactRedux from 'react-redux';
 
-import * as Operations from '~client/app/ui/store/domain/users/operations';
+import * as StoreUsers from '~client/app/ui/store/domain/users';
 
 export const usePage = () => {
   const dispatch = ReactRedux.useDispatch();
+  const hoge = ReactRedux.useSelector(StoreUsers.entitiesSelector);
+  console.log(hoge);
 
   React.useEffect(() => {
-    dispatch(Operations.fetchUsers());
+    dispatch(StoreUsers.fetchUsers());
   }, [dispatch]);
 };
