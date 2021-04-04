@@ -1,0 +1,5 @@
+- index.ts ... lazy で包むところ
+- page.ts ... page 固有の情報（routing とか）を処理して container に渡すところ
+- usePage.ts ... page で利用する色んな情報やロジックを返すところ
+- container.ts ... page.ts や usePage.ts で取得した色んなものを presentational にわたすところ
+- presentational.ts ... container から渡ってきたものをコンポーネントに渡すところ layout を決めるところでもある

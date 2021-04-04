@@ -1,13 +1,11 @@
 import * as React from 'react';
 
-import * as Container from './container';
+import * as Presentational from './presentational';
 
 // ------------------------------------
 // Component
 // ------------------------------------
 
-const Component = () => {
-  return <Container.Component />;
+export const Component = () => {
+  return <Presentational.Component />;
 };
-
-export default Component;

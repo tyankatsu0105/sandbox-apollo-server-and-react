@@ -36,6 +36,7 @@
     "document-register-element": "1.13.1",
     "express": "4.17.1",
     "graphql": "15.5.0",
+    "minireset.css": "0.0.7",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-is": "17.0.1",
@@ -83,8 +84,8 @@
     "@types/react-router": "^5.1.12",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "5.1.4",
-    "@typescript-eslint/eslint-plugin": "4.3.0",
-    "@typescript-eslint/parser": "4.3.0",
+    "@typescript-eslint/eslint-plugin": "4.20.0",
+    "@typescript-eslint/parser": "4.20.0",
     "apollo-server-express": "2.21.0",
     "babel-jest": "26.2.2",
     "babel-plugin-styled-components": "1.10.7",
@@ -109,6 +110,6 @@
     "prettier": "2.2.1",
     "ts-jest": "26.4.0",
     "ts-node": "~9.1.1",
-    "typescript": "~4.0.3"
+    "typescript": "~4.1.0"
   }
 }
