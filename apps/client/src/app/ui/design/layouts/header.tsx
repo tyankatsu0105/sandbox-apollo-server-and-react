@@ -28,7 +28,6 @@ export const Component = () => (
         </StyledNavListItem>
         <StyledNavListItem>
           <StyledNavListItemLink
-            exact
             activeClassName={activeClassName}
             to={RoutesEntity.URI.users}
           >

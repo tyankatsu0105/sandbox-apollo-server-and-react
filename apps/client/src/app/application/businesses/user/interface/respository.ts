@@ -1,5 +1,5 @@
 import * as Entity from '../entity';
 
-export interface UsersRepository {
-  toEntityUsers: Entity.User[] | null;
+export interface UserRepository {
+  toEntityUser: Entity.User | null;
 }

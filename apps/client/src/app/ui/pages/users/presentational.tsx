@@ -8,6 +8,7 @@ import * as SharedTypes from '~client/app/ui/shared/types';
 // ------------------------------------
 // Props
 // ------------------------------------
+
 type Props = {
   routeMatch: ReactRouter.match<
     SharedTypes.Routes.GetParams<typeof RoutesEntity.URI.users>

@@ -4,31 +4,29 @@ import * as Scalars from '~client/app/application/types/scalars';
 import * as Entity from './entity';
 import * as Interface from './interface';
 
-export class UsersRepository implements Interface.UsersRepository {
-  constructor(public data: GraphQLTypes.UsersQuery) {}
+export class UserRepository implements Interface.UserRepository {
+  constructor(public data: GraphQLTypes.UserQuery) {}
 
-  get toEntityUsers(): Entity.User[] | null {
-    if (this.data.users.edges == null) return null;
+  get toEntityUser(): Entity.User | null {
+    if (this.data.node == null) return null;
 
-    return this.data.users.edges.map((edge) => {
-      return {
-        birthDay:
-          edge.node.birthDay != null
-            ? new Scalars.ScalarDate(edge.node.birthDay).getFormattedValue(
-                'yyyy-MM-dd'
-              )
-            : null,
-        createdAt: new Scalars.ScalarDateTime(
-          edge.node.createdAt
-        ).getFormattedValue('yyyy-MM-dd HH:mm'),
-        favorites: {
-          books: edge.node.favorites?.books,
-          movies: edge.node.favorites?.movies,
-          musics: edge.node.favorites?.musics,
-        },
-        id: new Scalars.ScalarID(edge.node.id).id,
-        name: edge.node.name,
-      };
-    });
+    return {
+      birthDay:
+        this.data.node.birthDay != null
+          ? new Scalars.ScalarDate(this.data.node.birthDay).getFormattedValue(
+              'yyyy-MM-dd'
+            )
+          : null,
+      createdAt: new Scalars.ScalarDateTime(
+        this.data.node.createdAt
+      ).getFormattedValue('yyyy-MM-dd HH:mm'),
+      favorites: {
+        books: this.data.node.favorites?.books,
+        movies: this.data.node.favorites?.movies,
+        musics: this.data.node.favorites?.musics,
+      },
+      id: new Scalars.ScalarID(this.data.node.id).id,
+      name: this.data.node.name,
+    };
   }
 }

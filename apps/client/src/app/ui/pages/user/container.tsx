@@ -10,10 +10,9 @@ import { usePage } from './usePage';
 // ------------------------------------
 // Props
 // ------------------------------------
-
 type Props = {
   routeMatch: ReactRouter.match<
-    SharedTypes.Routes.GetParams<typeof RoutesEntity.URI.users>
+    SharedTypes.Routes.GetParams<typeof RoutesEntity.URI.user>
   >;
 };
 
@@ -22,9 +21,7 @@ type Props = {
 // ------------------------------------
 
 export const Component = (props: Props) => {
-  const { users } = usePage();
+  const { user } = usePage({ userID: props.routeMatch.params.userID });
 
-  return (
-    <Presentational.Component routeMatch={props.routeMatch} users={users} />
-  );
+  return <Presentational.Component routeMatch={props.routeMatch} user={user} />;
 };
