@@ -12,13 +12,6 @@ query Users($page: PaginationInput!, $ids: [ID!]) {
       node {
         id
         name
-        birthDay
-        createdAt
-        favorites {
-          books
-          movies
-          musics
-        }
       }
     }
   }

@@ -12,15 +12,15 @@ export type Scalars = {
   Int: number;
   Float: number;
   /**
-   * ISO 8601準拠 YYYY-MM-DDTHH:mm:ss.sssZ
-   * ex: 2011-10-05T14:48:00.000Z
-   */
-  DateTime: string;
-  /**
    * YYYY-MM-DD
    * ex: 2020-01-01
    */
   Date: string;
+  /**
+   * ISO 8601準拠 YYYY-MM-DDTHH:mm:ss.sssZ
+   * ex: 2011-10-05T14:48:00.000Z
+   */
+  DateTime: string;
 };
 
 /** 血液型 */
@@ -32,7 +32,120 @@ export const Blood = {
 } as const;
 
 export type Blood = typeof Blood[keyof typeof Blood];
+export type Book = Node & {
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** 名前 */
+  name: Scalars['String'];
+  /** 著者 */
+  author: Scalars['String'];
+  /** 金額 */
+  price: Price;
+  /** 発売日 */
+  releaseAt: Scalars['Date'];
+};
 
+export type BookConnection = {
+  edges?: Maybe<Array<BookConnectionEdge>>;
+  nodes?: Maybe<Array<Book>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type BookConnectionEdge = Edge & {
+  cursor: Scalars['String'];
+  node: Book;
+};
+
+export type CreateUserInput = {
+  /** 名前 */
+  name: Scalars['String'];
+  /** 年齢 */
+  age: Scalars['Int'];
+  /** 血液型 */
+  blood: Blood;
+};
+
+export type CreateUserPayload = {
+  user?: Maybe<User>;
+};
+
+export type CreateUsersPayload = {
+  users?: Maybe<Array<Maybe<User>>>;
+};
+
+
+
+export type DeleteUserInput = {
+  userID: Scalars['ID'];
+};
+
+export type DeleteUserPayload = {
+  DeletedUserID: Scalars['ID'];
+  user?: Maybe<User>;
+};
+
+export type Edge = {
+  cursor: Scalars['String'];
+  node: Node;
+};
+
+export type Favorites = {
+  books?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  musics?: Maybe<Array<Maybe<Scalars['ID']>>>;
+};
+
+export type Movie = Node & {
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** 名前 */
+  name: Scalars['String'];
+  /** 映画監督 */
+  director: Scalars['String'];
+  /** 公開日 */
+  releaseAt: Scalars['Date'];
+  /** 公開地域 */
+  releaseCountry?: Maybe<Array<Scalars['String']>>;
+};
+
+export type MovieConnection = {
+  edges?: Maybe<Array<MovieConnectionEdge>>;
+  nodes?: Maybe<Array<Movie>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type MovieConnectionEdge = Edge & {
+  cursor: Scalars['String'];
+  node: Movie;
+};
+
+export type Music = Node & {
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  /** 楽曲名 */
+  name: Scalars['String'];
+  /** アーティスト名 */
+  artist: Scalars['String'];
+  /** 公開日 */
+  releaseAt: Scalars['Date'];
+};
+
+export type MusicConnection = {
+  edges?: Maybe<Array<MusicConnectionEdge>>;
+  nodes?: Maybe<Array<Music>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type MusicConnectionEdge = Edge & {
+  cursor: Scalars['String'];
+  node: Music;
+};
 
 export type Mutation = {
   createUser: CreateUserPayload;
@@ -62,12 +175,37 @@ export type MutationNoopArgs = {
   input?: Maybe<NoopInput>;
 };
 
+export type Node = {
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
 export type NoopInput = {
   clientMutationId?: Maybe<Scalars['String']>;
 };
 
 export type NoopPayload = {
   clientMutationId?: Maybe<Scalars['String']>;
+};
+
+export type PageInfo = {
+  startCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']>;
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  hasPreviousPage?: Maybe<Scalars['Boolean']>;
+};
+
+export type PaginationInput = {
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+};
+
+export type Price = {
+  amount: Scalars['Float'];
+  symbol: Scalars['String'];
 };
 
 export type Query = {
@@ -137,124 +275,6 @@ export type QueryUsersArgs = {
   ids?: Maybe<Array<Scalars['ID']>>;
 };
 
-export type PageInfo = {
-  startCursor?: Maybe<Scalars['String']>;
-  endCursor?: Maybe<Scalars['String']>;
-  hasNextPage?: Maybe<Scalars['Boolean']>;
-  hasPreviousPage?: Maybe<Scalars['Boolean']>;
-};
-
-export type PaginationInput = {
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-};
-
-export type Edge = {
-  cursor: Scalars['String'];
-  node: Node;
-};
-
-export type Node = {
-  id: Scalars['ID'];
-  createdAt: Scalars['DateTime'];
-  updatedAt?: Maybe<Scalars['DateTime']>;
-};
-
-export type Price = {
-  amount: Scalars['Float'];
-  symbol: Scalars['String'];
-};
-
-export type BookConnectionEdge = Edge & {
-  cursor: Scalars['String'];
-  node: Book;
-};
-
-export type BookConnection = {
-  edges?: Maybe<Array<BookConnectionEdge>>;
-  nodes?: Maybe<Array<Book>>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
-};
-
-export type Book = Node & {
-  id: Scalars['ID'];
-  createdAt: Scalars['DateTime'];
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  /** 名前 */
-  name: Scalars['String'];
-  /** 著者 */
-  author: Scalars['String'];
-  /** 金額 */
-  price: Price;
-  /** 発売日 */
-  releaseAt: Scalars['Date'];
-};
-
-export type MovieConnectionEdge = Edge & {
-  cursor: Scalars['String'];
-  node: Movie;
-};
-
-export type MovieConnection = {
-  edges?: Maybe<Array<MovieConnectionEdge>>;
-  nodes?: Maybe<Array<Movie>>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
-};
-
-export type Movie = Node & {
-  id: Scalars['ID'];
-  createdAt: Scalars['DateTime'];
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  /** 名前 */
-  name: Scalars['String'];
-  /** 映画監督 */
-  director: Scalars['String'];
-  /** 公開日 */
-  releaseAt: Scalars['Date'];
-  /** 公開地域 */
-  releaseCountry?: Maybe<Array<Scalars['String']>>;
-};
-
-export type MusicConnectionEdge = Edge & {
-  cursor: Scalars['String'];
-  node: Music;
-};
-
-export type MusicConnection = {
-  edges?: Maybe<Array<MusicConnectionEdge>>;
-  nodes?: Maybe<Array<Music>>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
-};
-
-export type Music = Node & {
-  id: Scalars['ID'];
-  createdAt: Scalars['DateTime'];
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  /** 楽曲名 */
-  name: Scalars['String'];
-  /** アーティスト名 */
-  artist: Scalars['String'];
-  /** 公開日 */
-  releaseAt: Scalars['Date'];
-};
-
-export type UserConnectionEdge = Edge & {
-  cursor: Scalars['String'];
-  node: User;
-};
-
-export type UserConnection = {
-  edges?: Maybe<Array<UserConnectionEdge>>;
-  nodes?: Maybe<Array<User>>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
-};
-
 export type User = Node & {
   id: Scalars['ID'];
   createdAt: Scalars['DateTime'];
@@ -272,36 +292,16 @@ export type User = Node & {
   favorites?: Maybe<Favorites>;
 };
 
-export type Favorites = {
-  books?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  musics?: Maybe<Array<Maybe<Scalars['ID']>>>;
+export type UserConnection = {
+  edges?: Maybe<Array<UserConnectionEdge>>;
+  nodes?: Maybe<Array<User>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
 };
 
-export type CreateUserInput = {
-  /** 名前 */
-  name: Scalars['String'];
-  /** 年齢 */
-  age: Scalars['Int'];
-  /** 血液型 */
-  blood: Blood;
-};
-
-export type CreateUserPayload = {
-  user?: Maybe<User>;
-};
-
-export type CreateUsersPayload = {
-  users?: Maybe<Array<Maybe<User>>>;
-};
-
-export type DeleteUserInput = {
-  userID: Scalars['ID'];
-};
-
-export type DeleteUserPayload = {
-  DeletedUserID: Scalars['ID'];
-  user?: Maybe<User>;
+export type UserConnectionEdge = Edge & {
+  cursor: Scalars['String'];
+  node: User;
 };
 
 export type CreateUserMutationVariables = Exact<{
@@ -334,7 +334,10 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { node?: Maybe<Pick<User, 'id' | 'name'>> };
+export type UserQuery = { node?: Maybe<(
+    Pick<User, 'id' | 'name' | 'birthDay' | 'createdAt'>
+    & { favorites?: Maybe<Pick<Favorites, 'books' | 'movies' | 'musics'>> }
+  )> };
 
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
@@ -346,10 +349,7 @@ export type UsersQuery = { users: (
     Pick<UserConnection, 'totalCount'>
     & { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges?: Maybe<Array<(
       Pick<UserConnectionEdge, 'cursor'>
-      & { node: (
-        Pick<User, 'id' | 'name' | 'birthDay' | 'createdAt'>
-        & { favorites?: Maybe<Pick<Favorites, 'books' | 'movies' | 'musics'>> }
-      ) }
+      & { node: Pick<User, 'id' | 'name'> }
     )>> }
   ) };
 
@@ -404,6 +404,13 @@ export const UserDocument = gql`
     ... on User {
       id
       name
+      birthDay
+      createdAt
+      favorites {
+        books
+        movies
+        musics
+      }
     }
   }
 }
@@ -427,13 +434,6 @@ export const UsersDocument = gql`
       node {
         id
         name
-        birthDay
-        createdAt
-        favorites {
-          books
-          movies
-          musics
-        }
       }
     }
   }

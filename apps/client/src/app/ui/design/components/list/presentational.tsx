@@ -13,4 +13,6 @@ export const Component: React.FC = (props) => (
 // Styles
 // ------------------------------------
 
-const StyledWrap = styled.div``;
+const StyledWrap = styled.div`
+  display: flex;
+`;

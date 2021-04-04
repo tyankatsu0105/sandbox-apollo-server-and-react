@@ -3,6 +3,13 @@ query User($id: ID!) {
     ... on User {
       id
       name
+      birthDay
+      createdAt
+      favorites {
+        books
+        movies
+        musics
+      }
     }
   }
 }
