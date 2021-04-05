@@ -29,11 +29,12 @@ export const Component = (props: Props) => (
 
 const StyledWrap = styled.div`
   box-shadow: 0 0 6px #ccc;
+  border-radius: 6px;
 `;
 
 const StyledHeader = styled.div`
   padding: 12px;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #eee;
 `;
 
 const StyledBody = styled.div`
@@ -42,4 +43,5 @@ const StyledBody = styled.div`
 
 const StyledFooter = styled.div`
   padding: 12px;
+  border-top: 1px solid #eee;
 `;
