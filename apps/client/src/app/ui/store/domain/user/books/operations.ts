@@ -10,28 +10,6 @@ import * as Types from './types';
 
 const name = `${Constants.parentsKey}/${Constants.featureKey}`;
 
-export const fetchUser = createAsyncThunk<
-  Types.Payload['operation']['fetchUser'],
-  {
-    id: Entity.User['id'];
-  },
-  AsyncThunkConfig<{ message: string }>
->(`${name}/fetchUser`, async (args, thunkAPI) => {
-  try {
-    const { data } = await thunkAPI.extra.api.query<
-      GraphQLTypes.UserQuery,
-      GraphQLTypes.UserQueryVariables
-    >({
-      query: GraphQLTypes.UserDocument,
-      variables: { id: args.id },
-    });
-
-    return new Repository.UserRepository(data).toEntityUser;
-  } catch (error) {
-    return thunkAPI.rejectWithValue({ message: error.message });
-  }
-});
-
 export const fetchBooks = createAsyncThunk<
   Types.Payload['operation']['fetchBooks'],
   {
@@ -44,7 +22,7 @@ export const fetchBooks = createAsyncThunk<
       GraphQLTypes.UserFavoriteBooksQuery,
       GraphQLTypes.UserFavoriteBooksQueryVariables
     >({
-      query: GraphQLTypes.UserDocument,
+      query: GraphQLTypes.UserFavoriteBooksDocument,
       variables: { ids: args.ids, page: { first: args.ids.length } },
     });
 

@@ -1,10 +1,8 @@
 import * as ReduxToolkit from '@reduxjs/toolkit';
 
 import * as Entity from '~client/app/application/businesses/user/entity';
-import * as Connection from '~client/app/application/types/connection';
 import * as Status from '~client/app/ui/store/status';
 
-import * as Books from './books';
 import * as Constants from './constants';
 import * as Operations from './operations';
 import * as Types from './types';
@@ -13,18 +11,16 @@ import * as Types from './types';
 // Setups
 // ==================================================
 
-export const initialState: Types.FeatureState = {
-  birthDay: '',
-  createdAt: '',
-  favorites: {
-    books: [],
-    movies: [],
-    musics: [],
-  },
-  id: '',
-  name: '',
+export const adapter = ReduxToolkit.createEntityAdapter<Entity.Book>({
+  selectId: (book) => book.id,
+});
+
+export const initialState = adapter.getInitialState<
+  Omit<Types.State, 'entities' | 'ids'>
+>({
+  pageInfo: {},
   status: Status.status.PRISTINE,
-};
+});
 
 const name = `${Constants.parentsKey}/${Constants.featureKey}`;
 
@@ -35,32 +31,24 @@ const name = `${Constants.parentsKey}/${Constants.featureKey}`;
 const slice = ReduxToolkit.createSlice({
   extraReducers: (builder) => {
     builder
-      .addCase(Operations.fetchUser.pending, (state, action) => {
+      .addCase(Operations.fetchBooks.pending, (state) => {
         state.status = Status.status.SUBMITTING;
       })
-      .addCase(Operations.fetchUser.fulfilled, (state, action) => {
+      .addCase(Operations.fetchBooks.fulfilled, (state, action) => {
         state.status = Status.status.SUCCESS;
         if (!action.payload) return;
 
-        state.id = action.payload.id;
-        state.name = action.payload.name;
-        state.birthDay = action.payload.birthDay;
-        state.createdAt = action.payload.createdAt;
-        state.favorites = action.payload.favorites;
+        state.pageInfo = action.payload.pageInfo;
+        adapter.addMany(state, action.payload.nodes);
       })
-      .addCase(Operations.fetchUser.rejected, (state, action) => {
+      .addCase(Operations.fetchBooks.rejected, (state, action) => {
         state.status = Status.status.INVALID;
         if (action.payload) alert(action.payload.message);
       });
   },
-  initialState: initialState as Types.FeatureState,
+  initialState,
   name,
   reducers: {},
 });
 
-export const { actions } = slice;
-
-export const reducer = ReduxToolkit.combineReducers({
-  books: Books.reducer,
-  info: slice.reducer,
-});
+export const { actions, reducer } = slice;

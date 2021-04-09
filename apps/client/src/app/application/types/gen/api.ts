@@ -339,6 +339,39 @@ export type UserQuery = { node?: Maybe<(
     & { favorites?: Maybe<Pick<Favorites, 'books' | 'movies' | 'musics'>> }
   )> };
 
+export type UserFavoriteBooksQueryVariables = Exact<{
+  ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+  page: PaginationInput;
+}>;
+
+
+export type UserFavoriteBooksQuery = { books: { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges?: Maybe<Array<(
+      Pick<BookConnectionEdge, 'cursor'>
+      & { node: Pick<Book, 'id' | 'name'> }
+    )>> } };
+
+export type UserFavoriteMoviesQueryVariables = Exact<{
+  ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+  page: PaginationInput;
+}>;
+
+
+export type UserFavoriteMoviesQuery = { books: { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges?: Maybe<Array<(
+      Pick<BookConnectionEdge, 'cursor'>
+      & { node: Pick<Book, 'id' | 'name'> }
+    )>> } };
+
+export type UserFavoriteMusicsQueryVariables = Exact<{
+  ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+  page: PaginationInput;
+}>;
+
+
+export type UserFavoriteMusicsQuery = { books: { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges?: Maybe<Array<(
+      Pick<BookConnectionEdge, 'cursor'>
+      & { node: Pick<Book, 'id' | 'name'> }
+    )>> } };
+
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
   ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
@@ -418,6 +451,75 @@ export const UserDocument = gql`
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
 export function refetchUserQuery(variables?: UserQueryVariables) {
       return { query: UserDocument, variables: variables }
+    }
+export const UserFavoriteBooksDocument = gql`
+    query UserFavoriteBooks($ids: [ID!], $page: PaginationInput!) {
+  books(ids: $ids, page: $page) {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+    edges {
+      cursor
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export type UserFavoriteBooksQueryResult = Apollo.QueryResult<UserFavoriteBooksQuery, UserFavoriteBooksQueryVariables>;
+export function refetchUserFavoriteBooksQuery(variables?: UserFavoriteBooksQueryVariables) {
+      return { query: UserFavoriteBooksDocument, variables: variables }
+    }
+export const UserFavoriteMoviesDocument = gql`
+    query UserFavoriteMovies($ids: [ID!], $page: PaginationInput!) {
+  books(ids: $ids, page: $page) {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+    edges {
+      cursor
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export type UserFavoriteMoviesQueryResult = Apollo.QueryResult<UserFavoriteMoviesQuery, UserFavoriteMoviesQueryVariables>;
+export function refetchUserFavoriteMoviesQuery(variables?: UserFavoriteMoviesQueryVariables) {
+      return { query: UserFavoriteMoviesDocument, variables: variables }
+    }
+export const UserFavoriteMusicsDocument = gql`
+    query UserFavoriteMusics($ids: [ID!], $page: PaginationInput!) {
+  books(ids: $ids, page: $page) {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+    edges {
+      cursor
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export type UserFavoriteMusicsQueryResult = Apollo.QueryResult<UserFavoriteMusicsQuery, UserFavoriteMusicsQueryVariables>;
+export function refetchUserFavoriteMusicsQuery(variables?: UserFavoriteMusicsQueryVariables) {
+      return { query: UserFavoriteMusicsDocument, variables: variables }
     }
 export const UsersDocument = gql`
     query Users($page: PaginationInput!, $ids: [ID!]) {

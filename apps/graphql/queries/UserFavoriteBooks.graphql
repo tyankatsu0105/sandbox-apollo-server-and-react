@@ -1,0 +1,18 @@
+query UserFavoriteBooks($ids: [ID!], $page: PaginationInput!) {
+  books(ids: $ids, page: $page) {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
+
+    edges {
+      cursor
+      node {
+        id
+        name
+      }
+    }
+  }
+}

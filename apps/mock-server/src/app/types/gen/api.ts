@@ -392,6 +392,78 @@ export type UserQuery = (
   )> }
 );
 
+export type UserFavoriteBooksQueryVariables = Exact<{
+  ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+  page: PaginationInput;
+}>;
+
+
+export type UserFavoriteBooksQuery = (
+  { __typename?: 'Query' }
+  & { books: (
+    { __typename?: 'BookConnection' }
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+    ), edges?: Maybe<Array<(
+      { __typename?: 'BookConnectionEdge' }
+      & Pick<BookConnectionEdge, 'cursor'>
+      & { node: (
+        { __typename?: 'Book' }
+        & Pick<Book, 'id' | 'name'>
+      ) }
+    )>> }
+  ) }
+);
+
+export type UserFavoriteMoviesQueryVariables = Exact<{
+  ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+  page: PaginationInput;
+}>;
+
+
+export type UserFavoriteMoviesQuery = (
+  { __typename?: 'Query' }
+  & { books: (
+    { __typename?: 'BookConnection' }
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+    ), edges?: Maybe<Array<(
+      { __typename?: 'BookConnectionEdge' }
+      & Pick<BookConnectionEdge, 'cursor'>
+      & { node: (
+        { __typename?: 'Book' }
+        & Pick<Book, 'id' | 'name'>
+      ) }
+    )>> }
+  ) }
+);
+
+export type UserFavoriteMusicsQueryVariables = Exact<{
+  ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;
+  page: PaginationInput;
+}>;
+
+
+export type UserFavoriteMusicsQuery = (
+  { __typename?: 'Query' }
+  & { books: (
+    { __typename?: 'BookConnection' }
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+    ), edges?: Maybe<Array<(
+      { __typename?: 'BookConnectionEdge' }
+      & Pick<BookConnectionEdge, 'cursor'>
+      & { node: (
+        { __typename?: 'Book' }
+        & Pick<Book, 'id' | 'name'>
+      ) }
+    )>> }
+  ) }
+);
+
 export type UsersQueryVariables = Exact<{
   page: PaginationInput;
   ids?: Maybe<Array<Scalars['ID']> | Scalars['ID']>;

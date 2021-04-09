@@ -30,3 +30,17 @@ export class UserRepository implements Interface.UserRepository {
     };
   }
 }
+
+export class UserFavoriteBooksRepository
+  implements Interface.UserFavoriteBooksRepository {
+  constructor(public data: GraphQLTypes.UserFavoriteBooksQuery) {}
+
+  get toEntityUserFavoriteBooks() {
+    if (this.data.books.edges == null) return null;
+
+    return {
+      nodes: this.data.books.edges.map((edge) => edge.node),
+      pageInfo: this.data.books.pageInfo,
+    };
+  }
+}
