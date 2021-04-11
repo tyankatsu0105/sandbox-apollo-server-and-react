@@ -21,7 +21,17 @@ type Props = {
 // ------------------------------------
 
 export const Component = (props: Props) => {
-  const { user } = usePage({ userID: props.routeMatch.params.userID });
+  const { books, movies, musics, user } = usePage({
+    userID: props.routeMatch.params.userID,
+  });
 
-  return <Presentational.Component routeMatch={props.routeMatch} user={user} />;
+  return (
+    <Presentational.Component
+      books={books}
+      movies={movies}
+      musics={musics}
+      routeMatch={props.routeMatch}
+      user={user}
+    />
+  );
 };

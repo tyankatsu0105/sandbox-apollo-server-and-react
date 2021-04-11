@@ -10,6 +10,9 @@ import * as Components from '../../components';
 // ------------------------------------
 
 type Props = {
+  books: Entity.Book[];
+  movies: Entity.Music[];
+  musics: Entity.Movie[];
   user: Entity.User;
 };
 
@@ -27,24 +30,24 @@ export const Component = (props: Props) => (
             <li>
               <ul>
                 book
-                {props.user.favorites?.books?.map((book) => (
-                  <li key={book}>{book}</li>
+                {props.books.map((book) => (
+                  <li key={book.id}>{book.name}</li>
                 ))}
               </ul>
             </li>
             <li>
               <ul>
                 movie
-                {props.user.favorites?.movies?.map((movie) => (
-                  <li key={movie}>{movie}</li>
+                {props.movies.map((movie) => (
+                  <li key={movie.id}>{movie.name}</li>
                 ))}
               </ul>
             </li>
             <li>
               <ul>
                 music
-                {props.user.favorites?.musics?.map((music) => (
-                  <li key={music}>{music}</li>
+                {props.musics.map((music) => (
+                  <li key={music.id}>{music.name}</li>
                 ))}
               </ul>
             </li>

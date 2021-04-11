@@ -1,5 +1,5 @@
 query UserFavoriteMovies($ids: [ID!], $page: PaginationInput!) {
-  books(ids: $ids, page: $page) {
+  movies(ids: $ids, page: $page) {
     pageInfo {
       startCursor
       endCursor

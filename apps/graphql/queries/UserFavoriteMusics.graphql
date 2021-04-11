@@ -1,5 +1,5 @@
 query UserFavoriteMusics($ids: [ID!], $page: PaginationInput!) {
-  books(ids: $ids, page: $page) {
+  musics(ids: $ids, page: $page) {
     pageInfo {
       startCursor
       endCursor

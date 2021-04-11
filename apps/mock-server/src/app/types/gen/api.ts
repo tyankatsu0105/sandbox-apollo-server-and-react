@@ -424,17 +424,17 @@ export type UserFavoriteMoviesQueryVariables = Exact<{
 
 export type UserFavoriteMoviesQuery = (
   { __typename?: 'Query' }
-  & { books: (
-    { __typename?: 'BookConnection' }
+  & { movies: (
+    { __typename?: 'MovieConnection' }
     & { pageInfo: (
       { __typename?: 'PageInfo' }
       & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
     ), edges?: Maybe<Array<(
-      { __typename?: 'BookConnectionEdge' }
-      & Pick<BookConnectionEdge, 'cursor'>
+      { __typename?: 'MovieConnectionEdge' }
+      & Pick<MovieConnectionEdge, 'cursor'>
       & { node: (
-        { __typename?: 'Book' }
-        & Pick<Book, 'id' | 'name'>
+        { __typename?: 'Movie' }
+        & Pick<Movie, 'id' | 'name'>
       ) }
     )>> }
   ) }
@@ -448,17 +448,17 @@ export type UserFavoriteMusicsQueryVariables = Exact<{
 
 export type UserFavoriteMusicsQuery = (
   { __typename?: 'Query' }
-  & { books: (
-    { __typename?: 'BookConnection' }
+  & { musics: (
+    { __typename?: 'MusicConnection' }
     & { pageInfo: (
       { __typename?: 'PageInfo' }
       & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
     ), edges?: Maybe<Array<(
-      { __typename?: 'BookConnectionEdge' }
-      & Pick<BookConnectionEdge, 'cursor'>
+      { __typename?: 'MusicConnectionEdge' }
+      & Pick<MusicConnectionEdge, 'cursor'>
       & { node: (
-        { __typename?: 'Book' }
-        & Pick<Book, 'id' | 'name'>
+        { __typename?: 'Music' }
+        & Pick<Music, 'id' | 'name'>
       ) }
     )>> }
   ) }

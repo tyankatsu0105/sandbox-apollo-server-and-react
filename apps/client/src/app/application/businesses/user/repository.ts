@@ -44,3 +44,31 @@ export class UserFavoriteBooksRepository
     };
   }
 }
+
+export class UserFavoriteMoviesRepository
+  implements Interface.UserFavoriteMoviesRepository {
+  constructor(public data: GraphQLTypes.UserFavoriteMoviesQuery) {}
+
+  get toEntityUserFavoriteMovies() {
+    if (this.data.movies.edges == null) return null;
+
+    return {
+      nodes: this.data.movies.edges.map((edge) => edge.node),
+      pageInfo: this.data.movies.pageInfo,
+    };
+  }
+}
+
+export class UserFavoriteMusicsRepository
+  implements Interface.UserFavoriteMusicsRepository {
+  constructor(public data: GraphQLTypes.UserFavoriteMusicsQuery) {}
+
+  get toEntityUserFavoriteMusics() {
+    if (this.data.musics.edges == null) return null;
+
+    return {
+      nodes: this.data.musics.edges.map((edge) => edge.node),
+      pageInfo: this.data.musics.pageInfo,
+    };
+  }
+}

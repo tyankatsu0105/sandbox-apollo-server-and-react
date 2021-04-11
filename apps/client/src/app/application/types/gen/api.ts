@@ -356,9 +356,9 @@ export type UserFavoriteMoviesQueryVariables = Exact<{
 }>;
 
 
-export type UserFavoriteMoviesQuery = { books: { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges?: Maybe<Array<(
-      Pick<BookConnectionEdge, 'cursor'>
-      & { node: Pick<Book, 'id' | 'name'> }
+export type UserFavoriteMoviesQuery = { movies: { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges?: Maybe<Array<(
+      Pick<MovieConnectionEdge, 'cursor'>
+      & { node: Pick<Movie, 'id' | 'name'> }
     )>> } };
 
 export type UserFavoriteMusicsQueryVariables = Exact<{
@@ -367,9 +367,9 @@ export type UserFavoriteMusicsQueryVariables = Exact<{
 }>;
 
 
-export type UserFavoriteMusicsQuery = { books: { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges?: Maybe<Array<(
-      Pick<BookConnectionEdge, 'cursor'>
-      & { node: Pick<Book, 'id' | 'name'> }
+export type UserFavoriteMusicsQuery = { musics: { pageInfo: Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>, edges?: Maybe<Array<(
+      Pick<MusicConnectionEdge, 'cursor'>
+      & { node: Pick<Music, 'id' | 'name'> }
     )>> } };
 
 export type UsersQueryVariables = Exact<{
@@ -477,7 +477,7 @@ export function refetchUserFavoriteBooksQuery(variables?: UserFavoriteBooksQuery
     }
 export const UserFavoriteMoviesDocument = gql`
     query UserFavoriteMovies($ids: [ID!], $page: PaginationInput!) {
-  books(ids: $ids, page: $page) {
+  movies(ids: $ids, page: $page) {
     pageInfo {
       startCursor
       endCursor
@@ -500,7 +500,7 @@ export function refetchUserFavoriteMoviesQuery(variables?: UserFavoriteMoviesQue
     }
 export const UserFavoriteMusicsDocument = gql`
     query UserFavoriteMusics($ids: [ID!], $page: PaginationInput!) {
-  books(ids: $ids, page: $page) {
+  musics(ids: $ids, page: $page) {
     pageInfo {
       startCursor
       endCursor

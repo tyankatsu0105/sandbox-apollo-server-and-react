@@ -1,11 +1,11 @@
 import * as ReduxToolkit from '@reduxjs/toolkit';
 
-import * as Entity from '~client/app/application/businesses/user/entity';
-import * as Connection from '~client/app/application/types/connection';
 import * as Status from '~client/app/ui/store/status';
 
 import * as Books from './books';
 import * as Constants from './constants';
+import * as Movies from './movies';
+import * as Musics from './musics';
 import * as Operations from './operations';
 import * as Types from './types';
 
@@ -63,4 +63,6 @@ export const { actions } = slice;
 export const reducer = ReduxToolkit.combineReducers({
   books: Books.reducer,
   info: slice.reducer,
+  movies: Movies.reducer,
+  musics: Musics.reducer,
 });

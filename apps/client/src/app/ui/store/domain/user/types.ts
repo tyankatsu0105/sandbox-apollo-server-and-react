@@ -2,6 +2,8 @@ import * as Entity from '~client/app/application/businesses/user/entity';
 import * as Status from '~client/app/ui/store/status';
 
 import * as Books from './books';
+import * as Movies from './movies';
+import * as Musics from './musics';
 
 // ==================================================
 // State
@@ -20,6 +22,8 @@ export type FeatureState = {
 export type State = {
   info: FeatureState;
 
+  [Movies.featureKey]: Movies.State;
+  [Musics.featureKey]: Musics.State;
   [Books.featureKey]: Books.State;
 };
 

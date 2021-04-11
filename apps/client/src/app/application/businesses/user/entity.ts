@@ -1,4 +1,3 @@
-import * as UtilityTypes from '~client/app/application/shared/utility-types';
 import * as TypesBook from '~client/app/application/types/book';
 import * as Connection from '~client/app/application/types/connection';
 import * as TypesMovie from '~client/app/application/types/movie';
@@ -34,11 +33,11 @@ export type Books = {
 };
 
 export type Musics = {
-  data: UtilityTypes.Entities<Music>;
+  nodes: Connection.Nodes<Music>;
   pageInfo: Connection.PageInfo;
 };
 
 export type Movies = {
-  data: UtilityTypes.Entities<Movie>;
+  nodes: Connection.Nodes<Movie>;
   pageInfo: Connection.PageInfo;
 };

@@ -10,6 +10,9 @@ import * as SharedTypes from '~client/app/ui/shared/types';
 // ------------------------------------
 
 type Props = {
+  books: Entity.Book[];
+  movies: Entity.Music[];
+  musics: Entity.Movie[];
   routeMatch: ReactRouter.match<
     SharedTypes.Routes.GetParams<typeof RoutesEntity.URI.users>
   >;
@@ -24,6 +27,11 @@ export const Component = (props: Props) => (
   <>
     <Design.Layouts.Header.Component />
     <p>{JSON.stringify(props.routeMatch, null, 2)}</p>
-    <Design.Recipies.UserCard.Component user={props.user} />
+    <Design.Recipies.UserCard.Component
+      books={props.books}
+      movies={props.movies}
+      musics={props.musics}
+      user={props.user}
+    />
   </>
 );

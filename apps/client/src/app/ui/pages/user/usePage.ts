@@ -5,6 +5,8 @@ import * as Entity from '~client/app/application/businesses/user/entity';
 import * as Presenter from '~client/app/application/businesses/user/presenter';
 import * as StoreUser from '~client/app/ui/store/domain/user';
 import * as StoreUserBooks from '~client/app/ui/store/domain/user/books';
+import * as StoreUserMovies from '~client/app/ui/store/domain/user/movies';
+import * as StoreUserMusics from '~client/app/ui/store/domain/user/musics';
 
 // ------------------------------------
 // usePage
@@ -17,16 +19,36 @@ export const usePage = (props: UserPageProps) => {
   const dispatch = ReactRedux.useDispatch();
   const user = ReactRedux.useSelector(StoreUser.userSelector);
   const books = ReactRedux.useSelector(StoreUserBooks.allSelector);
+  const musics = ReactRedux.useSelector(StoreUserMusics.allSelector);
+  const movies = ReactRedux.useSelector(StoreUserMovies.allSelector);
 
   React.useEffect(() => {
     dispatch(StoreUser.fetchUser({ id: props.userID }));
+  }, [dispatch, props.userID]);
 
+  React.useEffect(() => {
     if (
       user.favorites?.books &&
       Presenter.isNonNullableBooks(user.favorites.books)
     )
       dispatch(StoreUserBooks.fetchBooks({ ids: user.favorites.books }));
-  }, [dispatch, props.userID, user.favorites?.books]);
+  }, [dispatch, user.favorites?.books]);
 
-  return { books, user };
+  React.useEffect(() => {
+    if (
+      user.favorites?.movies &&
+      Presenter.isNonNullableMovies(user.favorites.movies)
+    )
+      dispatch(StoreUserMovies.fetchMovies({ ids: user.favorites.movies }));
+  }, [dispatch, user.favorites?.movies]);
+
+  React.useEffect(() => {
+    if (
+      user.favorites?.musics &&
+      Presenter.isNonNullableMusics(user.favorites.musics)
+    )
+      dispatch(StoreUserMusics.fetchMusics({ ids: user.favorites.musics }));
+  }, [dispatch, user.favorites?.musics]);
+
+  return { books, movies, musics, user };
 };
