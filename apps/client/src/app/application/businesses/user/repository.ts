@@ -16,14 +16,14 @@ export class UserRepository implements Interface.UserRepository {
           ? new Scalars.ScalarDate(this.data.node.birthDay).getFormattedValue(
               'yyyy-MM-dd'
             )
-          : null,
+          : '',
       createdAt: new Scalars.ScalarDateTime(
         this.data.node.createdAt
       ).getFormattedValue('yyyy-MM-dd HH:mm'),
       favorites: {
-        books: this.data.node.favorites?.books,
-        movies: this.data.node.favorites?.movies,
-        musics: this.data.node.favorites?.musics,
+        books: this.data.node.favorites?.books || null,
+        movies: this.data.node.favorites?.movies || null,
+        musics: this.data.node.favorites?.musics || null,
       },
       id: new Scalars.ScalarID(this.data.node.id).id,
       name: this.data.node.name,

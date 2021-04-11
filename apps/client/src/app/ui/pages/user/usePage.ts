@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactRedux from 'react-redux';
 
 import * as Entity from '~client/app/application/businesses/user/entity';
-import * as Presenter from '~client/app/application/businesses/user/presenter';
 import * as StoreUser from '~client/app/ui/store/domain/user';
 import * as StoreUserBooks from '~client/app/ui/store/domain/user/books';
 import * as StoreUserMovies from '~client/app/ui/store/domain/user/movies';
@@ -27,28 +26,19 @@ export const usePage = (props: UserPageProps) => {
   }, [dispatch, props.userID]);
 
   React.useEffect(() => {
-    if (
-      user.favorites?.books &&
-      Presenter.isNonNullableBooks(user.favorites.books)
-    )
+    if (user.favorites.books)
       dispatch(StoreUserBooks.fetchBooks({ ids: user.favorites.books }));
-  }, [dispatch, user.favorites?.books]);
+  }, [dispatch, user.favorites.books]);
 
   React.useEffect(() => {
-    if (
-      user.favorites?.movies &&
-      Presenter.isNonNullableMovies(user.favorites.movies)
-    )
+    if (user.favorites.movies)
       dispatch(StoreUserMovies.fetchMovies({ ids: user.favorites.movies }));
-  }, [dispatch, user.favorites?.movies]);
+  }, [dispatch, user.favorites.movies]);
 
   React.useEffect(() => {
-    if (
-      user.favorites?.musics &&
-      Presenter.isNonNullableMusics(user.favorites.musics)
-    )
+    if (user.favorites.musics)
       dispatch(StoreUserMusics.fetchMusics({ ids: user.favorites.musics }));
-  }, [dispatch, user.favorites?.musics]);
+  }, [dispatch, user.favorites.musics]);
 
   return { books, movies, musics, user };
 };

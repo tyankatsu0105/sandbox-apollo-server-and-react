@@ -40,9 +40,9 @@ type User implements Node {
 }
 
 type Favorites {
-  books: [ID]
-  movies: [ID]
-  musics: [ID]
+  books: [ID!]
+  movies: [ID!]
+  musics: [ID!]
 }
 
 input CreateUserInput {

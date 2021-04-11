@@ -92,9 +92,9 @@ export type Edge = {
 };
 
 export type Favorites = {
-  books?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  musics?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  books?: Maybe<Array<Scalars['ID']>>;
+  movies?: Maybe<Array<Scalars['ID']>>;
+  musics?: Maybe<Array<Scalars['ID']>>;
 };
 
 export type Movie = Node & {

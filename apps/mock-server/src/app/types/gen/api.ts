@@ -99,9 +99,9 @@ export type Edge = {
 
 export type Favorites = {
   __typename?: 'Favorites';
-  books?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  movies?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  musics?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  books?: Maybe<Array<Scalars['ID']>>;
+  movies?: Maybe<Array<Scalars['ID']>>;
+  musics?: Maybe<Array<Scalars['ID']>>;
 };
 
 export type Movie = Node & {
@@ -699,9 +699,9 @@ export type EdgeResolvers<ContextType = any, ParentType extends ResolversParentT
 }>;
 
 export type FavoritesResolvers<ContextType = any, ParentType extends ResolversParentTypes['Favorites'] = ResolversParentTypes['Favorites']> = ResolversObject<{
-  books?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
-  movies?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
-  musics?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
+  books?: Resolver<Maybe<Array<ResolversTypes['ID']>>, ParentType, ContextType>;
+  movies?: Resolver<Maybe<Array<ResolversTypes['ID']>>, ParentType, ContextType>;
+  musics?: Resolver<Maybe<Array<ResolversTypes['ID']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
